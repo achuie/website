@@ -1,8 +1,18 @@
+:root {
+    --bg-color: #514f4e;
+    --fg-color: #e2dad4;
+}
+
 body {
-    background-color: #514f4e;
+    background-color: var(--bg-color);
+    color: var(--fg-color);
 }
 
 h1 {
-    color: #e2dad4;
+    color: var(--fg-color);
     font-family: serif;
+}
+
+a {
+    color: var(--fg-color);
 }
