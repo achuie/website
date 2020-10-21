@@ -10,9 +10,14 @@ body {
 
 h1 {
     color: var(--fg-color);
-    font-family: serif;
+    font-family: sans-serif;
 }
 
 a {
     color: var(--fg-color);
+}
+
+p {
+    color: var(--fg-color);
+    font-family: serif;
 }
