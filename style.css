@@ -3,11 +3,11 @@
     --fg-color: #c5c8c6;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
-
 body {
     background-color: var(--bg-color);
     color: var(--fg-color);
+    width: 70%;
+    margin: auto;
 }
 
 h1 {
