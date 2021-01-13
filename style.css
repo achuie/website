@@ -8,6 +8,7 @@ html, body {
     min-height: 100%;
     margin: 0;
     padding: 0;
+    overflow: auto;
 }
 
 body {
@@ -15,8 +16,7 @@ body {
     color: var(--fg-color);
 }
 
-.container {
-    height: 100%;
+.main {
     width: 70%;
     margin-left: auto;
     margin-right: auto;
@@ -47,15 +47,25 @@ p {
 #homepage {
     background-image: url("images/columns_phone.jpg");
     background-size: cover;
+    background-repeat: no-repeat;
 }
-
 @media (min-width: 1025px) {
     #homepage {
         background-image: url("images/columns.jpg");
         background-size: cover;
+        background-repeat: no-repeat;
     }
 }
 
 #origami {
     text-align: center;
+}
+
+#resume {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+#resume-embed {
+    flex-grow: 1;
 }
