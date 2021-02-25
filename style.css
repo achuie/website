@@ -20,18 +20,19 @@ body {
     width: 70%;
     margin-left: auto;
     margin-right: auto;
+    font-size: 1.5vmax;
 }
 
 .navbar {
     width: 70%;
     margin-left: auto;
     margin-right: auto;
+    font-size: 2vmax;
 }
 
-h1 {
+h1, h2, h3, h4, h5, h6 {
     color: var(--fg-color);
     font-family: 'Playfair Display', serif;
-    font-size: 3vmax;
 }
 
 a {
@@ -41,7 +42,6 @@ a {
 p {
     color: var(--fg-color);
     font-family: 'Vollkorn', serif;
-    font-size: 1.5vmax;
 }
 
 footer {
