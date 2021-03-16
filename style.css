@@ -17,10 +17,10 @@ body {
 }
 
 .main {
-    width: 70%;
+    width: 50%;
     margin-left: auto;
     margin-right: auto;
-    font-size: 1.5vmax;
+    font-size: 1vmax;
 }
 
 .navbar {
@@ -45,7 +45,7 @@ p {
 }
 
 footer {
-    width: 70%;
+    width: 50%;
     bottom: 0;
     position: fixed;
 }
