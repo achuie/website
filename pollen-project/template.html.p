@@ -7,12 +7,14 @@
 </head>
 ◊(define (body-with-nav)
   ◊body{
-    ◊div[#:class "navbar"]{
-      ◊nav-link["index.html"]{Home} ◊br{}
-      ◊nav-link["pages/about.html"]{About} ◊br{}
-      ◊nav-link["pages/resume.html"]{Resume} ◊br{}
+    ◊div[#:class "content"]{
+      ◊div[#:class "navbar"]{
+        ◊nav-link["index.html"]{Home} ◊br{}
+        ◊nav-link["pages/about.html"]{About} ◊br{}
+        ◊nav-link["pages/resume.html"]{Resume} ◊br{}
+      }
+      ◊div[#:class "main"]{◊doc}
     }
-    ◊div[#:class "main"]{◊doc}
   })
 ◊(->html (body (body-with-nav)) #:splice? #t)
 </html>

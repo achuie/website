@@ -1,3 +1,6 @@
 [submodule "resume"]
 	path = resume
 	url = https://github.com/achuie/resume
+[submodule "pollen-project/Junicode-New"]
+	path = pollen-project/Junicode-New
+	url = git@github.com:psb1558/Junicode-New.git

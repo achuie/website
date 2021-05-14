@@ -4,7 +4,7 @@
 
 @font-face {
     font-family: "JuniusX-Regular";
-    src: url("JuniusVF.woff2");
+    src: url("Junicode-New/webfiles/JuniusVF.woff2");
 }
 
 html, body {
@@ -22,12 +22,31 @@ body {
 }
 
 .navbar {
-    color: red;
     font-size: ◊|multiplier|em;
 }
 
 a.navlink:link, a.navlink:visited {
     text-decoration: none;
+    position: relative;
+    color: #000000;
+}
+
+a.navlink:hover, a.navlink:active {
+    color: #000000;
+}
+
+a.navlink:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    border-bottom: 1px solid;
+    transition: 0.2s;
+}
+
+a.navlink:hover:after {
+    width: 100%;
 }
 
 .main {
