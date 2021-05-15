@@ -1,6 +1,6 @@
 #lang pollen
 
-◊(define multiplier 1.3)
+◊(define multiplier 1.5)
 
 @font-face {
     font-family: "JuniusX-Regular";
@@ -19,6 +19,18 @@ body {
     font-size: ◊|multiplier|em;
     line-height: ◊|multiplier|;
     font-family: "JuniusX-Regular", serif;
+}
+
+.content {
+    display: table;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.navbar-cell {
+    display: table-cell;
+    width: 20%;
 }
 
 .navbar {
@@ -49,10 +61,12 @@ a.navlink:hover:after {
     width: 100%;
 }
 
+.main-cell {
+    display: table-cell;
+}
+
 .main {
-    width: 50%;
-    margin-left: auto;
-    margin-right: auto;
+    padding: 0.5em;
 }
 
 h1 {
