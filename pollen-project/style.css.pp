@@ -34,7 +34,9 @@ body {
 }
 
 .navbar {
+    padding: 0.5em;
     font-size: ◊|multiplier|em;
+    text-align: right;
 }
 
 a.navlink:link, a.navlink:visited {
@@ -71,5 +73,5 @@ a.navlink:hover:after {
 
 h1 {
     font-feature-settings: "smcp";
-    border-top: 1px solid;
+    border-bottom: 1px solid;
 }
