@@ -1,3 +1,3 @@
 #lang pollen
 
-◊h2{Welcome!}
+◊h2[#:style "line-height: 2.15em"]{Welcome!}

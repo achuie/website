@@ -1,6 +1,6 @@
 #lang pollen
 
-◊(define multiplier 1.5)
+◊(define multiplier 1.3)
 
 @font-face {
     font-family: "JuniusX-Regular";
@@ -22,6 +22,8 @@ body {
 }
 
 .content {
+    height: 100%;
+    min-height: 100%;
     display: table;
     width: 70%;
     margin-left: auto;
@@ -73,5 +75,5 @@ a.navlink:hover:after {
 
 h1 {
     font-feature-settings: "smcp";
-    border-bottom: 1px solid;
+    border-top: 1px solid;
 }
