@@ -5,6 +5,12 @@
          pollen/unstable/typography
          txexpr)
 
+(module setup racket/base
+  (require pollen/setup)
+
+  (provide (all-defined-out))
+  (define block-tags (append '(img) default-block-tags)))
+
 (provide (all-defined-out))
 
 (define (nav-link url text) `(a ((class "navlink") (href ,url)) ,text))
@@ -17,9 +23,7 @@
 
 ;; All the smart features plus trim ending "\\".
 (define smart-and-trim
-  (compose1 (compose1 (compose1 smart-quotes smart-dashes)
-                      smart-ellipses)
-            (lambda (s) (string-trim s "\\\\"))))
+  (compose1 smart-quotes smart-dashes smart-ellipses (lambda (s) (string-trim s "\\\\"))))
 
 ;; Decode paragraphs plus LaTeX-style linebreaks.
 (define (smart-paragraphs elements)
@@ -31,5 +35,6 @@
   (define processed-elems
     (decode-elements elements
                      #:txexpr-elements-proc smart-paragraphs))
-  (txexpr 'root empty (decode-elements processed-elems
-                                       #:string-proc smart-and-trim)))
+  (list* 'div '((id "doc"))
+         (decode-elements processed-elems
+                          #:string-proc smart-and-trim)))

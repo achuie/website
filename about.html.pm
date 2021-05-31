@@ -2,6 +2,9 @@
 
 ◊h1{About}
 
+◊img[#:class "textwrap" #:style "width: 15vmax" #:src "images/headshot.png"
+  #:alt "Headshot"]{}
+
 All about me, for those interested.
 
 ◊h2{Education}

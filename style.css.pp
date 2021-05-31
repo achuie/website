@@ -73,6 +73,11 @@ a.navlink:hover:after {
     padding: 0.5em;
 }
 
+.textwrap {
+    float: right;
+    margin: 1.1vmax;
+}
+
 h1 {
     font-feature-settings: "smcp";
     border-top: 1px solid;
