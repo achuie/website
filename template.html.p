@@ -13,6 +13,7 @@
           ◊nav-link["index.html"]{Home} ◊br{}
           ◊nav-link["about.html"]{About} ◊br{}
           ◊nav-link["resume.html"]{Resume} ◊br{}
+          ◊nav-link["interests.html"]{Interests}
         }
       }
       ◊div[#:class "main-cell"]{ ◊div[#:class "main"]{◊doc} }

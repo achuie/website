@@ -15,6 +15,8 @@
 
 (define (nav-link url text) `(a ((class "navlink") (href ,url)) ,text))
 
+(define (body-link url text) `(a ((class "bodylink") (href ,url)) ,text))
+
 ;; Only convert a newline to a linebreak if the preceding line ends with "\\".
 (define (latex-linebreaker prev next)
   (if (and (string? prev) (regexp-match #rx"\\\\$" prev))
