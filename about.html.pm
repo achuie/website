@@ -11,7 +11,7 @@ All about me, for those interested.
 
 I graduated from Rice University with a BA in Computer Science in 2016. I was
 in Sid Richardson college, the best college. \\
-◊em{Death from Above.}
+◊body-link["https://sidrich.rice.edu/about"]{◊em{Death from Above.}}
 
 ◊h2{Work}
 
