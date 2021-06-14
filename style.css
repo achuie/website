@@ -73,7 +73,7 @@ a.navlink:after {
     left: 0;
     width: 0%;
     border-bottom: 1px solid;
-    transition: 0.2s;
+    transition: 0.2s cubic-bezier(0.5,0.5,0,1);
 }
 
 a.navlink:hover:after {
@@ -81,28 +81,12 @@ a.navlink:hover:after {
 }
 
 a.bodylink:link, a.bodylink:visited {
-    text-decoration: none;
-    position: relative;
+    text-decoration: underline 2px solid #e0e0e0;
     color: #000000;
 }
 
 a.bodylink:hover, a.bodylink:active {
-    color: #0000ee;
-}
-
-a.bodylink:after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    border-bottom: 4px solid #e0e0e0;
-    transition: 0.2s;
-}
-
-a.bodylink:hover:after {
-    border-bottom: 1px solid #0000ee;
-    bottom: 4px;
+    text-decoration: underline 1px solid #0000ee;
     color: #0000ee;
 }
 
