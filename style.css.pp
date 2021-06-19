@@ -1,7 +1,8 @@
 #lang pollen
 
 ◊(define multiplier 1.3)
-◊(define link-color "#000000")
+◊(define link-color "#0000ee")
+◊(define link-gray "#e0e0e0")
 
 @font-face {
     font-family: "EBGaramond";
@@ -64,14 +65,14 @@ body {
 a.navlink:link, a.navlink:visited {
     text-decoration: none;
     position: relative;
-    color: ◊|link-color|;
+    color: black;
 }
 
 a.navlink:hover, a.navlink:active {
-    color: ◊|link-color|;
+    color: black;
 }
 
-a.navlink:after {
+a.navlink::after {
     content: "";
     position: absolute;
     bottom: 0;
@@ -81,18 +82,18 @@ a.navlink:after {
     transition: 0.2s cubic-bezier(0.5,0.5,0,1);
 }
 
-a.navlink:hover:after {
+a.navlink:hover::after {
     width: 100%;
 }
 
 a.bodylink:link, a.bodylink:visited {
-    text-decoration: underline 2px solid #e0e0e0;
-    color: ◊|link-color|;
+    text-decoration: underline 2px solid ◊|link-gray|;
+    color: black;
 }
 
 a.bodylink:hover, a.bodylink:active {
-    text-decoration: underline 1px solid #0000ee;
-    color: #0000ee;
+    text-decoration: underline 1px solid ◊|link-color|;
+    color: ◊|link-color|;
 }
 
 .main-cell {

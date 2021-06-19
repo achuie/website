@@ -59,14 +59,14 @@ body {
 a.navlink:link, a.navlink:visited {
     text-decoration: none;
     position: relative;
-    color: #000000;
+    color: black;
 }
 
 a.navlink:hover, a.navlink:active {
-    color: #000000;
+    color: black;
 }
 
-a.navlink:after {
+a.navlink::after {
     content: "";
     position: absolute;
     bottom: 0;
@@ -76,13 +76,13 @@ a.navlink:after {
     transition: 0.2s cubic-bezier(0.5,0.5,0,1);
 }
 
-a.navlink:hover:after {
+a.navlink:hover::after {
     width: 100%;
 }
 
 a.bodylink:link, a.bodylink:visited {
     text-decoration: underline 2px solid #e0e0e0;
-    color: #000000;
+    color: black;
 }
 
 a.bodylink:hover, a.bodylink:active {
