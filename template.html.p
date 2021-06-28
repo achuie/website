@@ -12,7 +12,8 @@
         ◊div[#:class "navbar"]{
           ◊nav-link["index.html"]{Home} ◊br{}
           ◊nav-link["about.html"]{About} ◊br{}
-          ◊nav-link["resume.html"]{Resume} ◊br{}
+          ◊nav-link[
+            "https://github.com/achuie/resume/blob/master/andrew_huie.pdf"]{Resume} ◊br{}
           ◊nav-link["interests.html"]{Interests}
         }
       }
