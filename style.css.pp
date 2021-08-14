@@ -1,3 +1,9 @@
+#lang pollen
+
+◊(define multiplier 1.3)
+◊(define link-color "#0000ee")
+◊(define link-gray "#e0e0e0")
+
 @font-face {
     font-family: "EBGaramond";
     src: url("EBGaramond12/fonts/otf/EBGaramond-Regular.otf")
@@ -31,8 +37,8 @@ html, body {
 }
 
 body {
-    font-size: 1.3em;
-    line-height: 1.3;
+    font-size: ◊|multiplier|em;
+    line-height: ◊|multiplier|;
     font-family: "EBGaramond", serif;
 }
 
@@ -52,7 +58,7 @@ body {
 
 .navbar {
     padding: 0.5em;
-    font-size: 1.3em;
+    font-size: ◊|multiplier|em;
     text-align: right;
 }
 
@@ -81,13 +87,13 @@ a.navlink:hover::after {
 }
 
 a.bodylink:link, a.bodylink:visited {
-    text-decoration: underline 2px solid #e0e0e0;
+    text-decoration: underline 2px solid ◊|link-gray|;
     color: black;
 }
 
 a.bodylink:hover, a.bodylink:active {
-    text-decoration: underline 1px solid #0000ee;
-    color: #0000ee;
+    text-decoration: underline 1px solid ◊|link-color|;
+    color: ◊|link-color|;
 }
 
 .main-cell {
