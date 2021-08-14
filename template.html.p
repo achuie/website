@@ -10,7 +10,9 @@
     ◊div[#:class "content"]{
       ◊div[#:class "navbar-cell"]{
         ◊div[#:class "navbar"]{
-          ◊img[#:style "width: 6vmax; margin-top: 2.15em" #:src "images/columns.jpg" #:alt "Icon"]{} ◊br{}
+          ◊img[#:style "width: 7vmax; vertical-align: middle;"
+               #:src "images/columns.jpg"
+               #:alt "Icon"]{} ◊br{}
           ◊nav-link["index.html"]{Home} ◊br{}
           ◊nav-link["about.html"]{About} ◊br{}
           ◊nav-link[
