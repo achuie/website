@@ -1,13 +1,11 @@
 { pkgs ? import <nixpkgs> {} }:
 
-pkgs.mkShell {
-  nativeBuildInputs = [ pkgs.racket-minimal ];
-
-  shellHook = ''
-    if [ -z "$(raco pkg show | awk '/pollen/')" ]; then
-      raco pkg install pollen
-    else
-      raco pkg update pollen
-    fi
-  '';
+let
+  racket2nix = builtins.fetchGit {
+    url = "https://github.com/achuie/racket2nix";
+    ref = "master";
+    rev = "3b8a03cd38cea86591a0884d267f46c1a7f475f9";
+  };
+in pkgs.mkShell {
+  nativeBuildInputs = [ (import racket2nix { package = "pollen"; }).lib ];
 }
