@@ -2,7 +2,8 @@
 
 ◊h1{About}
 
-◊img[#:class "textwrap" #:style "width: 15vmax" #:src "images/headshot.png"
+◊img[#:class "textwrap" #:style "width: 15vmax"
+  #:src "https://media.githubusercontent.com/media/achuie/achuie.github.io/master/images/headshot.png"
   #:alt "Headshot"]{}
 
 All about me, for those interested.
@@ -11,15 +12,14 @@ All about me, for those interested.
 
 I graduated from Rice University with a BA in Computer Science in 2016. I was
 in Sid Richardson college, the best college. \\
-◊body-link["https://sidrich.rice.edu/about"]{◊em{Death from Above.}}
+◊body-link["https://sidrich.rice.edu/about"]{◊em{Mors de Super.}}
 
 ◊h2{Work}
 
-I am a software engineer experienced in program design for research application
-software. I am currently at Ascent Robotics in Tokyo, Japan, where we try to
-make robots autonomous.
+I am a software engineer experienced in program design for research application software and test
+development. I am currently at Mujin in Tokyo, Japan, where we try to make robots autonomous.
 
-◊h2{Interests}
+◊h2{Fun}
 
 I fill my time with a few different pursuits including disc golf, origami,
 travel, skiing, photography, vidya, calligraphy, and of course keeping my
