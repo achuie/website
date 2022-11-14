@@ -1,32 +1,12 @@
 #lang pollen
 
-◊(define multiplier 1.3)
+◊(define body-em-size 1.2)
+◊(define leading (number->string (* body-em-size 1.2)))
 ◊(define link-color "#0000ee")
 ◊(define link-gray "#e0e0e0")
 
-@font-face {
-    font-family: "EBGaramond";
-    src: url("EBGaramond12/fonts/otf/EBGaramond-Regular.otf")
-    format("opentype");
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: "EBGaramond";
-    src: url("EBGaramond12/fonts/otf/EBGaramond-Bold.otf")
-    format("opentype");
-    font-weight: bold;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: "EBGaramond";
-    src: url("EBGaramond12/fonts/otf/EBGaramond-Italic.otf")
-    format("opentype");
-    font-weight: normal;
-    font-style: italic;
-}
+@import url("https://indestructibletype.com/fonts/Bodoni/Bodoni.css");
+@import url("https://indestructibletype.com/fonts/Besley.css");
 
 html, body {
     height: 100%;
@@ -37,9 +17,9 @@ html, body {
 }
 
 body {
-    font-size: ◊|multiplier|em;
-    line-height: ◊|multiplier|;
-    font-family: "EBGaramond", serif;
+    font-size: ◊|body-em-size|em;
+    line-height: ◊|leading|;
+    font-family: "Besley", serif;
 }
 
 .content {
@@ -58,8 +38,9 @@ body {
 
 .navbar {
     padding: 0.5em;
-    font-size: ◊|multiplier|em;
+    font-size: ◊|body-em-size|em;
     text-align: right;
+    font-family: "Bodoni 11";
 }
 
 a.navlink:link, a.navlink:visited {
@@ -110,7 +91,16 @@ a.bodylink:hover, a.bodylink:active {
     margin: 0.5em;
 }
 
+h1,h2,h3,h4,h5,h6 {
+    font-family: "Bodoni 24";
+    margin: 0px;
+}
+
 h1 {
     font-feature-settings: "smcp";
     border-top: 1px solid;
+}
+
+p {
+    margin-top: 0.2em;
 }

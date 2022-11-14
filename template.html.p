@@ -3,7 +3,7 @@
   <meta charset="UTF-8">
   ◊(define title (select 'h1 doc))
   <title>◊(if title title "Home") &ndash; AH</title>
-  <link rel="shortcut icon" type="image/jpg" href="images/columns.jpg"/>
+  <link rel="shortcut icon" type="image/jpg" href="https://media.githubusercontent.com/media/achuie/achuie.github.io/master/images/columns.jpg"/>
   <link rel="stylesheet" type="text/css" media="all" href="style.css"/>
 </head>
 ◊(define (body-with-nav)
@@ -12,7 +12,7 @@
       ◊div[#:class "navbar-cell"]{
         ◊div[#:class "navbar"]{
           ◊img[#:style "width: 7vmax; vertical-align: middle;"
-               #:src "images/columns.jpg"
+               #:src "https://media.githubusercontent.com/media/achuie/achuie.github.io/master/images/columns.jpg"
                #:alt "Icon"]{} ◊br{}
           ◊nav-link["index.html"]{Home} ◊br{}
           ◊nav-link["about.html"]{About} ◊br{}
