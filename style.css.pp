@@ -5,7 +5,6 @@
 ◊(define link-color "#0000ee")
 ◊(define link-gray "#e0e0e0")
 
-@import url("https://indestructibletype.com/fonts/Bodoni/Bodoni.css");
 @import url("https://indestructibletype.com/fonts/Besley.css");
 
 html, body {
@@ -19,8 +18,7 @@ html, body {
 body {
     font-size: 1.1em;
     line-height: 1.43;
-    ◊;;font-family: "Besley", serif;
-    font-family: "Bodoni 6", serif;
+    font-family: "Besley", serif;
 }
 
 .content {
@@ -39,9 +37,10 @@ body {
 
 .navbar {
     padding: 0.5em;
-    font-size: 1.43em;
+    font-size: 1.2em;
     text-align: right;
-    font-family: "Bodoni 11";
+    font-feature-settings: "smcp";
+    font-weight: 100;
 }
 
 a.navlink:link, a.navlink:visited {
@@ -93,12 +92,10 @@ a.bodylink:hover, a.bodylink:active {
 }
 
 h1,h2,h3,h4,h5,h6 {
-    font-family: "Bodoni 24";
     margin: 0px;
 }
 
 h1 {
-    font-feature-settings: "smcp";
     border-top: 1px solid;
     font-size: 1.2em;
 }
