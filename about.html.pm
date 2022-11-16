@@ -17,7 +17,7 @@ in Sid Richardson college, the best college. \\
 ◊h2{Work}
 
 I am a software engineer experienced in program design for research application software and test
-development. I am currently at Mujin in Tokyo, Japan, where we try to make robots autonomous.
+development. I am currently at Mujin in Tokyo, Japan, where we try to make robotic systems smart.
 
 ◊h2{Fun}
 

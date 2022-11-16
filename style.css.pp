@@ -1,7 +1,7 @@
 #lang pollen
 
-◊(define body-em-size 1.2)
-◊(define leading (number->string (* body-em-size 1.2)))
+◊(define body-em-size 1.1)
+◊(define leading (* body-em-size 1.3))
 ◊(define link-color "#0000ee")
 ◊(define link-gray "#e0e0e0")
 
@@ -17,9 +17,10 @@ html, body {
 }
 
 body {
-    font-size: ◊|body-em-size|em;
-    line-height: ◊|leading|;
-    font-family: "Besley", serif;
+    font-size: 1.1em;
+    line-height: 1.43;
+    ◊;;font-family: "Besley", serif;
+    font-family: "Bodoni 6", serif;
 }
 
 .content {
@@ -38,7 +39,7 @@ body {
 
 .navbar {
     padding: 0.5em;
-    font-size: ◊|body-em-size|em;
+    font-size: 1.43em;
     text-align: right;
     font-family: "Bodoni 11";
 }
@@ -99,6 +100,15 @@ h1,h2,h3,h4,h5,h6 {
 h1 {
     font-feature-settings: "smcp";
     border-top: 1px solid;
+    font-size: 1.2em;
+}
+
+h2 {
+    font-size: 1.15em;
+}
+
+h3,h4,h5,h6 {
+    font-size: 1.1em;
 }
 
 p {
