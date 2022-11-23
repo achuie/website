@@ -25,14 +25,14 @@ body {
     height: 100%;
     min-height: 100%;
     display: table;
-    width: 75%;
+    width: 80%;
     margin-left: 0;
     margin-right: auto;
 }
 
 .navbar-cell {
     display: table-cell;
-    width: 40%;
+    width: 35%;
 }
 
 .navbar {
@@ -79,7 +79,7 @@ a.bodylink:hover, a.bodylink:active {
 
 .main-cell {
     display: table-cell;
-    width: 60%;
+    width: 65%;
 }
 
 .main {
