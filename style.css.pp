@@ -1,11 +1,12 @@
 #lang pollen
 
-◊(define body-em-size 1.1)
-◊(define leading (* body-em-size 1.3))
+◊(define body-em-size 0.9)
+◊(define leading (+ body-em-size 0.5))
 ◊(define link-color "#0000ee")
-◊(define link-gray "#e0e0e0")
+◊(define link-gray "#e6e6e6")
 
 @import url("https://indestructibletype.com/fonts/Besley.css");
+@import url("https://indestructibletype.com/fonts/Bodoni/Bodoni.css");
 
 html, body {
     height: 100%;
@@ -16,9 +17,10 @@ html, body {
 }
 
 body {
-    font-size: 1.1em;
-    line-height: 1.43;
-    font-family: "Besley", serif;
+    font-size: ◊|body-em-size|em;
+    line-height: ◊leading;
+    font-family: "Bodoni 6", serif;
+    font-weight: 400;
 }
 
 .content {
@@ -37,10 +39,11 @@ body {
 
 .navbar {
     padding: 0.5em;
-    font-size: 1.2em;
+    font-family: "Besley", serif;
+    font-size: ◊(+ body-em-size 0.3)em;
+    line-height: ◊(+ leading 0.1)em;
     text-align: right;
     font-feature-settings: "smcp";
-    font-weight: 100;
 }
 
 a.navlink:link, a.navlink:visited {
@@ -56,7 +59,7 @@ a.navlink:hover, a.navlink:active {
 a.navlink::after {
     content: "";
     position: absolute;
-    bottom: 0;
+    bottom: 0.2em;
     left: 0;
     width: 0%;
     border-bottom: 1px solid;
@@ -68,12 +71,18 @@ a.navlink:hover::after {
 }
 
 a.bodylink:link, a.bodylink:visited {
-    text-decoration: underline 2px solid ◊|link-gray|;
+    text-decoration: underline 8px solid ◊|link-gray|;
+    text-decoration-skip-ink: none;
+    text-underline-offset: -4px;
+    transition: 0.1s;
     color: black;
 }
 
 a.bodylink:hover, a.bodylink:active {
     text-decoration: underline 1px solid ◊|link-color|;
+    text-decoration-skip-ink: auto;
+    text-underline-offset: 2px;
+    transition: 0.1s;
     color: ◊|link-color|;
 }
 
@@ -93,19 +102,20 @@ a.bodylink:hover, a.bodylink:active {
 
 h1,h2,h3,h4,h5,h6 {
     margin: 0px;
+    font-weight: 600;
 }
 
 h1 {
     border-top: 1px solid;
-    font-size: 1.2em;
+    font-size: ◊(+ body-em-size 0.3)em;
 }
 
 h2 {
-    font-size: 1.15em;
+    font-size: ◊(+ body-em-size 0.2)em;
 }
 
 h3,h4,h5,h6 {
-    font-size: 1.1em;
+    font-size: ◊|body-em-size|em;
 }
 
 p {

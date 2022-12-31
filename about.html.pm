@@ -2,7 +2,7 @@
 
 ◊h1{About}
 
-◊img[#:class "textwrap" #:style "width: 15vmax"
+◊img[#:class "textwrap" #:style "width: 12vmax"
   #:src "https://media.githubusercontent.com/media/achuie/achuie.github.io/master/images/headshot.png"
   #:alt "Headshot"]{}
 
