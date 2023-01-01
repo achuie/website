@@ -11,7 +11,7 @@
     ◊div[#:class "content"]{
       ◊div[#:class "navbar-cell"]{
         ◊div[#:class "navbar"]{
-          ◊img[#:style "width: 7vmax; vertical-align: middle;"
+          ◊img[#:style "width: 5vmax; vertical-align: middle;"
                #:src "https://media.githubusercontent.com/media/achuie/achuie.github.io/master/images/columns.jpg"
                #:alt "Icon"]{} ◊br{}
           ◊nav-link["index.html"]{Home} ◊br{}
