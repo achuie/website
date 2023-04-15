@@ -17,6 +17,15 @@
 
 (define (body-link url text) `(a ((class "bodylink") (href ,url)) ,text))
 
+;; Find photos and generate image tags for each.
+(define list-photos
+  (map (λ (path)
+          `(img ((src ,(path->string (build-path
+                          "https://media.githubusercontent.com/media/achuie/achuie.github.io/master/images/portfolio"
+                          path)))
+                 (width "100%"))))
+       (directory-list (build-path (current-directory) "images" "portfolio"))))
+
 ;; Only convert a newline to a linebreak if the preceding line ends with "\\".
 (define (latex-linebreaker prev next)
   (if (and (string? prev) (regexp-match #rx"\\\\$" prev))
@@ -25,7 +34,7 @@
 
 ;; All the smart features plus trim ending "\\".
 (define smart-and-trim
-  (compose1 smart-quotes smart-dashes smart-ellipses (lambda (s) (string-trim s "\\\\"))))
+  (compose1 smart-quotes smart-dashes smart-ellipses (λ (s) (string-trim s "\\\\"))))
 
 ;; Decode paragraphs plus LaTeX-style linebreaks.
 (define (smart-paragraphs elements)
@@ -34,6 +43,7 @@
   (decode-paragraphs elements #:linebreak-proc decode-latex-lines))
 
 (define (root . elements)
+  (displayln elements)
   (define processed-elems
     (decode-elements elements
                      #:txexpr-elements-proc smart-paragraphs))

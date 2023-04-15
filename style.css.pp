@@ -5,8 +5,7 @@
 ◊(define link-color "#0000ee")
 ◊(define link-gray "#e6e6e6")
 
-@import url("https://indestructibletype.com/fonts/Besley.css");
-@import url("https://indestructibletype.com/fonts/Bodoni/Bodoni.css");
+@import url("./fonts.css");
 
 html, body {
     height: 100%;
@@ -131,8 +130,8 @@ p {
 
 .masonry-panel {
     break-inside: avoid;
-    width: 100%;
 }
 
 .masonry-panel__content {
+    padding: 0.4vmax;
 }
