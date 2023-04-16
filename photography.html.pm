@@ -5,7 +5,7 @@
   `(div ((class "masonry-panel__content"))
         ,@(for/list
             ; Reverse chronological order.
-            ([i (in-range (- (- (length photos) 1) idx) 0 -3)])
+            ([i (in-range (- (- (length photos) 1) idx) -1 -3)])
             (list-ref photos i))))
 
 ◊h1{Photography}
