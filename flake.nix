@@ -14,6 +14,24 @@
       nixpkgsFor = forAllSystems (system: import nixpkgs { inherit system; });
     in
     {
+      apps = forAllSystems (system:
+        let pkgs = nixpkgsFor.${system};
+        in
+        {
+          thumbnails = {
+            type = "app";
+            program = "${pkgs.writeShellScriptBin "generateThumbnails.sh" ''
+              for pic in $(ls ./images/portfolio); do
+                if [ -f ./images/thumbnails/$pic ]; then
+                  echo "  Found thumbnail for $pic"
+                else
+                  echo "  Generating thumbnail for $pic"
+                  ${pkgs.imagemagick}/bin/magick ./images/portfolio/$pic -resize 1000000@ ./images/thumbnails/$pic
+                fi
+              done
+            ''}/bin/generateThumbnails.sh";
+          };
+        });
       devShells = forAllSystems (system:
         let
           dependencies = (dream2nix.lib.makeFlakeOutputs {
@@ -30,7 +48,6 @@
           }).packages.${system};
         in
         {
-          dependencies = dependencies;
           default = nixpkgsFor.${system}.mkShell {
             packages = [ dependencies.site ];
           };

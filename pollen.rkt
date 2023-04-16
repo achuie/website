@@ -21,11 +21,11 @@
 (define list-photos
   (map (λ (path)
           `(img ((src ,(path->string (build-path
-                          "https://media.githubusercontent.com/media/achuie/achuie.github.io/master/images/portfolio"
+                          "https://media.githubusercontent.com/media/achuie/achuie.github.io/master/images/thumbnails"
                           path)))
                  (width "100%")
                  (class "masonry-img"))))
-       (directory-list (build-path (current-directory) "images" "portfolio"))))
+       (directory-list (build-path (current-directory) "images" "thumbnails"))))
 
 ;; Only convert a newline to a linebreak if the preceding line ends with "\\".
 (define (latex-linebreaker prev next)
