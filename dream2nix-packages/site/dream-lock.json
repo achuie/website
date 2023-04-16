@@ -1,0 +1,179 @@
+{
+  "_generic": {
+    "defaultPackage": "site",
+    "invalidationHash": "77c582cf7d204706b715b02d5ccbfcb64944dca058846b3674247371561258f4",
+    "location": "",
+    "packages": {
+      "site": "0.0.0"
+    },
+    "sourcesAggregatedHash": null,
+    "subsystem": "racket"
+  },
+  "_subsystem": {},
+  "dependencies": {
+    "markdown": {
+      "0.0.0": [
+        [ "parsack", "0.0.0" ],
+        [ "threading-lib", "0.0.0" ],
+        [ "sexp-diff-lib", "0.0.0" ]
+      ]
+    },
+    "parsack": {
+      "0.0.0": [
+        [ "parsack-lib", "0.0.0" ],
+        [ "parsack-doc", "0.0.0" ],
+        [ "parsack-test", "0.0.0" ]
+      ]
+    },
+    "parsack-doc": {
+      "0.0.0": [
+        [ "parsack-lib", "0.0.0" ]
+      ]
+    },
+    "parsack-lib": {
+      "0.0.0": []
+    },
+    "parsack-test": {
+      "0.0.0": [
+        [ "parsack-lib", "0.0.0" ]
+      ]
+    },
+    "pollen": {
+      "0.0.0": [
+        [ "txexpr", "0.0.0" ],
+        [ "sugar", "0.0.0" ],
+        [ "markdown", "0.0.0" ],
+        [ "rackjure", "0.0.0" ]
+      ]
+    },
+    "rackjure": {
+      "0.0.0": [
+        [ "threading-lib", "0.0.0" ],
+        [ "threading-doc", "0.0.0" ]
+      ]
+    },
+    "sexp-diff-lib": {
+      "0.0.0": []
+    },
+    "site": {
+      "0.0.0": [
+        [ "pollen", "0.0.0" ]
+      ]
+    },
+    "sugar": {
+      "0.0.0": []
+    },
+    "threading-doc": {
+      "0.0.0": [
+        [ "threading-lib", "0.0.0" ]
+      ]
+    },
+    "threading-lib": {
+      "0.0.0": []
+    },
+    "txexpr": {
+      "0.0.0": [
+        [ "sugar", "0.0.0" ]
+      ]
+    }
+  },
+  "sources": {
+    "markdown": {
+      "0.0.0": {
+        "rev": "34ada7458fad51d3a5e0516352f8bd399c517140",
+        "type": "git",
+        "url": "https://github.com/greghendershott/markdown"
+      }
+    },
+    "parsack": {
+      "0.0.0": {
+        "dir": "parsack",
+        "rev": "57b21873e8e3eb7ffbdfa253251c3c27a66723b1",
+        "type": "git",
+        "url": "https://github.com/stchang/parsack.git"
+      }
+    },
+    "parsack-doc": {
+      "0.0.0": {
+        "dir": "parsack-doc",
+        "rev": "57b21873e8e3eb7ffbdfa253251c3c27a66723b1",
+        "type": "git",
+        "url": "https://github.com/stchang/parsack.git"
+      }
+    },
+    "parsack-lib": {
+      "0.0.0": {
+        "dir": "parsack-lib",
+        "rev": "57b21873e8e3eb7ffbdfa253251c3c27a66723b1",
+        "type": "git",
+        "url": "https://github.com/stchang/parsack.git"
+      }
+    },
+    "parsack-test": {
+      "0.0.0": {
+        "dir": "parsack-test",
+        "rev": "57b21873e8e3eb7ffbdfa253251c3c27a66723b1",
+        "type": "git",
+        "url": "https://github.com/stchang/parsack.git"
+      }
+    },
+    "pollen": {
+      "0.0.0": {
+        "rev": "c182a30f57ea5096440aea3d097f5fe3b78bb236",
+        "type": "git",
+        "url": "https://git.matthewbutterick.com/mbutterick/pollen.git"
+      }
+    },
+    "rackjure": {
+      "0.0.0": {
+        "rev": "9f7c74f5a499f71407890037839a3fa3b178dcef",
+        "type": "git",
+        "url": "https://github.com/greghendershott/rackjure"
+      }
+    },
+    "sexp-diff-lib": {
+      "0.0.0": {
+        "dir": "sexp-diff-lib",
+        "rev": "5791264cb7031308b81c8c91df457cd51888210f",
+        "type": "git",
+        "url": "https://github.com/stamourv/sexp-diff.git"
+      }
+    },
+    "site": {
+      "0.0.0": {
+        "path": "/nix/store/n8fb091cvrcfgc6ph2j5429midr2cr30-s59if47zs1i43m1nhq8c5ds53mnaj99d-source",
+        "type": "path"
+      }
+    },
+    "sugar": {
+      "0.0.0": {
+        "rev": "c90834b77afad07f9b02986fc8e157ccf30b753c",
+        "type": "git",
+        "url": "https://git.matthewbutterick.com/mbutterick/sugar.git"
+      }
+    },
+    "threading-doc": {
+      "0.0.0": {
+        "dir": "threading-doc",
+        "rev": "1f3b630d3ed78edc6d883f9d99305158d6b67623",
+        "type": "git",
+        "url": "https://github.com/lexi-lambda/threading"
+      }
+    },
+    "threading-lib": {
+      "0.0.0": {
+        "dir": "threading-lib",
+        "rev": "1f3b630d3ed78edc6d883f9d99305158d6b67623",
+        "type": "git",
+        "url": "https://github.com/lexi-lambda/threading"
+      }
+    },
+    "txexpr": {
+      "0.0.0": {
+        "rev": "4ed851459e97be03418b1e92a5c07174e99bf28f",
+        "type": "git",
+        "url": "https://git.matthewbutterick.com/mbutterick/txexpr.git"
+      }
+    }
+  }
+}
