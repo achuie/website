@@ -132,6 +132,12 @@ p {
     break-inside: avoid;
 }
 
+◊(define masonry-padding "0.4vmax")
+
 .masonry-panel__content {
-    padding: 0.4vmax;
+    padding: ◊|masonry-padding|;
+}
+
+.masonry-img {
+    padding: ◊|masonry-padding| 0px ◊|masonry-padding|;
 }

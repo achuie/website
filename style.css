@@ -125,6 +125,12 @@ p {
     break-inside: avoid;
 }
 
+
+
 .masonry-panel__content {
     padding: 0.4vmax;
+}
+
+.masonry-img {
+    padding: 0.4vmax 0px 0.4vmax;
 }
