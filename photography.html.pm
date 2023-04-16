@@ -2,9 +2,10 @@
 
 ◊(define photos list-photos)
 ◊(define (one-third-panel-content idx)
-  `(div ((class "masonry-panel__content")) ,@(for/list
-    ([i (in-range idx (length photos) 3)])
-    (list-ref photos i))))
+  `(div ((class "masonry-panel__content"))
+        ,@(for/list
+            ([i (in-range idx (length photos) 3)])
+            (list-ref photos i))))
 
 ◊h1{Photography}
 

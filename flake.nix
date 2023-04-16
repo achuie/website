@@ -20,7 +20,7 @@
         {
           thumbnails = {
             type = "app";
-            program = "${pkgs.writeShellScriptBin "generateThumbnails.sh" ''
+            program = "${pkgs.writeShellScriptBin "manageThumbnails.sh" ''
               for pic in $(ls ./images/portfolio); do
                 if [ -f ./images/thumbnails/$pic ]; then
                   echo "  Found thumbnail for $pic"
@@ -29,7 +29,13 @@
                   ${pkgs.imagemagick}/bin/magick ./images/portfolio/$pic -resize 1000000@ ./images/thumbnails/$pic
                 fi
               done
-            ''}/bin/generateThumbnails.sh";
+              for thumbnail in $(ls ./images/thumbnails); do
+                if [ ! -f ./images/portfolio/$pic ]; then
+                  echo "  Removing thumbnail $pic"
+                  rm ./images/thumbnails/$pic
+                fi
+              done
+            ''}/bin/manageThumbnails.sh";
           };
         });
       devShells = forAllSystems (system:
