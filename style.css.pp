@@ -122,7 +122,7 @@ p {
 }
 
 .masonry-layout {
-    column-count: 3;
+    column-count: 2;
     column-gap: 0;
     height: 100%;
     width: 100%;
