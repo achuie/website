@@ -6,7 +6,8 @@
   <link rel="shortcut icon" type="image/jpg" href="https://media.githubusercontent.com/media/achuie/achuie.github.io/master/images/columns.jpg"/>
   <link rel="stylesheet" type="text/css" media="all" href="style.css"/>
 </head>
-◊(define (body-with-nav)
+
+◊(define body-with-nav
   ◊body{
     ◊div[#:class "content"]{
       ◊div[#:class "navbar-cell"]{
@@ -25,10 +26,7 @@
     }
   })
 ◊(define is-display-image? (λ (x) (and (and (txexpr? x) (eq? 'img (get-tag x)))
-                                       (inlst `(id "fillIn") (get-attrs x)))))
-◊(define display-image-in-page
-         (λ (x)
-            (define root-elements (index (len (txexpr->values x))))
-            (map (λ (elem) (findf-exexpr elem is-display-image?)) root-elements)))
-◊(->html (if (display-image-in-page body) (body) (body (body-with-nav))) #:splice? #t)
+                                       (member '(id "fillIn") (get-attrs x)))))
+
+◊(->html (if (findf-txexpr doc is-display-image?) `(body ,doc) body-with-nav) #:splice? #t)
 </html>

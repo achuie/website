@@ -1,6 +1,7 @@
 #lang racket/base
 
 (require racket/string
+         racket/list
          pollen/decode 
          pollen/unstable/typography
          txexpr)
