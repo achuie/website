@@ -1,11 +1,4 @@
-<html>
-<head>
-  <meta charset="UTF-8">
-  ◊(define title (select 'h1 doc))
-  <title>◊(if title title "Home") &ndash; AH</title>
-  <link rel="shortcut icon" type="image/jpg" href="https://media.githubusercontent.com/media/achuie/achuie.github.io/master/images/columns.jpg"/>
-  <link rel="stylesheet" type="text/css" media="all" href="style.css"/>
-</head>
+◊(require txexpr)
 
 ◊(define body-with-nav
   ◊body{
@@ -28,5 +21,13 @@
 ◊(define is-display-image? (λ (x) (and (and (txexpr? x) (eq? 'img (get-tag x)))
                                        (member '(id "fillIn") (get-attrs x)))))
 
+<html>
+<head>
+  <meta charset="UTF-8">
+  ◊(define title (select 'h1 doc))
+  <title>◊(if title title "Home") &ndash; AH</title>
+  <link rel="shortcut icon" type="image/jpg" href="https://media.githubusercontent.com/media/achuie/achuie.github.io/master/images/columns.jpg"/>
+  <link rel="stylesheet" type="text/css" media="all" href="style.css"/>
+</head>
 ◊(->html (if (findf-txexpr doc is-display-image?) `(body ,doc) body-with-nav) #:splice? #t)
 </html>
