@@ -45,6 +45,18 @@ body {
     font-feature-settings: "smcp";
 }
 
+.back-button-cell {
+    display: table-cell;
+    width: 35%;
+    vertical-align: top;
+}
+
+.back-button {
+    font-family: "Fira Mono", sans-serif;
+    font-size: ◊(* body-em-size 3)em;
+    vertical-align: top;
+}
+
 a.navlink:link, a.navlink:visited {
     text-decoration: none;
     position: relative;
