@@ -1,23 +1,22 @@
 ◊(require txexpr)
 
 ◊(define body-with-nav
-  ◊body{
-    ◊div[#:class "content"]{
-      ◊div[#:class "navbar-cell"]{
-        ◊div[#:class "navbar"]{
-          ◊img[#:style "width: 5vmax; vertical-align: middle;"
-               #:src "https://media.githubusercontent.com/media/achuie/achuie.github.io/master/images/columns.jpg"
-               #:alt "Icon"]{} ◊br{}
-          ◊nav-link["index.html"]{Home} ◊br{}
-          ◊nav-link["about.html"]{About} ◊br{}
-          ◊nav-link[
-            "https://raw.githubusercontent.com/achuie/resume/master/andrew_huie.pdf"]{Resume} ◊br{}
-          ◊nav-link["interests.html"]{Interests}
-        }
-      }
-      ◊div[#:class "main-cell"]{ ◊div[#:class "main"]{◊doc} }
-    }
-  })
+  '(body
+       (div ((class "content"))
+            (div ((class "navbar-cell"))
+              (div ((class "navbar"))
+                (img ((style "width: 5vmax; vertical-align: middle;")
+                       (src "https://media.githubusercontent.com/media/achuie/achuie.github.io/master/images/columns.jpg")
+                       (alt "Icon"))) (br)
+                (nav-link "index.html" "Home") (br)
+                (nav-link "about.html" "About") (br)
+                (nav-link "https://raw.githubusercontent.com/achuie/resume/master/andrew_huie.pdf" "Resume") (br)
+                (nav-link "interests.html" "Interests")
+                )
+              )
+            (div ((class "main-cell")) (div ((class "main")) doc))
+            )
+       ))
 ◊(define is-display-image? (λ (x) (and (and (txexpr? x) (eq? 'img (get-tag x)))
                                        (member '(id "fillIn") (get-attrs x)))))
 
