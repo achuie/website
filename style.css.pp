@@ -27,16 +27,16 @@ body {
     min-height: 100%;
     display: table;
     width: 80%;
-    margin-left: 0;
+    margin-left: 10%;
     margin-right: auto;
 }
 
 .navbar-cell {
     display: table-cell;
-    width: 35%;
+    width: 15%;
 }
 
-.navbar, .back-button {
+.navbar, .backbutton {
     padding: 0.5em;
     line-height: ◊(+ leading 0.1)em;
 }
@@ -44,14 +44,20 @@ body {
 .navbar {
     font-family: "Besley", serif;
     font-size: ◊(+ body-em-size 0.3)em;
-    text-align: right;
+    text-align: end;
     font-feature-settings: "smcp";
 }
 
-.back-button {
+.backbutton {
+    padding-top: 2em;
+}
+
+a.backbutton-link {
     font-family: "Fira Mono", sans-serif;
-    font-size: ◊(* body-em-size 2)em;
-    text-align: center;
+    font-size: ◊(* body-em-size 3)em;
+    text-align: start;
+    color: black;
+    text-decoration: none;
 }
 
 a.navlink:link, a.navlink:visited {
@@ -96,7 +102,7 @@ a.bodylink:hover, a.bodylink:active {
 
 .main-cell {
     display: table-cell;
-    width: 65%;
+    width: 85%;
 }
 
 .main {
@@ -105,7 +111,7 @@ a.bodylink:hover, a.bodylink:active {
 
 .textwrap {
     float: right;
-    margin: 0.5em;
+    margin: 1.5em;
 }
 
 h1,h2,h3,h4,h5,h6 {

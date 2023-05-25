@@ -3,7 +3,7 @@
 ◊(define is-display-image? (λ (x) (and (and (txexpr? x) (eq? 'img (get-tag x)))
                                        (member '(id "fillIn") (get-attrs x)))))
 ◊(define navbar
-   ◊div[#:class "navbar"]{
+  ◊div[#:class "navbar"]{
     ◊img[#:style "width: 5vmax; vertical-align: middle;"
          #:src "https://media.githubusercontent.com/media/achuie/achuie.github.io/master/images/columns.jpg"
          #:alt "Icon"]{} ◊br{}
@@ -14,7 +14,7 @@
     ◊nav-link["interests.html"]{Interests}
   })
 ◊(define back-button
-  ◊div[#:class "back-button"]{◊a[#:class "back-button" #:href "photography.html"]{←}})
+  ◊div[#:class "backbutton"]{◊a[#:class "backbutton-link" #:href "photography.html"]{←}})
 ◊(define body-with-nav
   ◊body{
     ◊div[#:class "content"]{

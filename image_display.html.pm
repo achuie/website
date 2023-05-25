@@ -1,6 +1,11 @@
 #lang pollen
 
-◊img[#:id "fillIn" #:style "width: 100%; height: 100%; vertical-align: top;"
+◊img[#:id "fillIn"
+     #:style "width: auto;
+              max-width: 60vw;
+              height: auto;
+              max-height: 85vh;
+              vertical-align: top;"
      #:src ""
      #:alt ""]{}
 
