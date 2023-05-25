@@ -9,7 +9,7 @@
   (require pollen/setup)
 
   (provide (all-defined-out))
-  (define block-tags (append '(img) default-block-tags)))
+  (define block-tags (append '(img script) default-block-tags)))
 
 (provide (all-defined-out))
 
@@ -20,9 +20,7 @@
 ;; Find photos and generate image tags for each.
 (define list-photos
   (map (λ (path)
-          `(a ((href ,(path->string (build-path
-                                      "https://media.githubusercontent.com/media/achuie/achuie.github.io/master/images/portfolio"
-                                      path))))
+          `(a ((href ,(string-append "image_display.html?Viewing_Image=" (path-element->string path))))
               (img ((src ,(path->string (build-path
                                           "https://media.githubusercontent.com/media/achuie/achuie.github.io/master/images/thumbnails"
                                           path)))
