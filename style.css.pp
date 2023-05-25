@@ -36,19 +36,22 @@ body {
     width: 35%;
 }
 
-.navbar {
+.navbar, .back-button {
     padding: 0.5em;
+    line-height: ◊(+ leading 0.1)em;
+}
+
+.navbar {
     font-family: "Besley", serif;
     font-size: ◊(+ body-em-size 0.3)em;
-    line-height: ◊(+ leading 0.1)em;
     text-align: right;
     font-feature-settings: "smcp";
 }
 
 .back-button {
     font-family: "Fira Mono", sans-serif;
-    font-size: ◊(* body-em-size 3)em;
-    text-alight: center;
+    font-size: ◊(* body-em-size 2)em;
+    text-align: center;
 }
 
 a.navlink:link, a.navlink:visited {

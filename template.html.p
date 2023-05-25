@@ -14,14 +14,14 @@
     ◊nav-link["interests.html"]{Interests}
   })
 ◊(define back-button
-  ◊div[#:class "navbar"]{◊a[#:class "back-button" #:href "photography.html"]{←}})
+  ◊div[#:class "back-button"]{◊a[#:class "back-button" #:href "photography.html"]{←}})
 ◊(define body-with-nav
   ◊body{
     ◊div[#:class "content"]{
       ◊div[#:class "navbar-cell"]{
         ◊(if (findf-txexpr doc is-display-image?)
-            back-button
-            navbar)
+             back-button
+             navbar)
       }
       ◊div[#:class "main-cell"]{ ◊div[#:class "main"]{◊doc} }
     }
