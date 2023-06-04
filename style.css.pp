@@ -1,6 +1,6 @@
 #lang pollen
 
-◊(define body-em-size 0.9)
+◊(define body-em-size 1.0)
 ◊(define leading (+ body-em-size 0.5))
 ◊(define link-color "#0000ee")
 ◊(define link-gray "#e6e6e6")
@@ -19,8 +19,8 @@ html, body {
 body {
     font-size: ◊|body-em-size|em;
     line-height: ◊leading;
-    font-family: "Bodoni 6", serif;
-    font-weight: 400;
+    font-family: "Alegreya Sans", serif;
+    font-weight: normal;
 }
 
 .content {
@@ -37,20 +37,19 @@ body {
 }
 
 .my-navbar {
-    font-family: "Besley", serif;
+    font-family: "Alegreya Sans SC", sans-serif;
     font-size: ◊(+ body-em-size 0.3)em;
     text-align: end;
-    font-feature-settings: "smcp";
 }
 
 .backbutton {
     padding-top: 2em;
+    text-align: center;
 }
 
 a.backbutton-link {
     font-family: "Fira-Mono", sans-serif;
     font-size: ◊(* body-em-size 3)em;
-    text-align: start;
     color: black;
     text-decoration: none;
 }
@@ -68,7 +67,7 @@ a.navlink:hover, a.navlink:active {
 a.navlink::after {
     content: "";
     position: absolute;
-    bottom: 0.2em;
+    bottom: 0.0em;
     left: 0;
     width: 0%;
     border-bottom: 1px solid;
@@ -96,7 +95,7 @@ a.bodylink:hover, a.bodylink:active {
 }
 
 .main {
-    padding: 0.5em;
+    padding-top: 2.0em;
     display: block flex;
 }
 
@@ -112,11 +111,11 @@ h1,h2,h3,h4,h5,h6 {
 
 h1 {
     border-top: 1px solid;
-    font-size: ◊(+ body-em-size 0.3)em;
+    font-size: ◊(+ body-em-size 0.2)em;
 }
 
 h2 {
-    font-size: ◊(+ body-em-size 0.2)em;
+    font-size: ◊(+ body-em-size 0.1)em;
 }
 
 h3,h4,h5,h6 {

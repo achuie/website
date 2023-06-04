@@ -50,6 +50,8 @@
   (define processed-elems
     (decode-elements elements
                      #:txexpr-elements-proc smart-paragraphs))
-  (list* 'div '((id "doc"))
+  ;; Bulma.css requires class container inside a column to render elements full-width instead of
+  ;; auto-shrinking to fit.
+  (list* 'div '((id "doc") (class "container"))
          (decode-elements processed-elems
                           #:string-proc smart-and-trim)))

@@ -2,10 +2,13 @@
 
 ◊img[#:id "fillIn"
      #:style "width: auto;
-              max-width: 60vw;
+              max-width: 100%;
               height: auto;
               max-height: 85vh;
-              vertical-align: top;"
+              vertical-align: top;
+              display: block;
+              margin-left: auto;
+              margin-right: auto;"
      #:src ""
      #:alt ""]{}
 

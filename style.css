@@ -10,10 +10,10 @@ html, body {
 }
 
 body {
-    font-size: 0.9em;
-    line-height: 1.4;
-    font-family: "Bodoni 6", serif;
-    font-weight: 400;
+    font-size: 1.0em;
+    line-height: 1.5;
+    font-family: "Alegreya Sans", serif;
+    font-weight: normal;
 }
 
 .content {
@@ -26,24 +26,23 @@ body {
 
 .my-navbar, .backbutton {
     padding: 0.5em;
-    line-height: 1.5em;
+    line-height: 1.6em;
 }
 
 .my-navbar {
-    font-family: "Besley", serif;
-    font-size: 1.2em;
+    font-family: "Alegreya Sans SC", sans-serif;
+    font-size: 1.3em;
     text-align: end;
-    font-feature-settings: "smcp";
 }
 
 .backbutton {
     padding-top: 2em;
+    text-align: center;
 }
 
 a.backbutton-link {
     font-family: "Fira-Mono", sans-serif;
-    font-size: 2.7em;
-    text-align: start;
+    font-size: 3.0em;
     color: black;
     text-decoration: none;
 }
@@ -61,7 +60,7 @@ a.navlink:hover, a.navlink:active {
 a.navlink::after {
     content: "";
     position: absolute;
-    bottom: 0.2em;
+    bottom: 0.0em;
     left: 0;
     width: 0%;
     border-bottom: 1px solid;
@@ -89,7 +88,7 @@ a.bodylink:hover, a.bodylink:active {
 }
 
 .main {
-    padding: 0.5em;
+    padding-top: 2.0em;
     display: block flex;
 }
 
@@ -113,7 +112,7 @@ h2 {
 }
 
 h3,h4,h5,h6 {
-    font-size: 0.9em;
+    font-size: 1.0em;
 }
 
 p {
