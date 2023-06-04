@@ -3,7 +3,7 @@
 ◊(define is-display-image? (λ (x) (and (and (txexpr? x) (eq? 'img (get-tag x)))
                                        (member '(id "fillIn") (get-attrs x)))))
 ◊(define navbar
-  ◊div[#:class "navbar"]{
+  ◊div[#:class "my-navbar"]{
     ◊img[#:style "width: 5vmax; vertical-align: middle;"
          #:src "https://media.githubusercontent.com/media/achuie/achuie.github.io/master/images/columns.jpg"
          #:alt "Icon"]{} ◊br{}
@@ -17,13 +17,13 @@
   ◊div[#:class "backbutton"]{◊a[#:class "backbutton-link" #:href "photography.html"]{←}})
 ◊(define body-with-nav
   ◊body{
-    ◊div[#:class "content"]{
-      ◊div[#:class "navbar-cell"]{
+    ◊div[#:class "content columns"]{
+      ◊div[#:class "column is-one-fifth"]{
         ◊(if (findf-txexpr doc is-display-image?)
              back-button
              navbar)
       }
-      ◊div[#:class "main-cell"]{ ◊div[#:class "main"]{◊doc} }
+      ◊div[#:class "column"]{ ◊div[#:class "main"]{◊doc} }
     }
   })
 

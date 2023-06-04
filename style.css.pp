@@ -6,6 +6,7 @@
 ◊(define link-gray "#e6e6e6")
 
 @import url("./fonts.css");
+@import url("./bulma.min.css");
 
 html, body {
     height: 100%;
@@ -25,23 +26,17 @@ body {
 .content {
     height: 100%;
     min-height: 100%;
-    display: table;
     width: 80%;
-    margin-left: 10%;
+    margin-left: 0;
     margin-right: auto;
 }
 
-.navbar-cell {
-    display: table-cell;
-    width: 15%;
-}
-
-.navbar, .backbutton {
+.my-navbar, .backbutton {
     padding: 0.5em;
     line-height: ◊(+ leading 0.1)em;
 }
 
-.navbar {
+.my-navbar {
     font-family: "Besley", serif;
     font-size: ◊(+ body-em-size 0.3)em;
     text-align: end;
@@ -53,7 +48,7 @@ body {
 }
 
 a.backbutton-link {
-    font-family: "Fira Mono", sans-serif;
+    font-family: "Fira-Mono", sans-serif;
     font-size: ◊(* body-em-size 3)em;
     text-align: start;
     color: black;
@@ -100,13 +95,9 @@ a.bodylink:hover, a.bodylink:active {
     color: ◊|link-color|;
 }
 
-.main-cell {
-    display: table-cell;
-    width: 85%;
-}
-
 .main {
     padding: 0.5em;
+    display: block flex;
 }
 
 .textwrap {
