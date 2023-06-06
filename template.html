@@ -4,7 +4,7 @@
                                        (member '(id "fillIn") (get-attrs x)))))
 ◊(define navbar
   ◊div[#:class "my-navbar"]{
-    ◊img[#:style "width: 5vmax; vertical-align: middle;"
+    ◊img[#:style "width: 6vmax; vertical-align: middle;"
          #:src "https://media.githubusercontent.com/media/achuie/achuie.github.io/master/images/columns.jpg"
          #:alt "Icon"]{} ◊br{}
     ◊nav-link["index.html"]{Home} ◊br{}
@@ -18,7 +18,7 @@
 ◊(define body-with-nav
   ◊body{
     ◊div[#:class "content columns"]{
-      ◊div[#:class "column is-one-fifth"]{
+      ◊div[#:class "column is-one-quarter"]{
         ◊(if (findf-txexpr doc is-display-image?)
              back-button
              navbar)

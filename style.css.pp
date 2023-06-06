@@ -1,12 +1,14 @@
 #lang pollen
 
-◊(define body-em-size 1.0)
+◊(define body-em-size 0.7)
 ◊(define leading (+ body-em-size 0.5))
-◊(define link-color "#0000ee")
-◊(define link-gray "#e6e6e6")
+◊(define link-color "#0077aa")
+◊(define linkactive-color "#00a1e6")
 
 @import url("./fonts.css");
 @import url("./bulma.min.css");
+
+html { font-size: 2.4vw; }
 
 html, body {
     height: 100%;
@@ -17,10 +19,11 @@ html, body {
 }
 
 body {
-    font-size: ◊|body-em-size|em;
+    font-size: ◊|body-em-size|rem;
     line-height: ◊leading;
     font-family: "Alegreya Sans", serif;
     font-weight: normal;
+    color: black;
 }
 
 .content {
@@ -31,25 +34,33 @@ body {
     margin-right: auto;
 }
 
+@media screen and (max-width: 769px) {
+    .content {
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
 .my-navbar, .backbutton {
-    padding: 0.5em;
-    line-height: ◊(+ leading 0.1)em;
+    padding: 0.5rem;
+    line-height: ◊(+ leading 0.1)rem;
 }
 
 .my-navbar {
     font-family: "Alegreya Sans SC", sans-serif;
-    font-size: ◊(+ body-em-size 0.3)em;
+    font-size: ◊(+ body-em-size 0.2)rem;
     text-align: end;
 }
 
 .backbutton {
-    padding-top: 2em;
+    padding-top: 2rem;
     text-align: center;
 }
 
 a.backbutton-link {
     font-family: "Fira-Mono", sans-serif;
-    font-size: ◊(* body-em-size 3)em;
+    font-size: ◊(* body-em-size 3)rem;
     color: black;
     text-decoration: none;
 }
@@ -67,7 +78,7 @@ a.navlink:hover, a.navlink:active {
 a.navlink::after {
     content: "";
     position: absolute;
-    bottom: 0.0em;
+    bottom: 0.0rem;
     left: 0;
     width: 0%;
     border-bottom: 1px solid;
@@ -79,51 +90,45 @@ a.navlink:hover::after {
 }
 
 a.bodylink:link, a.bodylink:visited {
-    text-decoration: underline 8px solid ◊|link-gray|;
-    text-decoration-skip-ink: none;
-    text-underline-offset: -4px;
-    transition: 0.1s;
-    color: black;
+    color: ◊|link-color|;
+    text-decoration: underline solid transparent;
+    transition: 0.1s ease-in;
 }
 
 a.bodylink:hover, a.bodylink:active {
-    text-decoration: underline 1px solid ◊|link-color|;
-    text-decoration-skip-ink: auto;
-    text-underline-offset: 2px;
-    transition: 0.1s;
-    color: ◊|link-color|;
+    color: ◊|linkactive-color|;
+    text-decoration: underline solid ◊|linkactive-color|;
 }
 
 .main {
-    padding-top: 2.0em;
+    padding-top: 2.0rem;
     display: block flex;
 }
 
 .textwrap {
     float: right;
-    margin: 1.5em;
+    margin: 1.5rem;
 }
 
 h1,h2,h3,h4,h5,h6 {
     margin: 0px;
-    font-weight: 600;
 }
 
 h1 {
     border-top: 1px solid;
-    font-size: ◊(+ body-em-size 0.2)em;
+    font-size: ◊(+ body-em-size 0.2)rem;
 }
 
 h2 {
-    font-size: ◊(+ body-em-size 0.1)em;
+    font-size: ◊(+ body-em-size 0.1)rem;
 }
 
 h3,h4,h5,h6 {
-    font-size: ◊|body-em-size|em;
+    font-size: ◊|body-em-size|rem;
 }
 
 p {
-    margin-top: 0.2em;
+    margin-top: 0.2rem;
 }
 
 .masonry-layout {
