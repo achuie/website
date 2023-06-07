@@ -17,6 +17,7 @@
   ◊div[#:class "backbutton"]{◊a[#:class "backbutton-link" #:href "photography.html"]{←}})
 ◊(define body-with-nav
   ◊body{
+    ◊;; Bulma class content.
     ◊div[#:class "content columns"]{
       ◊div[#:class "column is-one-quarter"]{
         ◊(if (findf-txexpr doc is-display-image?)

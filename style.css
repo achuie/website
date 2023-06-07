@@ -1,7 +1,9 @@
 @import url("./fonts.css");
 @import url("./bulma.min.css");
 
-html { font-size: 2.4vw; }
+html {
+    font-size: 2.4vw;
+}
 
 html, body {
     height: 100%;
@@ -94,7 +96,7 @@ a.bodylink:hover, a.bodylink:active {
 }
 
 .main {
-    padding-top: 2.0rem;
+    padding-top: 1.3rem;
     display: block flex;
 }
 
@@ -103,20 +105,22 @@ a.bodylink:hover, a.bodylink:active {
     margin: 1.5rem;
 }
 
-h1,h2,h3,h4,h5,h6 {
-    margin: 0px;
+.content h1, .content h2, .content h3, .content h4, .content h5, .content h6 {
+    margin-bottom: 0px;
+    color: black;
 }
 
-h1 {
+.content h1 {
     border-top: 1px solid;
+    padding-top: 5px;
     font-size: 0.8999999999999999rem;
 }
 
-h2 {
+.content h2 {
     font-size: 0.7999999999999999rem;
 }
 
-h3,h4,h5,h6 {
+.content h3, .content h4, .content h5, .content h6 {
     font-size: 0.7rem;
 }
 

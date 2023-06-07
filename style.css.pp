@@ -8,7 +8,9 @@
 @import url("./fonts.css");
 @import url("./bulma.min.css");
 
-html { font-size: 2.4vw; }
+html {
+    font-size: 2.4vw;
+}
 
 html, body {
     height: 100%;
@@ -101,7 +103,7 @@ a.bodylink:hover, a.bodylink:active {
 }
 
 .main {
-    padding-top: 2.0rem;
+    padding-top: 1.3rem;
     display: block flex;
 }
 
@@ -110,20 +112,23 @@ a.bodylink:hover, a.bodylink:active {
     margin: 1.5rem;
 }
 
-h1,h2,h3,h4,h5,h6 {
-    margin: 0px;
+◊;; Bulma content classes.
+.content h1, .content h2, .content h3, .content h4, .content h5, .content h6 {
+    margin-bottom: 0px;
+    color: black;
 }
 
-h1 {
+.content h1 {
     border-top: 1px solid;
+    padding-top: 5px;
     font-size: ◊(+ body-em-size 0.2)rem;
 }
 
-h2 {
+.content h2 {
     font-size: ◊(+ body-em-size 0.1)rem;
 }
 
-h3,h4,h5,h6 {
+.content h3, .content h4, .content h5, .content h6 {
     font-size: ◊|body-em-size|rem;
 }
 
