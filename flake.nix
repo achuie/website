@@ -28,9 +28,9 @@
                 fi
               done
               for thumbnail in $(ls ./images/thumbnails); do
-                if [ ! -f ./images/portfolio/$pic ]; then
-                  echo "  Removing thumbnail $pic"
-                  rm ./images/thumbnails/$pic
+                if [ ! -f ./images/portfolio/$thumbnail ]; then
+                  echo "  Removing thumbnail for $thumbnail"
+                  rm ./images/thumbnails/$thumbnail
                 fi
               done
             ''}/bin/manageThumbnails.sh";
