@@ -9,14 +9,12 @@
 
   outputs = { self, nixpkgs, dream2nix }:
     let
-      supportedSystems = [ "x86_64-linux" ];
-      forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
-      nixpkgsFor = forAllSystems (system: import nixpkgs { inherit system; });
+      forAllSystems = f: nixpkgs.lib.genAttrs [ "x86_64-linux" ] (system:
+        f (import nixpkgs { inherit system; })
+      );
     in
     {
-      apps = forAllSystems (system:
-        let pkgs = nixpkgsFor.${system};
-        in
+      apps = forAllSystems (pkgs:
         {
           thumbnails = {
             type = "app";
@@ -38,7 +36,7 @@
             ''}/bin/manageThumbnails.sh";
           };
         });
-      devShells = forAllSystems (system:
+      devShells = forAllSystems (pkgs:
         let
           dependencies = (dream2nix.lib.makeFlakeOutputs {
             systems = [ "x86_64-linux" ];
@@ -51,14 +49,14 @@
                 translator = "racket-impure";
               };
             };
-          }).packages.${system};
+          }).packages.${pkgs.system};
         in
         {
-          default = nixpkgsFor.${system}.mkShell {
+          default = pkgs.mkShell {
             packages = [ dependencies.site ];
           };
         });
 
-      formatter = forAllSystems (system: nixpkgsFor.${system}.nixpkgs-fmt);
+      formatter = forAllSystems (pkgs: pkgs.nixpkgs-fmt);
     };
 }
