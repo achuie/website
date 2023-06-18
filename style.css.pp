@@ -4,17 +4,26 @@
 ◊(define leading (+ body-em-size 0.5))
 ◊(define link-color "#0077aa")
 ◊(define linkactive-color "#00a1e6")
+◊(define mobile-width-px "769px")
 
-@import url("./fonts.css");
-@import url("./bulma.min.css");
+@import url("css/fonts.css");
+@import url("css/bulma.min.css");
 
 html {
-    font-size: 2.4vw;
+    font-size: 1.8em;
+    -moz-text-size-adjust: auto;
+    -webkit-text-size-adjust: auto;
+}
+
+@media screen and (max-width: ◊|mobile-width-px|) {
+    html {
+        font-size: 4vw;
+    }
 }
 
 html, body {
-    height: 100%;
     min-height: 100%;
+    height: 100%;
     margin: 0;
     padding: 0;
     overflow: auto;
@@ -28,15 +37,21 @@ body {
     color: black;
 }
 
+.wrapper {
+    min-height: 100%;
+    display: grid;
+    grid-template-rows: 1fr auto;
+}
+
 .content {
     height: 100%;
     min-height: 100%;
-    width: 80%;
-    margin-left: 0;
+    width: 90%;
+    margin-left: auto;
     margin-right: auto;
 }
 
-@media screen and (max-width: 769px) {
+@media screen and (max-width: ◊|mobile-width-px|) {
     .content {
         width: 90%;
         margin-left: auto;
@@ -44,8 +59,13 @@ body {
     }
 }
 
-.my-navbar, .backbutton {
+◊; Bulma column padding default is 0.75rem.
+.column {
     padding: 0.5rem;
+}
+
+.my-navbar, .backbutton {
+    padding-top: 1rem;
     line-height: ◊(+ leading 0.1)rem;
 }
 
@@ -55,8 +75,14 @@ body {
     text-align: end;
 }
 
+@media screen and (max-width: ◊|mobile-width-px|) {
+    .my-navbar {
+        text-align: start;
+    }
+}
+
 .backbutton {
-    padding-top: 2rem;
+    padding-top: 1.5rem;
     text-align: center;
 }
 
@@ -103,8 +129,19 @@ a.bodylink:hover, a.bodylink:active {
 }
 
 .main {
-    padding-top: 1.3rem;
+    padding-top: 2rem;
+    margin-right: 7rem;
     display: block flex;
+}
+
+@media screen and (max-width: ◊|mobile-width-px|) {
+    .main {
+        margin-right: auto;
+    }
+}
+
+.footer {
+    text-align: center;
 }
 
 .textwrap {
