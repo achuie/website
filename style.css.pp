@@ -149,7 +149,7 @@ a.bodylink:hover, a.bodylink:active {
     margin: 1.5rem;
 }
 
-◊;; Bulma content classes.
+◊; Bulma content classes.
 .content h1, .content h2, .content h3, .content h4, .content h5, .content h6 {
     margin-bottom: 0px;
     color: black;

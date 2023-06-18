@@ -16,7 +16,7 @@
 ◊(define body-with-nav
   ◊body{
     ◊div[#:class "wrapper"]{
-      ◊;; Bulma class content.
+      ◊; Bulma class content.
       ◊div[#:class "content columns"]{
         ◊div[#:class "column is-one-fifth"]{
           ◊(if (findf-txexpr doc is-display-image?)
