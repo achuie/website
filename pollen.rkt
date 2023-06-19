@@ -8,8 +8,11 @@
 (module setup racket/base
   (require pollen/setup)
 
+  (provide current-project-root)
   (provide (all-defined-out))
   (define block-tags (append '(img script) default-block-tags)))
+
+(require 'setup)
 
 (provide (all-defined-out))
 
@@ -17,7 +20,7 @@
 
 (define (body-link url text) `(a ((class "bodylink") (href ,url)) ,text))
 
-;; body-link styling with an "external link" symbol svg.
+;; Body-link styling with an "external link" symbol svg.
 (define (body-link-external url text)
   `(a ((class "bodylink")
        (href ,url)
@@ -36,7 +39,7 @@
                     (width "100%")
                     (class "masonry-img")))))
        (directory-list
-         (build-path (current-directory) "images"
+         (build-path (current-project-root) "images"
                      "thumbnails"))))
 
 ;; Only convert a newline to a linebreak if the preceding line ends with "\\".

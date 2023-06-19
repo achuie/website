@@ -6,8 +6,8 @@
 ◊(define linkactive-color "#00a1e6")
 ◊(define mobile-width-px "769px")
 
-@import url("css/fonts.css");
-@import url("css/bulma.min.css");
+@import url("fonts.css");
+@import url("bulma.min.css");
 
 html {
     font-size: 1.8em;
