@@ -12,4 +12,4 @@
      #:src ""
      #:alt ""]{}
 
-◊script[#:type "text/javascript" #:src "fill_image.js"]{}
+◊script[#:type "text/javascript" #:src "../js/fill_image.js"]{}

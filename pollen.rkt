@@ -8,8 +8,11 @@
 (module setup racket/base
   (require pollen/setup)
 
+  (provide current-project-root)
   (provide (all-defined-out))
   (define block-tags (append '(img script) default-block-tags)))
+
+(require 'setup)
 
 (provide (all-defined-out))
 
@@ -17,9 +20,14 @@
 
 (define (body-link url text) `(a ((class "bodylink") (href ,url)) ,text))
 
-;; body-link styling with an "external link" symbol svg.
-;; viewBox: 0--16 square
-(define (body-link-external url text) `(a ((class "bodylink") (href ,url)) ,text (svg ((xmlns "http://www.w3.org/2000/svg") (viewBox "-3 0 19 18") (width "0.4rem") (height "0.4rem") (fill "currentColor"))(path ((fill-rule "evenodd") (d "M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"))) (path ((fill-rule "evenodd") (d "M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"))))))
+;; Body-link styling with an "external link" symbol svg.
+(define (body-link-external url text)
+  `(a ((class "bodylink")
+       (href ,url)
+       (style "white-space: pre"))
+      ,text
+      ; viewBox: 0--16 square
+      (svg ((xmlns "http://www.w3.org/2000/svg") (viewBox "-3 0 19 18") (width "0.4rem") (height "0.4rem") (fill "currentColor"))(path ((fill-rule "evenodd") (d "M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"))) (path ((fill-rule "evenodd") (d "M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"))))))
 
 ;; Find photos and generate image tags for each.
 (define list-photos
@@ -31,7 +39,7 @@
                     (width "100%")
                     (class "masonry-img")))))
        (directory-list
-         (build-path (current-directory) "images"
+         (build-path (current-project-root) "images"
                      "thumbnails"))))
 
 ;; Only convert a newline to a linebreak if the preceding line ends with "\\".
@@ -54,8 +62,8 @@
   (define processed-elems
     (decode-elements elements
                      #:txexpr-elements-proc smart-paragraphs))
-  ;; Bulma.css requires class container inside a column to render elements full-width instead of
-  ;; auto-shrinking to fit.
+  ; Bulma.css requires class container inside a column to render elements full-width instead of
+  ; auto-shrinking to fit.
   (list* 'div '((id "doc") (class "container"))
          (decode-elements processed-elems
                           #:string-proc smart-and-trim)))

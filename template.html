@@ -17,14 +17,21 @@
   ◊div[#:class "backbutton"]{◊a[#:class "backbutton-link" #:href "photography.html"]{←}})
 ◊(define body-with-nav
   ◊body{
-    ◊;; Bulma class content.
-    ◊div[#:class "content columns"]{
-      ◊div[#:class "column is-one-quarter"]{
-        ◊(if (findf-txexpr doc is-display-image?)
-             back-button
-             navbar)
+    ◊div[#:class "wrapper"]{
+      ◊;; Bulma class content.
+      ◊div[#:class "content columns"]{
+        ◊div[#:class "column is-one-quarter"]{
+          ◊(if (findf-txexpr doc is-display-image?)
+               back-button
+               navbar)
+        }
+        ◊div[#:class "column"]{
+          ◊div[#:class "main"]{◊doc}
+        }
       }
-      ◊div[#:class "column"]{ ◊div[#:class "main"]{◊doc} }
+      ◊footer[#:class "footer"]{
+        ◊div[#:class "content has-text-centered"]{Hello}
+      }
     }
   })
 
