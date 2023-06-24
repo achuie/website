@@ -10,8 +10,7 @@
   outputs = { self, nixpkgs, dream2nix }:
     let
       forAllSystems = f: nixpkgs.lib.genAttrs [ "x86_64-linux" ] (system:
-        f (import nixpkgs { inherit system; })
-      );
+        f nixpkgs.legacyPackages.${system});
     in
     {
       apps = forAllSystems (pkgs:
