@@ -1,7 +1,7 @@
 ◊(require txexpr)
 
 ◊;; Deal with subdirectories.
-◊(define path-prefix (if (string-contains (symbol->string here) "/") "../" ""))
+◊(define path-prefix (if (string-contains? (symbol->string here) "/") "../" ""))
 ◊;; Determine whether current page is the image display page.
 ◊(define is-display-image? (λ (x) (and (and (txexpr? x) (eq? 'img (get-tag x)))
                                        (member '(id "fillIn") (get-attrs x)))))
