@@ -4,8 +4,7 @@
 ◊(define (one-half-panel-content idx)
   `(div ((class "masonry-panel__content"))
         ,@(for/list
-            ; Reverse chronological order.
-            ([i (in-range (- (- (length photos) 1) idx) -1 -2)])
+            ([i (in-range idx (length photos) 2)])
             (list-ref photos i))))
 
 ◊h1{Photography}

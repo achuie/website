@@ -52,7 +52,7 @@
         in
         {
           default = pkgs.mkShell {
-            packages = [ dependencies.site ];
+            packages = [ dependencies.site pkgs.exif ];
           };
         });
 

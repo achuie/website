@@ -1,6 +1,9 @@
 #lang racket/base
 
 (require racket/string
+         racket/system
+         racket/port
+         racket/list
          pollen/decode 
          pollen/unstable/typography
          txexpr)
@@ -29,6 +32,19 @@
       ; viewBox: 0--16 square
       (svg ((xmlns "http://www.w3.org/2000/svg") (viewBox "-3 0 19 18") (width "0.4rem") (height "0.4rem") (fill "currentColor"))(path ((fill-rule "evenodd") (d "M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"))) (path ((fill-rule "evenodd") (d "M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"))))))
 
+;;
+(define get-photo-datestring
+  (λ (photo-path)
+    (define exif-out (with-output-to-string
+                       (λ () (system (format "exif -t DateTimeOriginal ~a" photo-path)))))
+    (define grep-out (with-output-to-string
+                       (λ () (with-input-from-string exif-out (λ () (system "grep Value"))))))
+    (define sed-out (with-output-to-string
+                      (λ () (with-input-from-string exif-out
+                                                    (λ () (system "sed 's/[a-zA-Z: ]*//g'"))))))
+
+    (last (string-split sed-out "\n"))))
+
 ;; Find photos and generate image tags for each.
 (define list-photos
   (map (λ (path)
@@ -38,9 +54,13 @@
                                           path)))
                     (width "100%")
                     (class "masonry-img")))))
-       (directory-list
-         (build-path (current-project-root) "images"
-                     "thumbnails"))))
+       ; Sort in reverse-chronological order.
+       (sort (directory-list (build-path (current-project-root) "images" "thumbnails"))
+             string>?
+             #:key (λ (pic) (get-photo-datestring (build-path (current-project-root)
+                                                              "images"
+                                                              "portfolio"
+                                                              pic))))))
 
 ;; Only convert a newline to a linebreak if the preceding line ends with "\\".
 (define (latex-linebreaker prev next)
