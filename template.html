@@ -11,7 +11,7 @@
          #:src "https://media.githubusercontent.com/media/achuie/achuie.github.io/master/images/columns.jpg"
          #:alt "Icon"]{} ◊br{}
     ◊nav-link[(string-append path-prefix "index.html")]{home} ◊br{}
-    ◊nav-link[(string-append path-prefix "pages/about.html")]{about} ◊br{}
+    ◊nav-link[(string-append path-prefix "pages/transient-comprehension.html")]{"blog"} ◊br{}
     ◊nav-link[(string-append path-prefix "pages/interests.html")]{interests}})
 ◊(define back-button
   ◊div[#:class "backbutton"]{◊a[#:class "backbutton-link"
@@ -28,11 +28,13 @@
         ◊div[#:class "column"]{◊div[#:class "main"]{◊doc}}}
       ◊footer[#:class "footer"]{
         ◊div[#:class "content"]{
-          ◊body-link-external["https://github.com/achuie"]{GitHub}
-          ◊body-link-external["https://www.instagram.com/achooie42"]{Instagram} ◊br{}
+          ◊span[#:class "footer-separator"]{‒‒‒} ◊br{} ◊br{}
+          ◊body-link["https://github.com/achuie"]{GitHub}
+          ◊body-link["https://www.instagram.com/achooie42"]{Instagram}
+          ◊body-link[(string-append path-prefix "pages/about.html")]{About} ◊br{}
           Made with
-          ◊body-link-external["https://git.matthewbutterick.com/mbutterick/pollen"]{Pollen} and
-          ◊body-link-external["https://bulma.io"]{Bulma}}}}})
+          ◊body-link["https://git.matthewbutterick.com/mbutterick/pollen"]{Pollen} and
+          ◊body-link["https://bulma.io"]{Bulma}}}}})
 
 <html lang="en">
 <head>

@@ -132,7 +132,16 @@ a.bodylink:hover, a.bodylink:active {
 }
 
 .footer {
+    font-size: 0.49999999999999994rem;
     text-align: center;
+    padding-top: 2rem;
+    padding-bottom: 4rem;
+}
+
+.footer-separator {
+    font-family: "Fira-Mono", sans-serif;
+    font-size: 1.2rem;
+    color: #992600;
 }
 
 .textwrap {

@@ -12,13 +12,13 @@ All about me, for those interested.
 
 I graduated from Rice University with a BA in Computer Science in 2016. I was
 in Sid Richardson college, the best college. \\
-◊body-link-external["https://sidrich.rice.edu/about"]{◊em{Mors de Super.}}
+◊body-link["https://sidrich.rice.edu/about"]{◊em{Mors de Super.}}
 
 ◊h2{Work}
 
 I am a software engineer experienced in program design for research application software and test
 development. I am currently at Mujin in Tokyo, Japan, where we try to make robotic systems smart.
-◊body-link-external["https://raw.githubusercontent.com/achuie/resume/master/andrew_huie.pdf"]{
+◊body-link["https://raw.githubusercontent.com/achuie/resume/master/andrew_huie.pdf"]{
   Read my resume}
 
 ◊h2{Fun}
