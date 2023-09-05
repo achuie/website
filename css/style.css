@@ -187,6 +187,7 @@ p {
 
 .masonry-panel__content {
     padding: 0.4vmax;
+    display: inline-grid;
 }
 
 .masonry-img {
