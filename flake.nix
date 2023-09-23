@@ -22,7 +22,7 @@
                 if [ -f ./images/thumbnails/$pic ]; then
                   echo "  Found thumbnail for $pic"
                 else
-                  echo "  Generating thumbnail for $pic"
+                  echo "    Generating thumbnail for $pic"
                   ${pkgs.imagemagick}/bin/magick ./images/portfolio/$pic -resize 1000000@ ./images/thumbnails/$pic
                 fi
               done
