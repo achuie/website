@@ -12,11 +12,29 @@ that were different so I wanted to write down what I did for future reference.
 
 ◊h2{Installation Media}
 
-As always, we start by creating a bootable disk. Below is my normal go-to: ◊code-block{# dd bs=4M
-if=path/to/nixos-minimal-version-x86_64-linux.iso of=/dev/disk/by-id/usb-My_flash_drive conv=fsync oflag=direct
-status=progress}
+As always, we start by creating a bootable disk. Below is my normal go-to:
+
+◊code-block{
+# dd bs=4M if=path/to/nixos-minimal-version-x86_64-linux.iso of=/dev/disk/by-id/usb-My_flash_drive
+conv=fsync oflag=direct status=progress
+}
 
 ◊h2{Formatting the Drives}
+
+Boot from the disk we just created. Ethernet should already be set up, but wifi requires extra steps:
+
+◊code-block{
+# wpa_passphrase $SSID $PASSWORD >/etc/wpa_supplicant.conf \\
+# systemctl start wpa_supplicant
+}
+
+Identify your drives (◊code{fdisk -l}), and start with what will be the OS drive. Run ◊code{gdisk} on it, no partition
+numbers since we'll be using the whole drive.
+
+◊code-block{# gdisk /dev/$DISK}
+
+Instead of the normal ◊code{/boot} partition, we'll create a partition for just the EFI bootloaders mounted at
+◊code{/boot/efi}. That way we can keep the kernel images encrypted.
 
 
 ◊h6{---

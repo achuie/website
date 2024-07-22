@@ -38,14 +38,14 @@ body {
     color: black;
 }
 
+◊; For flexbox--pre interaction
 * {
     min-width: 0;
 }
 
 code {
     font-family: "Fira-Mono", monospace;
-    ◊; Color code from Bulma's pre tag.
-    color: #4a4a4a;
+    color: black;
     border-radius: ◊|border-radius|;
 }
 
@@ -194,6 +194,7 @@ a.bodylink:hover, a.bodylink:active {
     max-width: inherit;
     max-height: 5rem;
     overflow: scroll;
+    color: black;
     border-radius: ◊|border-radius|;
 }
 
