@@ -28,7 +28,7 @@
         ◊div[#:class "column"]{◊div[#:class "main"]{◊doc}}}
       ◊footer[#:class "footer"]{
         ◊div[#:class "content"]{
-          ◊span[#:class "footer-separator"]{‒‒‒} ◊br{} ◊br{}
+          ◊span[#:class "footer-separator"]{𝄽} ◊br{} ◊br{}
           ◊body-link["https://github.com/achuie"]{GitHub}
           ◊body-link["https://www.instagram.com/achooie42"]{Instagram}
           ◊body-link[(string-append path-prefix "pages/about.html")]{About} ◊br{}
