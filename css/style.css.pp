@@ -5,6 +5,7 @@
 ◊(define link-color "#0077aa")
 ◊(define linkactive-color "#00a1e6")
 ◊(define mobile-width-px "769px")
+◊(define border-radius "0.25rem")
 
 @import url("fonts.css");
 @import url("bulma.min.css");
@@ -35,6 +36,17 @@ body {
     font-family: "Alegreya Sans", serif;
     font-weight: normal;
     color: black;
+}
+
+* {
+    min-width: 0;
+}
+
+code {
+    font-family: "Fira-Mono", monospace;
+    ◊; Color code from Bulma's pre tag.
+    color: #4a4a4a;
+    border-radius: ◊|border-radius|;
 }
 
 .wrapper {
@@ -176,6 +188,13 @@ a.bodylink:hover, a.bodylink:active {
 
 .content h3, .content h4, .content h5, .content h6 {
     font-size: ◊|body-em-size|rem;
+}
+
+.content pre {
+    max-width: inherit;
+    max-height: 5rem;
+    overflow: scroll;
+    border-radius: ◊|border-radius|;
 }
 
 p {

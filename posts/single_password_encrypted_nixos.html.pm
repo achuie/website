@@ -2,19 +2,19 @@
 
 ◊h1{Single-Password Encrypted NixOS}
 
-I recently installed NixOS on my home workstation/server. I've only put ◊code{/home} on ZFS instead of going full root on ZFS,
-mainly because I didn't want to deal with swap on ZFS and the root SSD would have been the odd drive out in a ZFS mirror
-anyway, so I figured I might as well go with BTRFS+LUKS-on-LVM to try out all the new-to-me technologies at once. I found some ◊body-link["https://astrid.tech/2021/12/17/0/two-disk-encrypted-zfs/"]{pretty}
-◊body-link[
-    "https://blog.kolaente.de/2021/11/installing-nixos-with-encrypted-btrfs-root-device-and-home-manager-from-start-to-finish/"
-]{good}
-◊body-link["https://gist.github.com/ladinu/bfebdd90a5afd45dec811296016b2a3f"]{guides}, but there were some steps that
-were different so I wanted to write down what I
-did for future reference.
+I recently installed NixOS on my home workstation/server. I've only put ◊code{/home} on ZFS instead of going full root
+on ZFS, mainly because I didn't want to deal with swap on ZFS and the root SSD would have been the odd drive out in a
+ZFS mirror anyway, so I figured I might as well go with BTRFS+LUKS-on-LVM to try out all the new-to-me technologies at
+once. I found some ◊body-link["https://astrid.tech/2021/12/17/0/two-disk-encrypted-zfs/"]{pretty} ◊body-link[
+  "https://blog.kolaente.de/2021/11/installing-nixos-with-encrypted-btrfs-root-device-and-home-manager-from-start-to-finish/"
+]{good} ◊body-link["https://gist.github.com/ladinu/bfebdd90a5afd45dec811296016b2a3f"]{guides}, but there were some steps
+that were different so I wanted to write down what I did for future reference.
 
 ◊h2{Installation Media}
 
-◊code-block{# dd bs=4M if=path/to/nixos-minimal-version-x86_64-linux.iso of=/dev/disk/by-id/usb-My_flash_drive conv=fsync oflag=direct status=progress}
+As always, we start by creating a bootable disk. Below is my normal go-to: ◊code-block{# dd bs=4M
+if=path/to/nixos-minimal-version-x86_64-linux.iso of=/dev/disk/by-id/usb-My_flash_drive conv=fsync oflag=direct
+status=progress}
 
 ◊h2{Formatting the Drives}
 

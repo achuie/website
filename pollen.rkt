@@ -3,6 +3,7 @@
 (require racket/string
          pollen/decode 
          pollen/unstable/typography
+         pollen/tag
          txexpr)
 
 (module setup racket/base
@@ -19,6 +20,8 @@
 (define (nav-link url text) `(a ((class "navlink") (href ,url)) ,text))
 
 (define (body-link url text) `(a ((class "bodylink") (href ,url)) ,text))
+
+(define-tag-function (code-block attrs elems) `(pre ,attrs (code ,@elems)))
 
 ;; Only convert a newline to a linebreak if the preceding line ends with "\\".
 (define (latex-linebreaker prev next)

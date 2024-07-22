@@ -29,6 +29,16 @@ body {
     color: black;
 }
 
+* {
+    min-width: 0;
+}
+
+code {
+    font-family: "Fira-Mono", monospace;
+    color: #4a4a4a;
+    border-radius: 0.25rem;
+}
+
 .wrapper {
     min-height: 100%;
     display: grid;
@@ -166,6 +176,13 @@ a.bodylink:hover, a.bodylink:active {
 
 .content h3, .content h4, .content h5, .content h6 {
     font-size: 0.7rem;
+}
+
+.content pre {
+    max-width: inherit;
+    max-height: 5rem;
+    overflow: scroll;
+    border-radius: 0.25rem;
 }
 
 p {
