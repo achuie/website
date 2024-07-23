@@ -11,7 +11,7 @@
 
   (provide current-project-root)
   (provide (all-defined-out))
-  (define block-tags (append '(img script) default-block-tags)))
+  (define block-tags (append '(img script code-block) default-block-tags)))
 
 (require 'setup)
 

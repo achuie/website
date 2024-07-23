@@ -47,6 +47,7 @@ code {
     font-family: "Fira-Mono", monospace;
     color: black;
     border-radius: ◊|border-radius|;
+    padding: 0.1rem 0.2rem;
 }
 
 .wrapper {
@@ -161,7 +162,7 @@ a.bodylink:hover, a.bodylink:active {
 
 .footer-separator {
     font-family: "Fira-Mono", sans-serif;
-    font-size: ◊(+ body-em-size 0.5)rem;
+    font-size: ◊(+ body-em-size 0.1)rem;
     color: #992600;
 }
 
@@ -196,6 +197,7 @@ a.bodylink:hover, a.bodylink:active {
     overflow: scroll;
     color: black;
     border-radius: ◊|border-radius|;
+    padding: 0.5rem 0.75rem;
 }
 
 p {

@@ -33,8 +33,10 @@ numbers since we'll be using the whole drive.
 
 ◊code-block{# gdisk /dev/$DISK}
 
-Instead of the normal ◊code{/boot} partition, we'll create a partition for just the EFI bootloaders mounted at
-◊code{/boot/efi}. That way we can keep the kernel images encrypted.
+Instead of the normal ◊code{/boot} partition, we'll create a partition for just the EFI bootloader entries mounted at
+◊code{/boot/efi}. That way we can keep the kernel images encrypted. Create the ESP with size anywhere from 550Mb to 1Gb,
+and with type ◊code{ef00}. The ◊code{/root} partition can use the rest of the space on the drive and should be type
+◊code{8300}.
 
 
 ◊h6{---
