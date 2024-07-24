@@ -43,6 +43,14 @@ and with type ◊code{ef00}. The ◊code{/root} partition can use the rest of th
 
 NOTES}
 
+$ DISKS=$(ls /dev/disk/by-id/ata-TOSHIBA_MN06ACA10T_14K0A06* | grep -v 'part' | tr '\n' ' ')
+# zpool create -O encryption=on -O keyformat=raw -O keylocation=file:///mnt-root/etc/secrets/initrd/keyfile1.bin -O compression=zstd -O mountpoint=none -O xattr=sa -O acltype=posix -O atime=off -O secondarycache=none -o ashift=12 ztank mirror $DISKS -f
+# zfs create -o mountpoint=legacy ztank/home
+
+# mkdir volkeys
+# mv mnt-root/etc/secrets/initrd/keyfile1.bin volkeys/
+# zfs set keylocation=file:///volkeys/keyfile1.bin ztank
+
 https://discourse.nixos.org/t/systemd-boot-root-zfs-native-zfs-encryption-with-keylocation-file/26446
 - details boot stage 1 initrd secret files
 - zfs keylocation=file:// must be accessible during the stage when the system attempts to mount the pool
