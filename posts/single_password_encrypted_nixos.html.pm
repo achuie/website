@@ -67,7 +67,14 @@ First let's format the root drive with LUKS. The password we set here will be th
 }
 
 We need to use LUKS version 1 in order to work with GRUB. Also, we're using GRUB instead of systemd-boot because GRUB is
-able to work with an encrypted ◊code{/boot} (as long as ◊code{/boot/efi} is unencrypted).
+able to work with an encrypted ◊code{/boot} (as long as ◊code{/boot/efi} is unencrypted). Now, we set up LVM:
+
+◊code-block{
+# pvcreate /dev/mapper/root \\
+# vgcreate vg /dev/mapper/root \\
+# lvcreate -L 8G -n swap vg \\
+# lvcreate -l '100%FREE' -n root vg
+}
 
 
 ◊h6{---
