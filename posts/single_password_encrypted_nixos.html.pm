@@ -35,7 +35,7 @@ numbers since we'll be using the whole drive.
 
 Instead of the normal ◊code{/boot} partition, we'll create a partition for just the EFI bootloader entries mounted at
 ◊code{/boot/efi}. That way we can keep the kernel images encrypted. Create the ESP with size anywhere from ◊code{550Mb}
-to ◊code{1Gb}, and with type ◊code{ef00}. The ◊code{/root} partition can use the rest of the space on the drive and
+to ◊code{1Gb}, and with type ◊code{ef00}. The ◊code{/} partition can use the rest of the space on the drive and
 should be type ◊code{8300}.
 
 ◊h2{Generate the Volume Keys}
@@ -58,12 +58,14 @@ ZFS requires a thirty-two byte keyfile:
 
 ◊h2{Format the Drives}
 
-First let's format the root drive with LUKS. The password we set here will be the one needed at boot:
+◊h3{OS Drive}
+
+Let's set up the root partition. LUKS first; the password we set here will be the one needed at boot:
 
 ◊code-block{
-# cryptsetup luksFormat --type luks1 -c aes-xts-plain64 -s 256 -h sha512 /dev/$DISK \\
-# cryptsetup luksAddKey /dev/$DISK keyfile0.bin \\
-# cryptsetup luksOpen /dev/$DISK root --key-file keyfile0.bin
+# cryptsetup luksFormat --type luks1 -c aes-xts-plain64 -s 256 -h sha512 /dev/${DISK}2 \\
+# cryptsetup luksAddKey /dev/${DISK}2 keyfile0.bin \\
+# cryptsetup luksOpen /dev/${DISK}2 root --key-file keyfile0.bin
 }
 
 We need to use LUKS version 1 in order to work with GRUB. Also, we're using GRUB instead of systemd-boot because GRUB is
@@ -74,6 +76,37 @@ able to work with an encrypted ◊code{/boot} (as long as ◊code{/boot/efi} is 
 # vgcreate vg /dev/mapper/root \\
 # lvcreate -L 8G -n swap vg \\
 # lvcreate -l '100%FREE' -n root vg
+}
+
+Now we can format each logical volume. We'll start with swap, and activate it:
+
+◊code-block{
+# mkswap /dev/mapper/vg-swap \\
+# swapon /dev/mapper/vg-swap
+}
+
+Now the root volume:
+
+◊code-block{
+# mkfs.btrfs -L root /dev/mapper/vg-root
+}
+
+And the EFI partition:
+
+◊code-block{
+# mkfs.vfat -n boot /dev/${DISK}1
+}
+
+◊h3{Home Drive}
+
+First we need to identify our disks in a persistent way. We'll use ◊code{/dev/disk/by-id} for this, and store the IDs of
+the drives we want to use in our ZFS array for easy insertion into the zpool creation command. But since it maps
+partitions as well we need to filter a listing of the available drives. Starting with a bit of info about your drives,
+for instance I'm using two identical ten-terabyte Toshibas, we can make a spece-delimited list of their IDs with the
+following:
+
+◊code-block{
+$ DISKS=$(ls /dev/disk/by-id/ata-TOSHIBA_* | grep -v 'part' | tr '\n' ' ')
 }
 
 
