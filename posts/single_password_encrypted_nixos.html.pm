@@ -17,8 +17,7 @@ BTRFS+LVM-on-LUKS to try out all the new-to-me technologies at once.
 As always, we start by creating a bootable disk. Below is my normal go-to:
 
 ◊code-block{
-# dd bs=4M if=path/to/nixos-minimal-version-x86_64-linux.iso of=/dev/disk/by-id/usb-My_flash_drive
-conv=fsync oflag=direct status=progress
+# dd bs=4M if=path/to/nixos-minimal-version-x86_64-linux.iso of=/dev/disk/by-id/usb-My_flash_drive conv=fsync oflag=direct status=progress
 }
 
 ◊h2{Partition the Root Drive}
@@ -58,7 +57,7 @@ and then a random key for ZFS, which requires a thirty-two byte keyfile:
 # dd if=/dev/urandom of=./keyfile1.bin bs=32 count=1
 }
 
-◊h2{Format the Drives}
+◊h2{Format and Mount the Drives}
 
 ◊h3{OS Drive}
 
@@ -99,29 +98,46 @@ And the EFI partition:
 # mkfs.vfat -n boot /dev/${DISK}1
 }
 
+As a last step before moving on to the ZFS pool, we can start assembling our target filesystem:
+
+◊code-block{
+# mount /dev/mapper/vg-root /mnt
+# mkdir -p /mnt/boot/efi
+# mount /dev/${DISK}1 /mnt/boot/efi
+}
+
 ◊h3{Home Drive}
 
 First we need to identify our disks in a persistent way. We'll use ◊code{/dev/disk/by-id} for this. We can get around
-having to deal with the unique IDs with the following:
+having to deal with the drives' unique IDs by selecting on some other identifying feature, such as brand name in the
+following:
 
 ◊code-block{
 $ DISKS=$(ls /dev/disk/by-id/ata-TOSHIBA_* | grep -v 'part' | tr '\n' ' ')
 }
 
 Now we can assemble the ZFS options for our pool. I consulted this
-◊body-link["https://jrs-s.net/2018/08/17/zfs-tuning-cheat-sheet/"]{older guide}, which still seemed applicable, and
+◊body-link["https://jrs-s.net/2018/08/17/zfs-tuning-cheat-sheet/"]{older guide}, which still seems applicable, and
 created the pool as below:
 
 ◊code-block{
-# zpool create -O encryption=on -O keyformat=raw -O keylocation=file:///mnt-root/etc/secrets/initrd/keyfile1.bin
--O compression=zstd -O mountpoint=none -O xattr=sa -O acltype=posix -O atime=off -O secondarycache=none -o ashift=12
-ztank mirror $DISKS
+# zpool create \
+  -O encryption=on \
+  -O keyformat=raw \
+  -O keylocation=file:///keyfile1.bin \
+  -O compression=zstd \
+  -O mountpoint=none \
+  -O xattr=sa \
+  -O acltype=posix \
+  -O atime=off \
+  -O secondarycache=none \
+  -o ashift=12 ztank mirror $DISKS
 }
 
+◊h2{Mount the Drives}
 
-◊h6{---
 
-NOTES}
+◊h6{--- NOTES ---}
 
 $ DISKS=$(ls /dev/disk/by-id/ata-TOSHIBA_MN06ACA10T_14K0A06* | grep -v 'part' | tr '\n' ' ')
 # zpool create -O encryption=on -O keyformat=raw -O keylocation=file:///mnt-root/etc/secrets/initrd/keyfile1.bin -O compression=zstd -O mountpoint=none -O xattr=sa -O acltype=posix -O atime=off -O secondarycache=none -o ashift=12 ztank mirror $DISKS -f
