@@ -98,13 +98,23 @@ And the EFI partition:
 # mkfs.vfat -n boot /dev/${DISK}1
 }
 
-As a last step before moving on to the ZFS pool, we can start assembling our target filesystem:
+As a last step before moving on, we can start assembling our target filesystem:
 
 ◊code-block{
 # mount /dev/mapper/vg-root /mnt
 # mkdir -p /mnt/boot/efi
 # mount /dev/${DISK}1 /mnt/boot/efi
 }
+
+◊h3{Moving the Keys into Place}
+
+GRUB will use the password to unlock the root drive to start Phase 1 of startup, but as far as I understand, Phase 2
+accesses the drive separately. So to avoid having to enter the password twice, we can use NixOS to copy the keyfile into
+the initial ramdisk where it will be available to unlock the drive again.
+
+Before we can create the zpool, we have to move its eventual keyfile to a location in the root drive where it can be
+accessed at startup. Because the zpool will only be a data array for ◊code{/home}, ◊code{/media}, etc., it doesn't have
+to be part of the initial ramdisk.
 
 ◊h3{Home Drive}
 
