@@ -2,17 +2,25 @@
 
 ◊h1{Single-Password Encrypted NixOS}
 
-I recently installed NixOS on my homelab. I found some
-◊body-link["https://astrid.tech/2021/12/17/0/two-disk-encrypted-zfs/"]{pretty} ◊body-link[
-  "https://blog.kolaente.de/2021/11/installing-nixos-with-encrypted-btrfs-root-device-and-home-manager-from-start-to-finish/"
-]{good} ◊body-link["https://gist.github.com/ladinu/bfebdd90a5afd45dec811296016b2a3f"]{guides}, but there were some steps
-that were different so I wanted to write down what I did for future reference.
+I recently installed NixOS on my homelab. The setup is a mix of ZFS for home and BTRFS for root, so the process was a
+bit non-standard and I wanted to write down what I did.
+
+◊h2{Motivation}
+
+As with most upgrades and re-tooling, it seems for me at least, I came to want a solution for disk failure ◊em{after} a
+disk failed when my computer case got jostled. Enter ZFS. However, I didn't want to have to coordinate out-of-tree
+kernel updates and worry about producing a working system at the end of every update, even though Arch Linux is probably
+the nicest and easiest distro to do it on. I'd like this machine to always be in a bootable, working state, as it will
+be the backstop to my unstable and experimental laptop. Enter NixOS.
 
 I've only put ◊code{/home} on ZFS instead of going full root on ZFS, mainly because I didn't want to deal with swap on
 ZFS and the root SSD would have been the odd drive out in a ZFS mirror anyway, so I figured I might as well go with
-BTRFS+LVM-on-LUKS to try out all the new-to-me technologies at once.
+BTRFS to try out all the new technologies at once. BTRFS has its own subvolume management, but I found that
+people recommend using LVM if the system is to be encrypted, so LVM-on-LUKS it is.
 
-◊h2{Create the Installation Media}
+◊h2{Step-by-Step}
+
+◊h3{Create the Installation Media}
 
 As always, we start by creating a bootable disk. Below is my normal go-to:
 
@@ -20,7 +28,7 @@ As always, we start by creating a bootable disk. Below is my normal go-to:
 # dd bs=4M if=path/to/nixos-minimal-version-x86_64-linux.iso of=/dev/disk/by-id/usb-My_flash_drive conv=fsync oflag=direct status=progress
 }
 
-◊h2{Partition the Root Drive}
+◊h3{Partition the Root Drive}
 
 Boot from the disk we just created. Ethernet should already be set up, but wifi requires extra steps:
 
@@ -39,7 +47,7 @@ Instead of the normal ◊code{/boot} partition, we'll create a partition for jus
 to ◊code{1Gb}, and with type ◊code{ef00}. The ◊code{/} partition can use the rest of the space on the drive and
 should be type ◊code{8300}.
 
-◊h2{Generate the Volume Keys}
+◊h3{Generate the Volume Keys}
 
 So far we've only dealt with the root drive. The home drive will be ZFS, so the partitioning and formatting are done
 together. We'll use keyfiles to decrypt each drive, and both keys will be stored on the root drive. LUKS supports
@@ -57,9 +65,9 @@ and then a random key for ZFS, which requires a thirty-two byte keyfile:
 # dd if=/dev/urandom of=./keyfile1.bin bs=32 count=1
 }
 
-◊h2{Format and Mount the Drives}
+◊h3{Format and Mount the Drives}
 
-◊h3{OS Drive}
+◊h4{OS Drive}
 
 Let's set up the root partition. LUKS first; the password we set here will be the one needed at boot:
 
@@ -106,7 +114,7 @@ As a last step before moving on, we can start assembling our target filesystem:
 # mount /dev/${DISK}1 /mnt/boot/efi
 }
 
-◊h3{Moving the Keys into Place}
+◊h4{Moving the Keys into Place}
 
 GRUB will use the password to unlock the root drive to start Phase 1 of startup, but as far as I understand, Phase 2
 accesses the drive separately. So to avoid having to enter the password twice, we can use NixOS to copy the keyfile into
@@ -116,7 +124,7 @@ Before we can create the zpool, we have to move its eventual keyfile to a locati
 accessed at startup. Because the zpool will only be a data array for ◊code{/home}, ◊code{/media}, etc., it doesn't have
 to be part of the initial ramdisk.
 
-◊h3{Home Drive}
+◊h4{Home Drive}
 
 First we need to identify our disks in a persistent way. We'll use ◊code{/dev/disk/by-id} for this. We can get around
 having to deal with the drives' unique IDs by selecting on some other identifying feature, such as brand name in the
@@ -144,7 +152,7 @@ created the pool as below:
   -o ashift=12 ztank mirror $DISKS
 }
 
-◊h2{Mount the Drives}
+◊h3{Mount the Drives}
 
 
 ◊h6{--- NOTES ---}
