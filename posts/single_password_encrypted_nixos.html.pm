@@ -8,17 +8,24 @@ bit non-standard and I wanted to write down what I did.
 ◊h2{Motivation}
 
 As with most upgrades and re-tooling, it seems for me at least, I came to want a solution for disk failure ◊em{after} a
-disk failed when my computer case got jostled. Enter ZFS. However, I didn't want to have to coordinate out-of-tree
-kernel updates and worry about producing a working system at the end of every update, even though Arch Linux is probably
-the nicest and easiest distro to do it on. I'd like this machine to always be in a bootable, working state, as it will
-be the backstop to my unstable and experimental laptop. Enter NixOS.
+disk failed when my computer case got jostled.
+
+Enter ZFS.
+
+However, I didn't want to have to coordinate out-of-tree kernel updates and worry about producing a working system at
+the end of every update, even though Arch Linux is probably the nicest and easiest distro to do it on. I'd like this
+machine to always be in a bootable, working state, as it will be the backstop to my unstable and experimental laptop.
+
+Enter NixOS.
 
 I've only put ◊code{/home} on ZFS instead of going full root on ZFS, mainly because I didn't want to deal with swap on
 ZFS and the root SSD would have been the odd drive out in a ZFS mirror anyway, so I figured I might as well go with
-BTRFS to try out all the new technologies at once. BTRFS has its own subvolume management, but I found that
-people recommend using LVM if the system is to be encrypted, so LVM-on-LUKS it is.
+BTRFS to try out all the new technologies at once. BTRFS has its own subvolume management, but I found that people
+recommend using LVM if the system is to be encrypted, so LVM-on-LUKS it is.
 
 ◊h2{Step-by-Step}
+
+I'll add comments where I can.
 
 ◊h3{Create the Installation Media}
 
@@ -37,7 +44,7 @@ Boot from the disk we just created. Ethernet should already be set up, but wifi 
 # systemctl start wpa_supplicant
 }
 
-Identify our drives (◊code{fdisk -l}), and start with what will be the OS drive. Run ◊code{gdisk} on it, no partition
+Identify the drives (◊code{fdisk -l}), and start with what will be the OS drive. Run ◊code{gdisk} on it, no partition
 numbers since we'll be using the whole drive.
 
 ◊code-block{# gdisk /dev/$DISK}
@@ -47,19 +54,21 @@ Instead of the normal ◊code{/boot} partition, we'll create a partition for jus
 to ◊code{1Gb}, and with type ◊code{ef00}. The ◊code{/} partition can use the rest of the space on the drive and
 should be type ◊code{8300}.
 
+; TODO: add gdisk commands
+
 ◊h3{Generate the Volume Keys}
 
 So far we've only dealt with the root drive. The home drive will be ZFS, so the partitioning and formatting are done
-together. We'll use keyfiles to decrypt each drive, and both keys will be stored on the root drive. LUKS supports
-encryption with both a key and a password, so GRUB can initially prompt us for the password, then NixOS can include the
-keyfile in the initial ramdisk for Stage 1 of the boot process to use. First, we'll generate a random, four kilobyte
-keyfile for LUKS:
+together, but before we get to that we need to create the encryption keys. We'll use keyfiles to decrypt each drive, and
+both keys will be stored on the root drive. LUKS supports encryption with both a key and a password, so GRUB can
+initially prompt us for the password, then NixOS can include the keyfile in the initial ramdisk for Stage 1 of the boot
+process to use. First, we'll generate a random, four kilobyte keyfile for LUKS:
 
 ◊code-block{
 # dd if=/dev/urandom of=./keyfile0.bin bs=1024 count=4
 }
 
-and then a random key for ZFS, which requires a thirty-two byte keyfile:
+and then a random key for ZFS, which requires the keyfile be thirty-two bytes:
 
 ◊code-block{
 # dd if=/dev/urandom of=./keyfile1.bin bs=32 count=1
@@ -73,6 +82,7 @@ Let's set up the root partition. LUKS first; the password we set here will be th
 
 ◊code-block{
 # cryptsetup luksFormat --type luks1 -c aes-xts-plain64 -s 256 -h sha512 /dev/${DISK}2
+
 # cryptsetup luksAddKey /dev/${DISK}2 keyfile0.bin
 # cryptsetup luksOpen /dev/${DISK}2 root --key-file keyfile0.bin
 }
@@ -116,12 +126,16 @@ As a last step before moving on, we can start assembling our target filesystem:
 
 ◊h4{Moving the Keys into Place}
 
-GRUB will use the password to unlock the root drive to start Phase 1 of startup, but as far as I understand, Phase 2
-accesses the drive separately. So to avoid having to enter the password twice, we can use NixOS to copy the keyfile into
-the initial ramdisk where it will be available to unlock the drive again.
-
 Before we can create the zpool, we have to move its eventual keyfile to a location in the root drive where it can be
-accessed at startup. Because the zpool will only be a data array for ◊code{/home}, ◊code{/media}, etc., it doesn't have
+accessed at startup. It's possible to change the location after the fact, with:
+
+◊code-block{
+# zfs set keylocation=file:///absolute/path/to/file $TANK
+}
+
+but this saves us a step.
+
+Because the zpool will only be a data array for ◊code{/home}, ◊code{/media}, etc., it doesn't have
 to be part of the initial ramdisk.
 
 ◊h4{Home Drive}
