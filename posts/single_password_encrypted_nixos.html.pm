@@ -135,8 +135,14 @@ accessed at startup. It's possible to change the location after the fact, with:
 
 but this saves us a step.
 
-Because the zpool will only be a data array for ◊code{/home}, ◊code{/media}, etc., it doesn't have
-to be part of the initial ramdisk.
+Because the zpool will only be a data array for ◊code{/home}, ◊code{/media}, etc., it doesn't have to be part of the
+initial ramdisk. We'll put it in ◊code{/volkeys} with the commands below, but any directory name will work.
+
+◊code-block{
+# mkdir /volkeys
+# chmod 500 /volkeys
+# mv ./keyfile1.bin /volkeys
+}
 
 ◊h4{Home Drive}
 
