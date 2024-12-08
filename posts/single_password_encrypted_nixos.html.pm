@@ -127,11 +127,9 @@ As a last step before moving on, we can start assembling our target filesystem:
 ◊h4{Moving the Keys into Place}
 
 Before we can create the zpool, we have to move its eventual keyfile to a location in the root drive where it can be
-accessed at startup. It's possible to change the location after the fact, with:
-
-◊code-block{
-# zfs set keylocation=file:///absolute/path/to/file $TANK
-}
+accessed at startup. It's possible to change the location after the fact, with ◊code{
+zfs set keylocation=file:///absolute/path/to/file $TANK
+}.
 
 but this saves us a step.
 
