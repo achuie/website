@@ -7,7 +7,7 @@ bit non-standard and I wanted to write down what I did.
 
 ◊h2{Motivation}
 
-As with most upgrades and re-tooling, it seems for me at least, I came to want a solution for disk failure ◊em{after} a
+As with most upgrades and re-tooling, at least for me it seems, I came to want a solution for disk failure ◊em{after} a
 disk failed when my computer case got jostled.
 
 Enter ZFS.
@@ -51,15 +51,15 @@ numbers since we'll be using the whole drive.
 
 Instead of the normal ◊code{/boot} partition, we'll create a partition for just the EFI bootloader entries mounted at
 ◊code{/boot/efi}. That way we can keep the kernel images encrypted. Create the ESP with size anywhere from ◊code{550Mb}
-to ◊code{1Gb}, and with type ◊code{ef00}. The ◊code{/} partition can use the rest of the space on the drive and
+to ◊code{1Gb}, and with type ◊code{ef00}. The LUKS partition can use the rest of the space on the drive and
 should be type ◊code{8300}.
 
 ; TODO: add gdisk commands
 
 ◊h3{Generate the Volume Keys}
 
-So far we've only dealt with the root drive. The home drive will be ZFS, so the partitioning and formatting are done
-together, but before we get to that we need to create the encryption keys. We'll use keyfiles to decrypt each drive, and
+So far we've only dealt with the root drive. The home drive will be ZFS so the partitioning and formatting are done
+together, and before we get to that we need to create the encryption keys. We'll use keyfiles to decrypt each drive, and
 both keys will be stored on the root drive. LUKS supports encryption with both a key and a password, so GRUB can
 initially prompt us for the password, then NixOS can include the keyfile in the initial ramdisk for Stage 1 of the boot
 process to use. First, we'll generate a random, four kilobyte keyfile for LUKS:
@@ -78,11 +78,15 @@ and then a random key for ZFS, which requires the keyfile be thirty-two bytes:
 
 ◊h4{OS Drive}
 
-Let's set up the root partition. LUKS first; the password we set here will be the one needed at boot:
+Let's set up the OS partition. LUKS first; the password we set here will be the one needed at boot:
 
 ◊code-block{
 # cryptsetup luksFormat --type luks1 -c aes-xts-plain64 -s 256 -h sha512 /dev/${DISK}2
+}
 
+Now we can add a second key for Stage 1 to use, entering the password we just set:
+
+◊code-block{
 # cryptsetup luksAddKey /dev/${DISK}2 keyfile0.bin
 # cryptsetup luksOpen /dev/${DISK}2 root --key-file keyfile0.bin
 }
@@ -124,24 +128,6 @@ As a last step before moving on, we can start assembling our target filesystem:
 # mount /dev/${DISK}1 /mnt/boot/efi
 }
 
-◊h4{Moving the Keys into Place}
-
-Before we can create the zpool, we have to move its eventual keyfile to a location in the root drive where it can be
-accessed at startup. It's possible to change the location after the fact, with ◊code{
-zfs set keylocation=file:///absolute/path/to/file $TANK
-}.
-
-but this saves us a step.
-
-Because the zpool will only be a data array for ◊code{/home}, ◊code{/media}, etc., it doesn't have to be part of the
-initial ramdisk. We'll put it in ◊code{/volkeys} with the commands below, but any directory name will work.
-
-◊code-block{
-# mkdir /volkeys
-# chmod 500 /volkeys
-# mv ./keyfile1.bin /volkeys
-}
-
 ◊h4{Home Drive}
 
 First we need to identify our disks in a persistent way. We'll use ◊code{/dev/disk/by-id} for this. We can get around
@@ -169,6 +155,37 @@ created the pool as below:
   -O secondarycache=none \
   -o ashift=12 ztank mirror $DISKS
 }
+
+◊code{ztank} is the name of the pool. ◊code{mountpoint} is ◊code{none} because we'll use NixOS to manage the
+mountpoints. It's possible to instead configure NixOS to play nicely with ZFS' mountpoint management, but I consider it
+worth the extra typing to have the mountpoints enumerated in the configuration in case I need to refer to it later. In
+either case, we can create the ZFS volumes now since we know what directories we'll put on the pool. To use NixOS
+management as we just discussed, these need to be legacy mountpoints:
+
+◊code-block{
+# zfs create -o mountpoint=legacy ztank/home
+# zfs create -o mountpoint=legacy ztank/media
+# zfs create -o mountpoint=legacy ztank/share
+}
+
+◊h4{Moving the Keys into Place}
+
+Now we need a permanent home for the keys. It can be anywhere, as the location will be specified in
+◊code{configuration.nix} later, but I think a good practice is somewhere isolated and clear:
+
+◊code-block{
+# mkdir -p /mnt/etc/secrets/initrd
+# chmod 500 /mnt/etc/secrets/initrd
+# mv keyfile0.bin /mnt/etc/secrets/initrd
+# chmod 400 /mnt/etc/secrets/initrd/keyfile0.bin
+# mv keyfile1.bin /mnt/etc/secrets
+# chmod 400 /mnt/etc/secrets/keyfile1.bin
+
+For the zpool, we'll have to change the ◊code{keylocation} later when we're chroot'd into the system because ZFS needs
+to be given the absolute path from the system's perspective at boot, and this won't include ◊code{/mnt}.
+
+Regarding the permissions: ◊code{500} is read and execute (because it's a directory) only for the owner, ◊{root}.
+◊code{400} is just read.
 
 ◊h3{Mount the Drives}
 
