@@ -2,10 +2,12 @@
 
 ◊(define body-em-size 0.7)
 ◊(define leading (+ body-em-size 0.5))
-◊(define link-color "#0077aa")
-◊(define linkactive-color "#00a1e6")
 ◊(define mobile-width-px "769px")
 ◊(define border-radius "0.25rem")
+
+◊(define link-color "#0077aa")
+◊(define linkactive-color "#00a1e6")
+◊(define inline-code-color "#660000")
 
 @import url("fonts.css");
 @import url("bulma.min.css");
@@ -45,7 +47,7 @@ body {
 
 code {
     font-family: "Fira-Mono", monospace;
-    color: black;
+    color: ◊|inline-code-color|;
     border-radius: ◊|border-radius|;
     padding: 0.1rem 0.2rem;
 }
@@ -193,7 +195,6 @@ a.bodylink:hover, a.bodylink:active {
 
 .content pre {
     max-width: inherit;
-    max-height: 5rem;
     overflow: scroll;
     color: black;
     border-radius: ◊|border-radius|;

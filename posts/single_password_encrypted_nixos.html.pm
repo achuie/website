@@ -25,7 +25,7 @@ recommend using LVM if the system is to be encrypted, so LVM-on-LUKS it is.
 
 ◊h2{Step-by-Step}
 
-I'll add comments where I can.
+I'll add comments where I can, but obviously I'm no expert.
 
 ◊h3{Create the Installation Media}
 
@@ -108,7 +108,7 @@ Now we can format each logical volume. We'll start with swap, and activate it:
 # swapon /dev/mapper/vg-swap
 }
 
-Now the root volume:
+Then the root volume:
 
 ◊code-block{
 # mkfs.btrfs -L root /dev/mapper/vg-root
@@ -159,16 +159,23 @@ created the pool as below:
 ◊code{ztank} is the name of the pool. ◊code{mountpoint} is ◊code{none} because we'll use NixOS to manage the
 mountpoints. It's possible to instead configure NixOS to play nicely with ZFS' mountpoint management, but I consider it
 worth the extra typing to have the mountpoints enumerated in the configuration in case I need to refer to it later. In
-either case, we can create the ZFS volumes now since we know what directories we'll put on the pool. To use NixOS
-management as we just discussed, these need to be legacy mountpoints:
+either case, we can create and mount the ZFS volumes now since we know what directories we'll put on the pool. To use
+NixOS management as we just discussed, these need to be legacy mountpoints:
 
 ◊code-block{
 # zfs create -o mountpoint=legacy ztank/home
 # zfs create -o mountpoint=legacy ztank/media
 # zfs create -o mountpoint=legacy ztank/share
+
+# mkdir /mnt/home
+# mkdir /mnt/media
+# mkdir /mnt/share
+# mount -t zfs ztank/home /mnt/home
+# mount -t zfs ztank/media /mnt/media
+# mount -t zfs ztank/share /mnt/share
 }
 
-◊h4{Moving the Keys into Place}
+◊h4{Move the Keys into Place}
 
 Now we need a permanent home for the keys. It can be anywhere, as the location will be specified in
 ◊code{configuration.nix} later, but I think a good practice is somewhere isolated and clear:
@@ -180,14 +187,24 @@ Now we need a permanent home for the keys. It can be anywhere, as the location w
 # chmod 400 /mnt/etc/secrets/initrd/keyfile0.bin
 # mv keyfile1.bin /mnt/etc/secrets
 # chmod 400 /mnt/etc/secrets/keyfile1.bin
+}
 
 For the zpool, we'll have to change the ◊code{keylocation} later when we're chroot'd into the system because ZFS needs
 to be given the absolute path from the system's perspective at boot, and this won't include ◊code{/mnt}.
 
-Regarding the permissions: ◊code{500} is read and execute (because it's a directory) only for the owner, ◊{root}.
+Regarding the permissions: ◊code{500} is read and execute (because it's a directory) only for the owner, ◊code{root}.
 ◊code{400} is just read.
 
-◊h3{Mount the Drives}
+◊h3{Generate the System Configuration}
+
+The system configuration, ◊code{/etc/nixos/configuration.nix} and ◊code{/etc/nixos/hardware-configuration.nix}, contains
+many, many options that define all aspects of the eventual system, and may be daunting to digest all at once. However,
+NixOS can help us generate a starting point which we can embellish and add to later. In fact, the point of creating the
+filesystem hierarchy above was to hint the generator as much as possible.
+
+◊code-block{
+# nixos-generate-config --root /mnt
+}
 
 
 ◊h6{--- NOTES ---}

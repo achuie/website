@@ -35,7 +35,7 @@ body {
 
 code {
     font-family: "Fira-Mono", monospace;
-    color: black;
+    color: #660000;
     border-radius: 0.25rem;
     padding: 0.1rem 0.2rem;
 }
@@ -181,7 +181,6 @@ a.bodylink:hover, a.bodylink:active {
 
 .content pre {
     max-width: inherit;
-    max-height: 5rem;
     overflow: scroll;
     color: black;
     border-radius: 0.25rem;
