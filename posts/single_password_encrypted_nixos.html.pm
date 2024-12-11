@@ -54,8 +54,6 @@ Instead of the normal ◊code{/boot} partition, we'll create a partition for jus
 to ◊code{1Gb}, and with type ◊code{ef00}. The LUKS partition can use the rest of the space on the drive and
 should be type ◊code{8300}.
 
-; TODO: add gdisk commands
-
 ◊h3{Generate the Volume Keys}
 
 So far we've only dealt with the root drive. The home drive will be ZFS so the partitioning and formatting are done
