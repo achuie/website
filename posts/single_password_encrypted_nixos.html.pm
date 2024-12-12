@@ -10,13 +10,15 @@ bit non-standard and I wanted to write down what I did.
 As with most upgrades and re-tooling, at least for me it seems, I came to want a solution for disk failure ◊em{after} a
 disk failed when my computer case got jostled.
 
-Enter ZFS.
+Enter ZFS. Mainly I just wanted something stable with redundancy.
 
 However, I didn't want to have to coordinate out-of-tree kernel updates and worry about producing a working system at
 the end of every update, even though Arch Linux is probably the nicest and easiest distro to do it on. I'd like this
 machine to always be in a bootable, working state, as it will be the backstop to my unstable and experimental laptop.
 
-Enter NixOS.
+Enter NixOS. Though rife with sharp edges from a usability perspective and reprehensible bad-actors from a community
+perspective, I've enjoyed using project-scoped flakes for a while. I think it will help prevent me from forgetting
+things I might set up and then never touch again until it's time to update.
 
 I've only put ◊code{/home} on ZFS instead of going full root on ZFS, mainly because I didn't want to deal with swap on
 ZFS and the root SSD would have been the odd drive out in a ZFS mirror anyway, so I figured I might as well go with
