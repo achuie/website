@@ -59,7 +59,7 @@ should be type ◊code{8300}.
 ◊h3{Generate the Volume Keys}
 
 So far we've only dealt with the root drive. The home drive will be ZFS so the partitioning and formatting are done
-together, and before we get to that we need to create the encryption keys. We'll use keyfiles to decrypt each drive, and
+together, but before we get to that we need to create the encryption keys. We'll use keyfiles to decrypt each drive, and
 both keys will be stored on the root drive. LUKS supports encryption with both a key and a password, so GRUB can
 initially prompt us for the password, then NixOS can include the keyfile in the initial ramdisk for Stage 1 of the boot
 process to use. First, we'll generate a random, four kilobyte keyfile for LUKS:
@@ -197,14 +197,91 @@ Regarding the permissions: ◊code{500} is read and execute (because it's a dire
 
 ◊h3{Generate the System Configuration}
 
-The system configuration, ◊code{/etc/nixos/configuration.nix} and ◊code{/etc/nixos/hardware-configuration.nix}, contains
-many, many options that define all aspects of the eventual system, and may be daunting to digest all at once. However,
-NixOS can help us generate a starting point which we can embellish and add to later. In fact, the point of creating the
-filesystem hierarchy above was to hint the generator as much as possible.
+NixOS can help us generate a starting point for our configuration, ◊code{/etc/nixos/configuration.nix} and
+◊code{/etc/nixos/hardware-configuration.nix}, which we can embellish and add to later. In fact, the point of creating
+the filesystem hierarchy above was to hint the generator as much as possible.
 
 ◊code-block{
 # nixos-generate-config --root /mnt
 }
+
+Still, it's necessary to double-check the options. I added the following for ZFS support:
+
+◊code-block{
+  boot.initrd.kernelModules = [ "zfs" ];
+  boot.supportedFilesystems = [ "zfs" ];
+  boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
+  boot.zfs.allowHibernation = false;
+  boot.zfs.devNodes = "/dev/disk/by-id";
+
+  networking.hostId = "<your ID>";
+
+  services.zfs = {
+    autoScrub.enable = true;
+    trim.enable = true;
+  };
+}
+
+The ◊code{hostId} is required by ZFS to make sure the system using the pool is the same as the last time the pool was
+used. Per ◊body-link["https://search.nixos.org/options"]{search.nixos.org}, use
+◊code{head -c4 /dev/urandom | od -A none -t x4} to generate a random ID.
+
+Below are the options for our boot process:
+
+◊code-block{
+
+  boot.loader.grub = {
+    enable = true;
+    device = "nodev";
+    efiSupport = true;
+    efiInstallAsRemovable = true;
+    enableCryptodisk = true;
+    configurationLimit = 20;
+  };
+
+  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  boot.loader.efi.canTouchEfiVariables = false;
+
+  boot.initrd = {
+    luks.devices.root = {
+      device = "/dev/disk/by-uuid/<some UUID>";
+      preLVM = true;
+      keyFile = "/keyfile0.bin";
+      allowDiscards = true;
+    };
+    secrets = {
+      "keyfile0.bin" = "/etc/secrets/initrd/keyfile0.bin";
+    };
+  };
+}
+
+◊code{boot.loader.efi.canTouchEfiVariables} depends on your hardware, it seems not to work on my motherboard so I'm
+using ◊code{boot.loader.grub.efiInstallAsRemovable} instead. I think setting ◊code{canTouchEfiVariables = true} and
+omitting ◊code{efiInstallAsRemovable} is preferred.
+
+The hardware configuration file has a warning not to edit it, as the changes may be overwritten by future calls to
+◊code{nixos-generate-config}, but we're going to make this a flake, and therefore tracked by git, so I think the risk is
+minimal. There are some options we want to set here, like turning on compression for BTRFS and mounting the legacy ZFS
+mountpoints.
+
+◊code-block{
+  fileSystems."/" =
+    { device = "/dev/disk/by-uuid/<some UUID>";
+      fsType = "btrfs";
+      options = [ "compress=zstd" "noatime" ];
+    };
+
+  fileSystems."/home" =
+    { device = "ztank/home";
+      fsType = "zfs";
+    };
+
+  (...)
+}
+
+These options could also go in ◊code{configuration.nix}, if you prefer. The full config for my setup can be found
+◊body-link["https://github.com/achuie/nixos-config/tree/ecda293753d3da659e3be4a025efef6dfc7f8dd7/nixos/svalbard"]{
+on GitHub}.
 
 
 ◊h6{--- NOTES ---}
