@@ -1,5 +1,9 @@
 #lang pollen
 
+◊(require racket/date)
+
+◊(define-meta published `(p ,(number->string (find-seconds 0 0 0 17 12 2024 #f))))
+
 ◊h1{Single-Password Encrypted NixOS}
 
 I recently installed NixOS on my homelab. The setup is a mix of ZFS for home and BTRFS for root, so the process was a
