@@ -12,20 +12,20 @@ and a bit obnoxious, some others are pretty and almost useful. Upon reflection, 
 that do not mutate the shape of the individual composing glyphs, rather they simply adjust the kerning and x-height to
 fit the neighboring glyphs.
 
-◊; TODO bad ligature example
-◊; img[#:style "width: 6vmax; vertical-align: middle;"
-◊;     #:src "https://media.githubusercontent.com/media/achuie/achuie.github.io/master/images/columns.jpg"
-◊;     #:alt "Icon"]{} ◊br{}
+TODO bad ligature example
+◊img[#:style "width: 6vmax; vertical-align: middle;"
+    #:src "https://media.githubusercontent.com/media/achuie/achuie.github.io/master/images/columns.jpg"
+    #:alt "Icon"]{} ◊br{}
 
-◊; TODO good ligature example
-◊; img[#:style "width: 6vmax; vertical-align: middle;"
-◊;     #:src "https://media.githubusercontent.com/media/achuie/achuie.github.io/master/images/columns.jpg"
-◊;     #:alt "Icon"]{} ◊br{}
+TODO good ligature example
+◊img[#:style "width: 6vmax; vertical-align: middle;"
+    #:src "https://media.githubusercontent.com/media/achuie/achuie.github.io/master/images/columns.jpg"
+    #:alt "Icon"]{} ◊br{}
 
 So below is a recount of my short endeavor to split these groups of ligatures and strip out the bad ones.
 
 ◊h2{TL;DR}
 
-The code is ◊body-link[https://github.com/achuie/dotfiles/tree/master/nix-flakes/firacode]{here}, and can be built with
+The code is ◊body-link["https://github.com/achuie/dotfiles/tree/master/nix-flakes/firacode"]{here}, and can be built with
 the following command if one has Nix installed:
-◊shell-cmd{nix build github:achuie/dotfiles?dir=nix-flakes/firacode}
+◊code{nix build github:achuie/dotfiles?dir=nix-flakes/firacode}
