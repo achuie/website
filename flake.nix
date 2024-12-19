@@ -2,9 +2,11 @@
   description = "Use Pollen Racket to generate static site";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/22.11";
-    dream2nix.url = "github:nix-community/dream2nix?ref=legacy";
-    dream2nix.inputs.nixpkgs.follows = "nixpkgs";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
+    dream2nix = {
+      url = "github:nix-community/dream2nix?ref=legacy";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, dream2nix }:
@@ -55,7 +57,5 @@
             packages = [ dependencies.site pkgs.exif ];
           };
         });
-
-      formatter = forAllSystems (pkgs: pkgs.nixpkgs-fmt);
     };
 }
