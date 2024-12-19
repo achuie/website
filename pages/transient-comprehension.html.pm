@@ -7,12 +7,6 @@
           racket/path
           racket/date)
 
-◊h1{Project SPINLOCK}
-
-\\
-
-◊h4{Posts}
-
 ◊(define (get-published-timestamp pollen-srcfile)
          (define published (select-from-metas 'published (get-metas (build-path posts-path pollen-srcfile))))
          (define seconds (if published
@@ -37,5 +31,11 @@
                             (directory-list (build-path posts-path)))
                     >
                     #:key get-published-timestamp)))
+
+◊h1{Project SPINLOCK}
+
+\\
+
+◊h4{Posts}
 
 ◊`(ul ,@(map (λ (link) `(li ,link)) post-links))
