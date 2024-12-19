@@ -1,8 +1,6 @@
 #lang pollen
 
-◊(require racket/date)
-
-◊(define-meta published `(p ,(number->string (find-seconds 0 0 0 17 12 2024 #f))))
+◊(define-meta published "17 12 2024")
 
 ◊h1{Single-Password Encrypted NixOS}
 
