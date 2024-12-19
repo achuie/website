@@ -5,8 +5,7 @@
           racket/port
           racket/list
           racket/path
-          racket/date
-          pollen/core)
+          racket/date)
 
 ◊h1{Project SPINLOCK}
 
@@ -14,20 +13,29 @@
 
 ◊h4{Posts}
 
-◊(define post-links (map (λ (path) `(a ((href ,(string-trim (path-element->string path) ".pm"))) (select 'h1 path)))
-       (sort (filter (λ (name) (define ext (path-get-extension name)) (and ext (bytes=? ext #".pm")))
-                     (directory-list (build-path ".." "posts")))
-             >
-             #:key (λ (post)
-                     (define published (select-from-metas 'published (get-metas (build-path ".." "posts" post))))
-                     (define seconds (if published
-                                       (apply
-                                         find-seconds
-                                         (append (list 0 0 0)
-                                                 (map (λ (s) (string->number s))
-                                                      (string-split published))
-                                                 (list #f)))
-                                       #f))
-                     (if seconds seconds 0)))))
+◊(define (get-published-timestamp pollen-srcfile)
+         (define published (select-from-metas 'published (get-metas (build-path posts-path pollen-srcfile))))
+         (define seconds (if published
+                           (apply find-seconds
+                                  (append (list 0 0 0)
+                                          (map (λ (s) (string->number s)) (string-split published))
+                                          (list #f)))
+                           #f))
+         (if seconds seconds 0))
+◊(define posts-path (build-path ".." "posts"))
+◊(define post-links
+         (map (λ (sorted-pollen-srcfile)
+                (define path-to-srcfile (build-path posts-path sorted-pollen-srcfile))
+                (define srcfile-published-ts (get-published-timestamp sorted-pollen-srcfile))
+                `(a ((class "bodylink")
+                     (title ,(if (> srcfile-published-ts 0)
+                               (date->string (seconds->date srcfile-published-ts))
+                               "unpublished"))
+                     (href ,(string-trim (path->string path-to-srcfile) ".pm")))
+                    ,(string-append (if (> srcfile-published-ts 0) "" "(unpublished) ") (select 'h1 path-to-srcfile))))
+              (sort (filter (λ (name) (define ext (path-get-extension name)) (and ext (bytes=? ext #".pm")))
+                            (directory-list (build-path posts-path)))
+                    >
+                    #:key get-published-timestamp)))
 
-◊ul{◊(@ (map (λ (link) `(li ,link)) post-links))}
+◊`(ul ,@(map (λ (link) `(li ,link)) post-links))
