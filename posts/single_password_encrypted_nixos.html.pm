@@ -283,7 +283,7 @@ mountpoints.
 
 These options could also go in ◊code{configuration.nix}, if you prefer. The full config for my setup can be found
 ◊body-link["https://github.com/achuie/nixos-config/tree/ecda293753d3da659e3be4a025efef6dfc7f8dd7/nixos/svalbard"]{
-on GitHub}.
+  on GitHub}.
 
 
 ◊h6{--- NOTES ---}
