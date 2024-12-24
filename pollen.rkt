@@ -48,4 +48,5 @@
   ; auto-shrinking to fit.
   (list* 'div '((id "doc") (class "container"))
          (decode-elements processed-elems
-                          #:string-proc smart-and-trim)))
+                          #:string-proc smart-and-trim
+                          #:exclude-tags (list 'pre 'code))))
