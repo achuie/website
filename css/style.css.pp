@@ -1,7 +1,8 @@
 #lang pollen
 
-◊(define body-em-size 0.7)
+◊(define body-em-size 0.6)
 ◊(define leading (+ body-em-size 0.5))
+◊(define code-em-size (* body-em-size 0.8))
 ◊(define mobile-width-px "769px")
 ◊(define border-radius "0.25rem")
 
@@ -47,6 +48,7 @@ body {
 
 code {
     font-family: "Fira-Mono", monospace;
+    font-size: ◊|code-em-size|rem;
     color: ◊|inline-code-color|;
     border-radius: ◊|border-radius|;
     padding: 0.1rem 0.2rem;
@@ -195,6 +197,7 @@ a.bodylink:hover, a.bodylink:active {
 
 .content pre {
     max-width: inherit;
+    font-size: ◊|code-em-size|rem;
     overflow: scroll;
     color: black;
     border-radius: ◊|border-radius|;

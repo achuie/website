@@ -1,6 +1,6 @@
 #lang pollen
 
-◊(define-meta published "17 12 2024")
+◊(define-meta published "24 12 2024")
 
 ◊h1{Single-Password Encrypted NixOS}
 
@@ -78,6 +78,9 @@ and then a random key for ZFS, which requires the keyfile be thirty-two bytes:
 
 ◊h3{Format and Mount the Drives}
 
+This step will be the bulk of the work, with important decisions to be made about filesystem attributes like
+compression, mountpoints, and caching.
+
 ◊h4{OS Drive}
 
 Let's set up the OS partition. LUKS first; the password we set here will be the one needed at boot:
@@ -132,9 +135,9 @@ As a last step before moving on, we can start assembling our target filesystem:
 
 ◊h4{Home Drive}
 
-First we need to identify our disks in a persistent way. We'll use ◊code{/dev/disk/by-id} for this. We can get around
-having to deal with the drives' unique IDs by selecting on some other identifying feature, such as brand name in the
-following:
+First we need to identify our disks in a persistent way, as the ZFS utility may get confused at boot just using
+bus-based names. We'll use ◊code{/dev/disk/by-id} for this. We can get around having to deal with the drives' unique IDs
+by selecting on some other identifying feature, such as brand name in the following:
 
 ◊code-block{
 $ DISKS=$(ls /dev/disk/by-id/ata-TOSHIBA_* | grep -v 'part' | tr '\n' ' ')
@@ -257,6 +260,10 @@ Below are the options for our boot process:
   };
 }
 
+The keyfile will be copied to a top-level path in the ramdisk at the name configured by ◊code{boot.initrd.secrets}. Thus
+the path at ◊code{boot.initrd.luks.devices.root.keyFile} should match the ◊code{boot.initrd.secrets} attribute, but
+prepended with ◊code{"/"}.
+
 ◊code{boot.loader.efi.canTouchEfiVariables} depends on your hardware, it seems not to work on my motherboard so I'm
 using ◊code{boot.loader.grub.efiInstallAsRemovable} instead. I think setting ◊code{canTouchEfiVariables = true} and
 omitting ◊code{efiInstallAsRemovable} is preferred.
@@ -281,39 +288,29 @@ mountpoints.
   (...)
 }
 
-These options could also go in ◊code{configuration.nix}, if you prefer. The full config for my setup can be found
+These options could also go in ◊code{configuration.nix}, but I think the conceptual separation is nice. With all the
+prepartion complete, we can now install:
+
+◊code-block{
+# nixos-install
+}
+
+The last thing to do is to update ZFS with the new key location. NixOS' special chroot command is ◊code{nixos-enter}.
+Call it without ◊code{-c} to start an interactive prompt.
+
+◊code-block{
+# nixos-enter --root /mnt -c 'zfs set keylocation=file:///etc/secrets/keyfile1.bin ztank'
+}
+
+Now we can reboot and enjoy the new system.
+
+◊h2{Wrap Up}
+
+For reference the full config for my setup can be found
 ◊body-link["https://github.com/achuie/nixos-config/tree/ecda293753d3da659e3be4a025efef6dfc7f8dd7/nixos/svalbard"]{
-  on GitHub}.
+  on GitHub
+}.
 
-
-◊h6{--- NOTES ---}
-
-$ DISKS=$(ls /dev/disk/by-id/ata-TOSHIBA_MN06ACA10T_14K0A06* | grep -v 'part' | tr '\n' ' ')
-# zpool create -O encryption=on -O keyformat=raw -O keylocation=file:///mnt-root/etc/secrets/initrd/keyfile1.bin -O compression=zstd -O mountpoint=none -O xattr=sa -O acltype=posix -O atime=off -O secondarycache=none -o ashift=12 ztank mirror $DISKS -f
-# zfs create -o mountpoint=legacy ztank/home
-
-# mkdir volkeys
-# mv mnt-root/etc/secrets/initrd/keyfile1.bin volkeys/
-# zfs set keylocation=file:///volkeys/keyfile1.bin ztank
-
-https://discourse.nixos.org/t/systemd-boot-root-zfs-native-zfs-encryption-with-keylocation-file/26446
-- details boot stage 1 initrd secret files
-- zfs keylocation=file:// must be accessible during the stage when the system attempts to mount the pool
-- our case is different, as attached storage with mountpoints is mounted during stage 2
-
-https://gist.github.com/ladinu/bfebdd90a5afd45dec811296016b2a3f
-- the main guide
-- does not say about stage 2 key availability
-
-https://jrs-s.net/2018/08/17/zfs-tuning-cheat-sheet/
-- zfs tuning reference
-
-https://discourse.nixos.org/t/how-to-run-init-stage-2-manually/38625
-- info about stage 2 root path
-
-https://astrid.tech/2021/12/17/0/two-disk-encrypted-zfs/
-- guide with multiple zpools
-- some info about keylocation
-
-https://old.reddit.com/r/zfs/comments/bnvdco/zol_080_encryption_dont_encrypt_the_pool_root/
-- future work
+I also recommend reading the following references: ◊body-link["https://wiki.nixos.org/wiki/ZFS"]{
+  the NixOS wiki for ZFS
+}, and ◊body-link["https://gist.github.com/ladinu/bfebdd90a5afd45dec811296016b2a3f"]{ladinu's encrypted install guide}.
