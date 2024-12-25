@@ -223,6 +223,7 @@ p {
 
 .masonry-panel__content {
     padding: ◊|masonry-padding|;
+    display: inline-grid;
 }
 
 .masonry-img {
