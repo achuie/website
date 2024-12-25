@@ -1,10 +1,14 @@
 #lang pollen
 
-◊(define body-em-size 0.7)
+◊(define body-em-size 0.6)
 ◊(define leading (+ body-em-size 0.5))
+◊(define code-em-size (* body-em-size 0.8))
+◊(define mobile-width-px "769px")
+◊(define border-radius "0.25rem")
+
 ◊(define link-color "#0077aa")
 ◊(define linkactive-color "#00a1e6")
-◊(define mobile-width-px "769px")
+◊(define inline-code-color "#660000")
 
 @import url("fonts.css");
 @import url("bulma.min.css");
@@ -35,6 +39,19 @@ body {
     font-family: "Alegreya Sans", serif;
     font-weight: normal;
     color: black;
+}
+
+◊; For flexbox--pre interaction
+* {
+    min-width: 0;
+}
+
+code {
+    font-family: "Fira-Mono", monospace;
+    font-size: ◊|code-em-size|rem;
+    color: ◊|inline-code-color|;
+    border-radius: ◊|border-radius|;
+    padding: 0.1rem 0.2rem;
 }
 
 .wrapper {
@@ -149,7 +166,7 @@ a.bodylink:hover, a.bodylink:active {
 
 .footer-separator {
     font-family: "Fira-Mono", sans-serif;
-    font-size: ◊(+ body-em-size 0.5)rem;
+    font-size: ◊(+ body-em-size 0.1)rem;
     color: #992600;
 }
 
@@ -176,6 +193,15 @@ a.bodylink:hover, a.bodylink:active {
 
 .content h3, .content h4, .content h5, .content h6 {
     font-size: ◊|body-em-size|rem;
+}
+
+.content pre {
+    max-width: inherit;
+    font-size: ◊|code-em-size|rem;
+    overflow: scroll;
+    color: black;
+    border-radius: ◊|border-radius|;
+    padding: 0.5rem 0.75rem;
 }
 
 p {

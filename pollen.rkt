@@ -3,6 +3,7 @@
 (require racket/string
          pollen/decode 
          pollen/unstable/typography
+         pollen/tag
          txexpr)
 
 (module setup racket/base
@@ -10,7 +11,7 @@
 
   (provide current-project-root)
   (provide (all-defined-out))
-  (define block-tags (append '(img script) default-block-tags)))
+  (define block-tags (append '(img script code-block) default-block-tags)))
 
 (require 'setup)
 
@@ -19,6 +20,8 @@
 (define (nav-link url text) `(a ((class "navlink") (href ,url)) ,text))
 
 (define (body-link url text) `(a ((class "bodylink") (href ,url)) ,text))
+
+(define-tag-function (code-block attrs elems) `(pre ,attrs (code ,@elems)))
 
 ;; Only convert a newline to a linebreak if the preceding line ends with "\\".
 (define (latex-linebreaker prev next)
@@ -39,9 +42,11 @@
 (define (root . elements)
   (define processed-elems
     (decode-elements elements
-                     #:txexpr-elements-proc smart-paragraphs))
+                     #:txexpr-elements-proc smart-paragraphs
+                     #:exclude-tags block-tags))
   ; Bulma.css requires class container inside a column to render elements full-width instead of
   ; auto-shrinking to fit.
   (list* 'div '((id "doc") (class "container"))
          (decode-elements processed-elems
-                          #:string-proc smart-and-trim)))
+                          #:string-proc smart-and-trim
+                          #:exclude-tags (list 'pre 'code))))
