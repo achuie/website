@@ -13,6 +13,19 @@
     let
       forAllSystems = f: nixpkgs.lib.genAttrs [ "x86_64-linux" ] (system:
         f nixpkgs.legacyPackages.${system});
+
+      project-outputs = dream2nix.lib.makeFlakeOutputs {
+        systems = [ "x86_64-linux" ];
+        config.projectRoot = ./.;
+        source = ./.;
+        projects = {
+          site = {
+            name = "site";
+            subsystem = "racket";
+            translator = "racket-impure";
+          };
+        };
+      };
     in
     {
       apps = forAllSystems (pkgs:
@@ -37,24 +50,28 @@
             ''}/bin/manageThumbnails.sh";
           };
         });
+
+      packages = forAllSystems (pkgs:
+        {
+          default = pkgs.stdenv.mkDerivation {
+            pname = "site";
+            version = "0.1.0";
+
+            src = ./.;
+            buildInputs = [ project-outputs.packages.${pkgs.system}.site pkgs.exif ];
+            buildPhase = ''
+              ${self.apps.${pkgs.system}.thumbnails.program}
+              raco pollen publish . $out
+            '';
+          };
+
+          resolveImpure = project-outputs.packages.${pkgs.system}.site.resolve;
+        });
+
       devShells = forAllSystems (pkgs:
-        let
-          dependencies = (dream2nix.lib.makeFlakeOutputs {
-            systems = [ "x86_64-linux" ];
-            config.projectRoot = ./.;
-            source = ./.;
-            projects = {
-              site = {
-                name = "site";
-                subsystem = "racket";
-                translator = "racket-impure";
-              };
-            };
-          }).packages.${pkgs.system};
-        in
         {
           default = pkgs.mkShell {
-            packages = [ dependencies.site pkgs.exif ];
+            packages = [ project-outputs.packages.${pkgs.system}.site pkgs.exif ];
           };
         });
     };
