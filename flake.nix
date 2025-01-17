@@ -33,14 +33,26 @@
           thumbnails = {
             type = "app";
             program = "${pkgs.writeShellScriptBin "manageThumbnails.sh" ''
-              for pic in $(ls ./images/portfolio); do
+              find ./images/portfolio -name '*.jpg' -printf '%f\n' >./portfolio_files.txt
+              if [ -f ./portfolio_datetimes.txt ]; then
+                rm ./portfolio_datetimes.txt
+              fi
+
+              while read pic; do
                 if [ -f ./images/thumbnails/$pic ]; then
                   echo "  Found thumbnail for $pic"
                 else
                   echo "    Generating thumbnail for $pic"
                   ${pkgs.imagemagick}/bin/magick ./images/portfolio/$pic -resize 1000000@ ./images/thumbnails/$pic
                 fi
-              done
+
+                timestamp=$(${pkgs.exif}/bin/exif -t DateTimeOriginal ./images/portfolio/$pic | grep Value | sed 's/[a-zA-Z: ]*//g')
+                if [ -z $timestamp ]; then
+                  timestamp="0"
+                fi
+                echo $timestamp >>./portfolio_datetimes.txt
+              done <./portfolio_files.txt
+
               for thumbnail in $(ls ./images/thumbnails); do
                 if [ ! -f ./images/portfolio/$thumbnail ]; then
                   echo "  Removing thumbnail for $thumbnail"
@@ -58,9 +70,9 @@
             version = "0.1.0";
 
             src = ./.;
-            buildInputs = [ project-outputs.packages.${pkgs.system}.site pkgs.exif ];
+            buildInputs = [ project-outputs.packages.${pkgs.system}.site ];
             buildPhase = ''
-              ${self.apps.${pkgs.system}.thumbnails.program}
+              raco pollen render -psf .
               raco pollen publish . $out
             '';
           };
