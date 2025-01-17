@@ -1,14 +1,17 @@
-◊(require txexpr)
+◊(require txexpr
+          racket/path
+          pollen/setup)
 
 ◊;; Deal with subdirectories.
-◊(define path-prefix (if (string-contains? (symbol->string here) "/") "../" ""))
+◊(define path-prefix (if (regexp-match #rx"^[a-zA-Z0-9]+/" (symbol->string here)) "../" ""))
+
 ◊;; Determine whether current page is the image display page.
 ◊(define is-display-image? (λ (x) (and (and (txexpr? x) (eq? 'img (get-tag x)))
                                        (member '(id "fillIn") (get-attrs x)))))
 ◊(define navbar
   ◊div[#:class "my-navbar"]{
     ◊img[#:style "width: 6vmax; vertical-align: middle;"
-         #:src "https://media.githubusercontent.com/media/achuie/achuie.github.io/master/images/columns.jpg"
+         #:src (string-append path-prefix "images/columns.jpg")
          #:alt "Icon"]{} ◊br{}
     ◊nav-link[(string-append path-prefix "index.html")]{home} ◊br{}
     ◊nav-link[(string-append path-prefix "pages/project-spinlock.html")]{"blog"} ◊br{}
@@ -43,7 +46,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   ◊(define title (select 'h1 doc))
   <title>◊(if title title "Home") &ndash; AH</title>
-  <link rel="shortcut icon" type="image/jpg" href="https://media.githubusercontent.com/media/achuie/achuie.github.io/master/images/columns.jpg"/>
+  <link rel="shortcut icon" type="image/jpg" href="◊|path-prefix|images/columns.jpg"/>
   <link rel="stylesheet" type="text/css" media="all" href="◊|path-prefix|css/style.css"/>
 </head>
 ◊(->html body-with-sidebar #:splice? #t)
