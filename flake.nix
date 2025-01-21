@@ -64,15 +64,25 @@
         });
 
       packages = forAllSystems (pkgs:
-        {
+        let fs = nixpkgs.lib.fileset; in {
           default = pkgs.stdenv.mkDerivation {
             pname = "site";
             version = "0.1.0";
 
-            src = ./.;
+            src = fs.toSource {
+              root = ./.;
+              fileset = fs.unions (map
+                (ext: fs.fileFilter (file: file.hasExt ext) ./.)
+                [ "p" "pp" "pm" "txt" "rkt" "css" "js" ]
+              );
+
+            };
             buildInputs = [ project-outputs.packages.${pkgs.system}.site ];
             buildPhase = ''
               raco pollen render -psf .
+            '';
+            installPhase = ''
+              rm *.txt
               raco pollen publish . $out
             '';
           };
