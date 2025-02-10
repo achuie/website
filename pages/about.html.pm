@@ -3,7 +3,7 @@
 ◊h1{About}
 
 ◊img[#:class "textwrap" #:style "width: 13vmax"
-  #:src "https://media.githubusercontent.com/media/achuie/achuie.github.io/master/images/headshot.png"
+  #:src "../images/headshot.png"
   #:alt "Headshot"]{}
 
 All about me, for those interested.
