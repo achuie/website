@@ -1,6 +1,0 @@
-/images/columns.jpg filter=lfs diff=lfs merge=lfs -text
-/images/columns_phone.jpg filter=lfs diff=lfs merge=lfs -text
-/images/headshot.png filter=lfs diff=lfs merge=lfs -text
-/images/rock_lichen.jpg filter=lfs diff=lfs merge=lfs -text
-images/portfolio/the_hermitage.jpg filter=lfs diff=lfs merge=lfs -text
-*.jpg filter=lfs diff=lfs merge=lfs -text
