@@ -85,7 +85,7 @@ Then spin up a VM based on that image.
 ◊h2{Setting up the SSH Tunnel}
 
 With the VM alive, I reserved a static IP address for it on DO's management page. Then I configured my homelab to reach
-out with ◊code{autossh}.
+out to that address with ◊code{autossh}.
 
 ◊code-block{
 systemd.services.tunnel = {
@@ -94,8 +94,9 @@ systemd.services.tunnel = {
   after = [ "network.target" "network-online.target" "sshd.service" ];
   serviceConfig = {
     ExecStart = ''
+      # Port 2222 can be any unreserved port
       ${pkgs.autossh}/bin/autossh -M 0 -o "ServerAliveInterval 30" -o "ServerAliveCountMax 3" -N -R *:2222:localhost:22 \
-      -i /home/achuie/.ssh/id_ed25519 $USER@$STATIC_IP
+      -i /home/$USER/.ssh/id_ed25519 $USER@$STATIC_IP
     '';
   };
 };
