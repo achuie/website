@@ -304,6 +304,17 @@ Call it without ◊code{-c} to start an interactive prompt.
 
 Now we can reboot and enjoy the new system.
 
+◊h3{Reboot}
+
+On the off chance the disk password is input incorrectly, the following steps must be done to get back to the password
+prompt for another shot:
+
+◊code-block{
+cryptomount -a <ENTER>
+insmod normal <ENTER>
+normal <ENTER>
+}
+
 ◊h2{Wrap Up}
 
 For reference the full config for my setup can be found

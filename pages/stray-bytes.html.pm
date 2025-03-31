@@ -34,7 +34,7 @@
                     >
                     #:key get-published-timestamp)))
 
-◊h1{Project SPINLOCK}
+◊h1{Stray Bytes}
 
 \\
 
