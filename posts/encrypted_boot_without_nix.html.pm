@@ -20,7 +20,7 @@ for LUKS-on-LVM or LUKS-only systems, which somehow seem more common than my set
 
 ◊h2{Justification}
 
-To recap, the main features I want from this setup are the following:
+The main features I want from this setup are the following:
 
 ◊ol{
   ◊li{Boot as encrypted as possible (so the images, but not the boot entries)}
