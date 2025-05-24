@@ -3,7 +3,8 @@
 ◊(define body-em-size 0.6)
 ◊(define leading (+ body-em-size 0.5))
 ◊(define code-em-size (* body-em-size 0.8))
-◊(define mobile-width-px "769px")
+◊(define narrow-aspect-ratio "7/6")
+◊(define mobile-aspect-ratio "6/7")
 ◊(define border-radius "0.25rem")
 
 ◊(define link-color "#0077aa")
@@ -19,9 +20,9 @@ html {
     -webkit-text-size-adjust: auto;
 }
 
-@media screen and (max-width: ◊|mobile-width-px|) {
+@media screen and (max-aspect-ratio: ◊|mobile-aspect-ratio|) {
     html {
-        font-size: 4vw;
+        font-size: 7vw;
     }
 }
 
@@ -68,7 +69,7 @@ code {
     margin-right: auto;
 }
 
-@media screen and (max-width: ◊|mobile-width-px|) {
+@media screen and (max-aspect-ratio: ◊|narrow-aspect-ratio|) {
     .content {
         width: 90%;
         margin-left: auto;
@@ -92,7 +93,7 @@ code {
     text-align: end;
 }
 
-@media screen and (max-width: ◊|mobile-width-px|) {
+@media screen and (max-aspect-ratio: ◊|narrow-aspect-ratio|) {
     .my-navbar {
         text-align: start;
     }
@@ -151,7 +152,7 @@ a.bodylink:hover, a.bodylink:active {
     display: block flex;
 }
 
-@media screen and (max-width: ◊|mobile-width-px|) {
+@media screen and (max-aspect-ratio: ◊|narrow-aspect-ratio|) {
     .main {
         margin-right: auto;
     }
@@ -184,6 +185,7 @@ a.bodylink:hover, a.bodylink:active {
 .content h1 {
     border-top: 1px solid;
     padding-top: 5px;
+    padding-bottom: 1rem;
     font-size: ◊(+ body-em-size 0.2)rem;
 }
 
