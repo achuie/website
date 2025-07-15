@@ -121,7 +121,7 @@
       "0.0.0": {
         "rev": "c182a30f57ea5096440aea3d097f5fe3b78bb236",
         "type": "git",
-        "url": "https://git.matthewbutterick.com/mbutterick/pollen.git"
+        "url": "https://git.sr.ht/~mbutterick/pollen"
       }
     },
     "rackjure": {
