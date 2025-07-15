@@ -9,6 +9,15 @@
     };
   };
 
+  nixConfig = {
+    extra-substituters = [
+      "https://garage.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "garage.cachix.org-1:AH27ths8QR/GZlbFoCQk+Ju3R4U2XepsdQKU3LN0JDA="
+    ];
+  };
+
   outputs = { self, nixpkgs, dream2nix }:
     let
       forAllSystems = f: nixpkgs.lib.genAttrs [ "x86_64-linux" ] (system:
