@@ -119,7 +119,7 @@
     },
     "pollen": {
       "0.0.0": {
-        "rev": "c182a30f57ea5096440aea3d097f5fe3b78bb236",
+        "rev": "99c43e6ad360f7735ebc9c6e70a08dec5829d64a",
         "type": "git",
         "url": "https://git.sr.ht/~mbutterick/pollen"
       }
