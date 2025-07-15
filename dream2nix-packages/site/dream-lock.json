@@ -149,7 +149,7 @@
       "0.0.0": {
         "rev": "c90834b77afad07f9b02986fc8e157ccf30b753c",
         "type": "git",
-        "url": "https://git.matthewbutterick.com/mbutterick/sugar.git"
+        "url": "https://github.com/mbutterick/sugar"
       }
     },
     "threading-doc": {
@@ -170,9 +170,9 @@
     },
     "txexpr": {
       "0.0.0": {
-        "rev": "4ed851459e97be03418b1e92a5c07174e99bf28f",
+        "rev": "037e280e343a91d82d499d548a023a834be15dba",
         "type": "git",
-        "url": "https://git.matthewbutterick.com/mbutterick/txexpr.git"
+        "url": "https://github.com/mbutterick/txexpr"
       }
     }
   }
