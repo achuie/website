@@ -15,7 +15,7 @@
          #:alt "Icon"]{} ◊br{}
     ◊nav-link[(string-append path-prefix "index.html")]{home} ◊br{}
     ◊nav-link[(string-append path-prefix "pages/stray-bytes.html")]{"blog"} ◊br{}
-    ◊nav-link[(string-append path-prefix "pages/interests.html")]{interests}})
+    ◊nav-link[(string-append path-prefix "pages/photography.html")]{photography}})
 ◊(define back-button
   ◊div[#:class "backbutton"]{◊a[#:class "backbutton-link"
                                 #:href (string-append path-prefix "pages/photography.html")]{←}})

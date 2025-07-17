@@ -2,7 +2,7 @@
 
 ◊(define-meta published "31 03 2025")
 
-◊h1{Setting Up a Server for My Server}
+◊(post-title "Setting Up a Server for My Server")
 
 So I set up my homelab, but now I have to make it accessible from outside my apartment. Normally this is trivially done
 with port forwarding rules on one's router, but my apartment building has a centralized, building-wide router from our

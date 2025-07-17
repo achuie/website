@@ -2,7 +2,7 @@
 
 ◊(define-meta published "24 12 2024")
 
-◊h1{Single-Password Encrypted NixOS}
+◊(post-title "Single-Password Encrypted NixOS")
 
 I recently installed NixOS on my homelab. The setup is a mix of ZFS for home and BTRFS for root, so the process was a
 bit non-standard and I wanted to write down what I did.

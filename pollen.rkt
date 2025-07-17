@@ -1,6 +1,8 @@
 #lang racket/base
 
 (require racket/string
+         racket/date
+         pollen/core
          pollen/decode 
          pollen/unstable/typography
          pollen/tag
@@ -22,6 +24,24 @@
 (define (body-link url text) `(a ((class "bodylink") (href ,url)) ,text))
 
 (define-tag-function (code-block attrs elems) `(pre ,attrs (code ,@elems)))
+
+(define (published->timestamp published-string)
+  (apply
+    find-seconds
+    (append (list 0 0 0) (map (λ (s) (string->number s)) (string-split published-string)) (list #f))))
+
+(define (seconds->default-datestring timestamp string-format)
+  (if (> timestamp 0)
+      (parameterize ([date-display-format string-format])
+        (date->string (seconds->date timestamp)))
+      "(unpublished)"))
+
+(define (post-title title)
+  (define published (select-from-metas 'published (current-metas)))
+  (define seconds (if published (published->timestamp published) #f))
+  `(h1 ((class "post-title"))
+       ,title
+       (span ((class "post-date")) ,(seconds->default-datestring seconds 'iso-8601))))
 
 ;; Only convert a newline to a linebreak if the preceding line ends with "\\".
 (define (latex-linebreaker prev next)

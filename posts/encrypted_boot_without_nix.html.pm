@@ -2,7 +2,7 @@
 
 ◊(define-meta published "24 05 2025")
 
-◊h1{Encrypted Boot Without Nix}
+◊(post-title "Encrypted Boot Without Nix")
 
 In the past I've done an ◊body-link["./single_password_encrypted_nixos.html"]{encrypted boot setup with NixOS} for my
 server, but now I'd like to also harden my laptop since, out of the two computers, that's the more vulnerable one

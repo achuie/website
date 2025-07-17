@@ -55,6 +55,11 @@ code {
     padding: 0.1rem 0.2rem;
 }
 
+.blog-list-date {
+    font-family: "Fira-Mono", monospace;
+    font-size: ◊|code-em-size|rem;
+}
+
 .wrapper {
     min-height: 100%;
     display: grid;
@@ -187,6 +192,18 @@ a.bodylink:hover, a.bodylink:active {
     padding-top: 5px;
     padding-bottom: 1rem;
     font-size: ◊(+ body-em-size 0.2)rem;
+}
+
+.post-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: top;
+}
+
+.post-date {
+    font-size: ◊|body-em-size|rem;
+    font-style: italic;
+    font-weight: normal;
 }
 
 .content h2 {
