@@ -7,7 +7,7 @@
 I recently installed NixOS on my homelab. The setup is a mix of ZFS for home and BTRFS for root, so the process was a
 bit non-standard and I wanted to write down what I did.
 
-◊h2{Motivation}
+◊(subheading 'h2 "Motivation")
 
 As with most upgrades and re-tooling, at least for me it seems, I came to want a solution for disk failure ◊em{after} a
 disk failed when my computer case got jostled.
@@ -27,11 +27,11 @@ ZFS and the root SSD would have been the odd drive out in a ZFS mirror anyway, s
 BTRFS to try out all the new technologies at once. BTRFS has its own subvolume management, but I found that people
 recommend using LVM if the system is to be encrypted, so LVM-on-LUKS it is.
 
-◊h2{Step-by-Step}
+◊(subheading 'h2 "Step-by-Step")
 
 I'll add comments where I can, but obviously I'm no expert.
 
-◊h3{Create the Installation Media}
+◊(subheading 'h3 "Create the Installation Media")
 
 As always, we start by creating a bootable disk. Below is my normal go-to:
 
@@ -39,7 +39,7 @@ As always, we start by creating a bootable disk. Below is my normal go-to:
 # dd bs=4M if=path/to/nixos-minimal-version-x86_64-linux.iso of=/dev/disk/by-id/usb-My_flash_drive conv=fsync oflag=direct status=progress
 }
 
-◊h3{Partition the Root Drive}
+◊(subheading 'h3 "Partition the Root Drive")
 
 Boot from the disk we just created. Ethernet should already be set up, but wifi requires extra steps:
 
@@ -58,7 +58,7 @@ Instead of the normal ◊code{/boot} partition, we'll create a partition for jus
 to ◊code{1Gb}, and with type ◊code{ef00}. The LUKS partition can use the rest of the space on the drive and
 should be type ◊code{8300}.
 
-◊h3{Generate the Volume Keys}
+◊(subheading 'h3 "Generate the Volume Keys")
 
 So far we've only dealt with the root drive. The home drive will be ZFS so the partitioning and formatting are done
 together, but before we get to that we need to create the encryption keys. We'll use keyfiles to decrypt each drive, and
@@ -76,12 +76,12 @@ and then a random key for ZFS, which requires the keyfile be thirty-two bytes:
 # dd if=/dev/urandom of=./keyfile1.bin bs=32 count=1
 }
 
-◊h3{Format and Mount the Drives}
+◊(subheading 'h3 "Format and Mount the Drives")
 
 This step will be the bulk of the work, with important decisions to be made about filesystem attributes like
 compression, mountpoints, and caching.
 
-◊h4{OS Drive}
+◊(subheading 'h4 "OS Drive")
 
 Let's set up the OS partition. LUKS first; the password we set here will be the one needed at boot:
 
@@ -133,7 +133,7 @@ As a last step before moving on, we can start assembling our target filesystem:
 # mount /dev/${DISK}1 /mnt/boot/efi
 }
 
-◊h4{Home Drive}
+◊(subheading 'h4 "Home Drive")
 
 First we need to identify our disks in a persistent way, as the ZFS utility may get confused at boot just using
 bus-based names. We'll use ◊code{/dev/disk/by-id} for this. We can get around having to deal with the drives' unique IDs
@@ -180,7 +180,7 @@ NixOS management as we just discussed, these need to be legacy mountpoints:
 # mount -t zfs ztank/share /mnt/share
 }
 
-◊h4{Move the Keys into Place}
+◊(subheading 'h4 "Move the Keys into Place")
 
 Now we need a permanent home for the keys. It can be anywhere, as the location will be specified in
 ◊code{configuration.nix} later, but I think a good practice is somewhere isolated and clear:
@@ -200,7 +200,7 @@ to be given the absolute path from the system's perspective at boot, and this wo
 Regarding the permissions: ◊code{500} is read and execute (because it's a directory) only for the owner, ◊code{root}.
 ◊code{400} is just read.
 
-◊h3{Generate the System Configuration}
+◊(subheading 'h3 "Generate the System Configuration")
 
 NixOS can help us generate a starting point for our configuration, ◊code{/etc/nixos/configuration.nix} and
 ◊code{/etc/nixos/hardware-configuration.nix}, which we can embellish and add to later. In fact, the point of creating
@@ -304,7 +304,7 @@ Call it without ◊code{-c} to start an interactive prompt.
 
 Now we can reboot and enjoy the new system.
 
-◊h3{Reboot}
+◊(subheading 'h3 "Reboot")
 
 On the off chance the disk password is input incorrectly, the following steps must be done to get back to the password
 prompt for another shot:
@@ -315,7 +315,7 @@ insmod normal <ENTER>
 normal <ENTER>
 }
 
-◊h2{Wrap Up}
+◊(subheading 'h2 "Wrap Up")
 
 For reference the full config for my setup can be found
 ◊body-link["https://github.com/achuie/nixos-config/tree/ecda293753d3da659e3be4a025efef6dfc7f8dd7/nixos/svalbard"]{

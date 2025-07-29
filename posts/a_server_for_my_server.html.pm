@@ -13,7 +13,7 @@ while.
 Instead, I will attempt to use a persistent reverse SSH tunnel from my homelab to a hosted virtual machine, in this case
 a Digital Ocean droplet.
 
-◊h2{Making the Base Image}
+◊(subheading 'h2 "Making the Base Image")
 
 NixOS has a convenient
 ◊body-link["https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/virtualisation/digital-ocean-config.nix"]{
@@ -93,7 +93,7 @@ $ nix build ".#nixosConfigurations.$HOSTNAME.config.system.build.digitalOceanIma
 
 Then spin up a VM based on that image.
 
-◊h2{Setting up the SSH Tunnel}
+◊(subheading 'h2 "Setting up the SSH Tunnel")
 
 With the VM alive, I reserved a static IP address for it on DO's management page. Then I configured my homelab to reach
 out to that address with ◊code{autossh}.
@@ -120,7 +120,7 @@ convenient for tracking the state of the system.
 
 One ◊code{nixos-rebuild switch} later and we're connected.
 
-◊h2{Rebuilding Remotely}
+◊(subheading 'h2 "Rebuilding Remotely")
 
 Another thing we'll have to do from time to time is change the config or update the droplet. Actually I've already had
 to do this when I forgot to include ◊code{GatewayPorts = "yes"} for openssh. I don't want to incur any additional
@@ -131,6 +131,6 @@ to the droplet; easily done with ◊code{--target-host}.
 $ nixos-rebuild switch --flake ".#$HOSTNAME" --target-host "$USER@$STATIC_IP"
 }
 
-◊h2{Wrap Up}
+◊(subheading 'h2 "Wrap Up")
 
 That's it for today, I'll have to think of what to do next with NixOS and droplets in the future.

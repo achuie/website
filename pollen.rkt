@@ -43,6 +43,10 @@
        ,title
        (span ((class "post-date")) ,(seconds->default-datestring seconds 'iso-8601))))
 
+(define (subheading level title)
+  (define title-id (string-join (string-split title) "-"))
+  `(,level ((id ,title-id) (class "linkable-heading")) (a ((class "subheadinglink") (href ,(string-append "#" title-id))) "#") ,title))
+
 ;; Only convert a newline to a linebreak if the preceding line ends with "\\".
 (define (latex-linebreaker prev next)
   (if (and (string? prev) (regexp-match #rx"\\\\$" prev))

@@ -18,7 +18,7 @@ for LUKS-on-LVM or LUKS-only systems, which somehow seem more common than my set
 ◊code{root=/dev/mapper/vg-root} in the kernel parameters with different combinations of ◊code{cryptkey} paths and
 ◊code{cryptdevice} names wondering why it wasn't working.
 
-◊h2{Justification}
+◊(subheading 'h2 "Justification")
 
 The main features I want from this setup are the following:
 
@@ -37,7 +37,7 @@ to provide a point to revert back to if anything goes wrong, in the worst case b
 than NixOS' system generations, but it seems like an OK trade-off for the flexibility of modifying the system on the
 fly.
 
-◊h2{The Process}
+◊(subheading 'h2 "The Process")
 
 Booting the Arch Linux live image, the first thing I did was connect to the internet. Arch provides ◊code{iwd}, but
 I always forget how to use it since I usually prefer Network Manager, so just a reminder:
@@ -51,7 +51,7 @@ I always forget how to use it since I usually prefer Network Manager, so just a 
 
 ◊code{scan} and ◊code{get-networks} can be skipped by tab-completing ◊code{station <name> connect}.
 
-◊h3{Partition and Format the Disks}
+◊(subheading 'h3 "Partition and Format the Disks")
 
 Next, I partitioned the hard drive with ◊code{gdisk}. EFI partition first, with default start, size ◊code{550Mb}, and
 type ◊code{ef00}. Then for the main partition, it can take up the rest of the drive, which is the default, and should be
@@ -93,7 +93,7 @@ Then I created the subvolumes and re-mounted so the new ◊code{rootfs} subvolum
 # mount -o subvol=rootfs /dev/mapper/root /mnt
 }
 
-◊h3{Normal Setup}
+◊(subheading 'h3 "Normal Setup")
 
 After that I proceeded as normal to assemble the other mountpoints and followed the
 ◊body-link["https://wiki.archlinux.org/title/Installation_guide#Installation"]{installation guide}, picking up from the
@@ -118,7 +118,7 @@ edited the ◊code{fstab} at this stage to add the options ◊code{uid=0,gid=0,}
 The rest of the configuration and setup was the same as in the guide, until the end with the initramfs and boot loader
 configs.
 
-◊h3{Initramfs and Boot Loader}
+◊(subheading 'h3 "Initramfs and Boot Loader")
 
 ◊code{arch-chroot}'d into ◊code{/mnt}, I changed the ◊code{FILES} and ◊code{HOOKS} lines in
 ◊code{/etc/mkinitcpio.conf} to the following below. For this setup, LVM-on-LUKS, ◊code{encrypt} should come before
@@ -166,7 +166,7 @@ Then I generated the initramfs image, configured GRUB, and set the root password
 # passwd
 }
 
-◊h3{Finish and Reboot}
+◊(subheading 'h3 "Finish and Reboot")
 
 With the installation complete, I rebooted into the new system and finished setting it up. I'll leave that for another
 time, as many people have different preferences, but if you're totally new I'd start with the

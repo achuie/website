@@ -146,9 +146,30 @@ a.bodylink:link, a.bodylink:visited {
     transition: 0.1s ease-in;
 }
 
-a.bodylink:hover, a.bodylink:active {
+a.bodylink:hover, a.bodylink:active, a.subheadinglink:hover, a.subheadinglink:active {
     color: ◊|linkactive-color|;
     text-decoration: underline solid ◊|linkactive-color|;
+}
+
+a.subheadinglink {
+    position: absolute;
+    left: -0.7rem;
+    top: 0rem;
+    width: 0.7rem;
+    color: ◊|link-color|;
+    font-weight: normal;
+    text-decoration: underline solid transparent;
+    opacity: 0;
+    transition: 0.1s ease-in;
+}
+
+.linkable-heading {
+    position: relative;
+    padding-left: -1.5rem;
+}
+
+.content h2:hover a.subheadinglink, .content h3:hover a.subheadinglink, .content h4:hover a.subheadinglink, .content h5:hover a.subheadinglink, .content h6:hover a.subheadinglink {
+    opacity: 1;
 }
 
 .main {
