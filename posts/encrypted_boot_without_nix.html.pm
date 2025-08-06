@@ -90,7 +90,7 @@ Then I created the subvolumes and re-mounted so the new ◊code{rootfs} subvolum
 # btrfs subvolume create homefs
 # cd ..
 # umount /mnt
-# mount -o subvol=rootfs /dev/mapper/root /mnt
+# mount -o subvol=rootfs /dev/mapper/vg-root /mnt
 }
 
 ◊(subheading 'h3 "Normal Setup")
@@ -101,7 +101,7 @@ After that I proceeded as normal to assemble the other mountpoints and followed 
 
 ◊code-block{
 # mkdir /mnt/home
-# mount -o subvol=homefs /dev/mapper/root /mnt/home
+# mount -o subvol=homefs /dev/mapper/vg-root /mnt/home
 # mkdir /mnt/efi
 # mount /dev/sda1 /mnt/efi
 # mkdir /mnt/boot
@@ -137,8 +137,20 @@ GRUB_ENABLE_CRYPTODISK=y
 }
 
 ◊ul{
-  ◊li{◊code{cryptdevice}: colon-separated list of arguments; first the disk partition (use a persistent name like UUID),
-    then the name of the decrypted partition, then disk options (◊code{allow-discards} enables TRIM)}
+  ◊li{◊code{cryptdevice}: colon-separated list of arguments; first the disk partition (the high level block device with
+  a name like sd* or nvme*, but use a persistent name like UUID), then the name of the decrypted partition, then disk
+  options (◊code{allow-discards} enables TRIM), e.g.:
+    ◊code-block{
+$ lsblk --output name,mountpoints,uuid
+NAME          MOUNTPOINTS UUID
+nvme0n1
+├─nvme0n1p1   /efi        XXXX-XXXX
+└─nvme0n1p2               XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX  <-- use this one
+  └─root                  XXXXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXXXX
+    ├─vg-swap [SWAP]      XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+    └─vg-root /home       XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+              /
+    }}
   ◊li{◊code{cryptkey}: path to the key file of the ◊code{cryptdevice} in the format ◊code{<disk>:<path>}; ◊code{rootfs}
     refers to the initramfs image, so in this case the path should be the same as in the ◊code{FILES} line in
     ◊code{/etc/mkinitcpio.conf}}
