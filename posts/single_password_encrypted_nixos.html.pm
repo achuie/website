@@ -181,8 +181,9 @@ NixOS management as we just discussed, these need to be legacy mountpoints:
 }
 
 Lastly, ZFS runs into performance trouble when the filesystem is near full, so it is commonly recommended to reserve
-anywhere from 10% to 20% of disk space. The command below will create a reservation that will let us know when the filesystem
-is too full, and that we can remove to continue using the array while we contemplate how to expand or upgrade the array.
+anywhere from 10% to 20% of disk space. The command below will create a reservation that will let us know when the
+filesystem is too full, and that we can remove to continue using the array while we contemplate how to expand or upgrade
+the array.
 
 ◊code-block{
 # zfs create -o refreservation=450G -o mountpoint=none ztank/reserved

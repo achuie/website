@@ -18,9 +18,21 @@
     ◊nav-link[(string-append path-prefix "pages/photography.html")]{photography}})
 ◊(define back-button
   ◊div[#:class "backbutton"]{◊a[#:class "backbutton-link"
+                                ◊; u2190
                                 #:href (string-append path-prefix "pages/photography.html")]{←}})
 ◊(define body-with-sidebar
   ◊body{
+    ◊div[#:class "toggle-wrapper"]{
+      ◊; u25d1
+      ◊span[#:class "toggle-label"]{◑}
+      ◊input[#:type "checkbox" #:id "theme-toggle"]{}
+      ◊label[#:for "theme-toggle" #:class "theme-switch"]{
+        ◊svg[#:viewBox "0 0 50 30" #:xmlns "http://www.w3.org/2000/svg"]{
+          ◊rect[#:class "toggle-bg" #:x "1" #:y "1" #:width "48" #:height "28" #:rx "14"]{}
+          ◊circle[#:class "toggle-thumb" #:cx "15" #:cy "15" #:r "12"]{}
+        }
+      }
+    }
     ◊div[#:class "wrapper"]{
       ◊; Bulma class content.
       ◊div[#:class "content columns"]{
@@ -38,7 +50,11 @@
           ◊body-link[(string-append path-prefix "pages/about.html")]{About} ◊br{}
           Made with
           ◊body-link["https://git.matthewbutterick.com/mbutterick/pollen"]{Pollen} and
-          ◊body-link["https://bulma.io"]{Bulma}}}}})
+          ◊body-link["https://bulma.io"]{Bulma}}}
+      ◊script[#:type "text/javascript" #:src (string-append path-prefix "js/dark_mode.js")]{}
+    }
+  }
+)
 
 <html lang="en">
 <head>
@@ -46,6 +62,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   ◊(define title (select 'h1 doc))
   <title>◊(if title title "Home") &ndash; AH</title>
+  ◊; Prevent flashbang by running JS to set color theme before css loads
+  <script>
+    (function() {
+      const theme = new URLSearchParams(location.search).get('theme');
+      if (theme === 'dark' || theme === 'light') {
+        document.documentElement.setAttribute('data-theme', theme);
+      }
+    })();
+  </script>
   <link rel="shortcut icon" type="image/jpg" href="◊|path-prefix|images/columns.jpg"/>
   <link rel="stylesheet" type="text/css" media="all" href="◊|path-prefix|css/style.css"/>
 </head>

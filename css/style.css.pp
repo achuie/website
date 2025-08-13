@@ -6,13 +6,25 @@
 ◊(define narrow-aspect-ratio "7/6")
 ◊(define mobile-aspect-ratio "6/7")
 ◊(define border-radius "0.25rem")
+◊(define masonry-padding "0.4vmax")
 
 ◊(define link-color "#0077aa")
 ◊(define linkactive-color "#00a1e6")
-◊(define inline-code-color "#660000")
+
+◊(define dark-mode-transition "background 0.3s, color 0.3s")
 
 @import url("fonts.css");
 @import url("bulma.min.css");
+
+:root {
+    --bg: #ffffff;
+    --fg: #000000;
+    ◊; Default Bulma footer bg
+    --footer-bg: #fafafa;
+    --inline-code-fg: #660000;
+    ◊; Default Bulma pre bg
+    --pre-bg: #f5f5f5;
+}
 
 html {
     font-size: 1.8em;
@@ -20,10 +32,13 @@ html {
     -webkit-text-size-adjust: auto;
 }
 
-@media screen and (max-aspect-ratio: ◊|mobile-aspect-ratio|) {
-    html {
-        font-size: 7vw;
-    }
+html[data-theme="dark"] {
+    --bg: #111111;
+    --fg: #eeeeee;
+    --footer-bg: #1a1a1a;
+    --inline-code-fg: #ac5353;
+    --pre-bg: #1f1f1f;
+    color-scheme: dark;
 }
 
 html, body {
@@ -39,7 +54,9 @@ body {
     line-height: ◊leading;
     font-family: "Alegreya Sans", serif;
     font-weight: normal;
-    color: black;
+    background: var(--bg);
+    color: var(--fg);
+    transition: ◊|dark-mode-transition|;
 }
 
 ◊; For flexbox--pre interaction
@@ -50,9 +67,11 @@ body {
 code {
     font-family: "Fira-Mono", monospace;
     font-size: ◊|code-em-size|rem;
-    color: ◊|inline-code-color|;
+    color: var(--inline-code-fg);
+    background: var(--pre-bg);
     border-radius: ◊|border-radius|;
     padding: 0.1rem 0.2rem;
+    transition: ◊|dark-mode-transition|;
 }
 
 .blog-list-date {
@@ -64,6 +83,7 @@ code {
     min-height: 100%;
     display: grid;
     grid-template-rows: 1fr auto;
+    color-scheme: light dark;
 }
 
 .content {
@@ -72,14 +92,6 @@ code {
     width: 90%;
     margin-left: auto;
     margin-right: auto;
-}
-
-@media screen and (max-aspect-ratio: ◊|narrow-aspect-ratio|) {
-    .content {
-        width: 90%;
-        margin-left: auto;
-        margin-right: auto;
-    }
 }
 
 ◊; Bulma column padding default is 0.75rem.
@@ -98,12 +110,6 @@ code {
     text-align: end;
 }
 
-@media screen and (max-aspect-ratio: ◊|narrow-aspect-ratio|) {
-    .my-navbar {
-        text-align: start;
-    }
-}
-
 .backbutton {
     padding-top: 1.5rem;
     text-align: center;
@@ -112,18 +118,21 @@ code {
 a.backbutton-link {
     font-family: "Fira-Mono", sans-serif;
     font-size: ◊(* body-em-size 3)rem;
-    color: black;
+    color: var(--fg);
     text-decoration: none;
+    transition: ◊|dark-mode-transition|;
 }
 
 a.navlink:link, a.navlink:visited {
     text-decoration: none;
     position: relative;
-    color: black;
+    color: var(--fg);
+    transition: ◊|dark-mode-transition|;
 }
 
 a.navlink:hover, a.navlink:active {
-    color: black;
+    color: var(--fg);
+    transition: ◊|dark-mode-transition|;
 }
 
 a.navlink::after {
@@ -146,7 +155,7 @@ a.bodylink:link, a.bodylink:visited {
     transition: 0.1s ease-in;
 }
 
-a.bodylink:hover, a.bodylink:active, a.subheadinglink:hover, a.subheadinglink:active {
+a.bodylink:hover, a.bodylink:active {
     color: ◊|linkactive-color|;
     text-decoration: underline solid ◊|linkactive-color|;
 }
@@ -154,13 +163,20 @@ a.bodylink:hover, a.bodylink:active, a.subheadinglink:hover, a.subheadinglink:ac
 a.subheadinglink {
     position: absolute;
     left: -0.7rem;
-    top: 0rem;
+    top: 50%;
+    ◊; Centers on line-height
+    transform: translateY(-50%);
     width: 0.7rem;
-    color: ◊|link-color|;
-    font-weight: normal;
+    color: var(--inline-code-fg);
+    font-weight: bold;
+    font-size: 0.8rem;
     text-decoration: underline solid transparent;
-    opacity: 0;
-    transition: 0.1s ease-in;
+    opacity: 0.3;
+    transition: 0.1s ease-in, ◊|dark-mode-transition|;
+}
+
+a.subheadinglink:hover, a.subheadinglink:active {
+    text-decoration: underline solid var(--inline-code-fg);
 }
 
 .linkable-heading {
@@ -178,17 +194,13 @@ a.subheadinglink {
     display: block flex;
 }
 
-@media screen and (max-aspect-ratio: ◊|narrow-aspect-ratio|) {
-    .main {
-        margin-right: auto;
-    }
-}
-
 .footer {
     font-size: ◊(- body-em-size 0.2)rem;
     text-align: center;
     padding-top: 2rem;
     padding-bottom: 4rem;
+    background: var(--footer-bg);
+    transition: ◊|dark-mode-transition|;
 }
 
 .footer-separator {
@@ -205,7 +217,8 @@ a.subheadinglink {
 ◊; Bulma content classes.
 .content h1, .content h2, .content h3, .content h4, .content h5, .content h6 {
     margin-bottom: 0px;
-    color: black;
+    color: var(--fg);
+    transition: ◊|dark-mode-transition|;
 }
 
 .content h1 {
@@ -239,9 +252,11 @@ a.subheadinglink {
     max-width: inherit;
     font-size: ◊|code-em-size|rem;
     overflow: scroll;
-    color: black;
+    color: var(--fg);
+    background: var(--pre-bg);
     border-radius: ◊|border-radius|;
     padding: 0.5rem 0.75rem;
+    transition: ◊|dark-mode-transition|;
 }
 
 p {
@@ -259,8 +274,6 @@ p {
     break-inside: avoid;
 }
 
-◊(define masonry-padding "0.4vmax")
-
 .masonry-panel__content {
     padding: ◊|masonry-padding|;
     display: inline-grid;
@@ -268,4 +281,82 @@ p {
 
 .masonry-img {
     padding: ◊|masonry-padding| 0px ◊|masonry-padding|;
+}
+
+.theme-switch {
+    z-index: 1000;
+}
+
+.toggle-wrapper {
+    margin: 0.5rem 10.25rem 0 0;
+    font-size: 0.8rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.1rem;
+    align-items: self-end;
+}
+
+#theme-toggle {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.theme-switch svg {
+    width: auto;
+    height: 0.8rem;
+    display: block;
+    cursor: pointer;
+}
+
+.toggle-bg {
+    fill: #cccccc;
+    transition: fill 0.25s ease;
+}
+
+.toggle-thumb {
+    fill: white;
+    transform: translateX(0);
+    transition: transform 0.25s ease;
+    transform-box: fill-box;
+    transform-origin: center;
+}
+
+#theme-toggle:checked + .theme-switch .toggle-bg {
+    ◊; light mode inline-code-fg
+    fill: var(--inline-code-fg);
+}
+
+#theme-toggle:checked + .theme-switch .toggle-thumb {
+    transform: translateX(20px);
+}
+
+@media screen and (max-aspect-ratio: ◊|mobile-aspect-ratio|) {
+    html {
+        font-size: 7vw;
+    }
+
+    .toggle-wrapper {
+        margin: 0.5rem 1.1rem 0 0;
+    }
+}
+
+@media screen and (max-aspect-ratio: ◊|narrow-aspect-ratio|) {
+    .content {
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media screen and (max-aspect-ratio: ◊|narrow-aspect-ratio|) {
+    .my-navbar {
+        text-align: start;
+    }
+}
+
+@media screen and (max-aspect-ratio: ◊|narrow-aspect-ratio|) {
+    .main {
+        margin-right: auto;
+    }
 }
