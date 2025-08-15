@@ -7,6 +7,7 @@
               max-height: 85vh;
               vertical-align: top;
               display: block;
+              border: 0.8vh solid #fff;
               margin-left: auto;
               margin-right: auto;"
      #:src ""
