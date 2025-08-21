@@ -2,7 +2,7 @@
 
 ◊(define-meta published "24 12 2024")
 
-◊(post-title "Single-Password Encrypted NixOS")
+◊post-title{Single-Password Encrypted NixOS}
 
 I recently installed NixOS on my homelab. The setup is a mix of ZFS for home and BTRFS for root, so the process was a
 bit non-standard and I wanted to write down what I did.
@@ -221,7 +221,7 @@ the filesystem hierarchy above was to hint the generator as much as possible.
 
 Still, it's necessary to double-check the options. I added the following for ZFS support:
 
-◊code-block{
+◊file-block["configuration.nix"]{
   boot.initrd.kernelModules = [ "zfs" ];
   boot.supportedFilesystems = [ "zfs" ];
   boot.kernelPackages = config.boot.zfs.package.latestCompatibleLinuxPackages;
@@ -242,7 +242,7 @@ used. Per ◊body-link["https://search.nixos.org/options"]{search.nixos.org}, us
 
 Below are the options for our boot process:
 
-◊code-block{
+◊file-block["configuration.nix"]{
 
   boot.loader.grub = {
     enable = true;
@@ -282,7 +282,7 @@ The hardware configuration file has a warning not to edit it, as the changes may
 minimal. There are some options we want to set here, like turning on compression for BTRFS and mounting the legacy ZFS
 mountpoints.
 
-◊code-block{
+◊file-block["hardware-configuration.nix"]{
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/<some UUID>";
       fsType = "btrfs";

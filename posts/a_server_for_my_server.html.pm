@@ -2,7 +2,7 @@
 
 ◊(define-meta published "31 03 2025")
 
-◊(post-title "Setting Up a Server for My Server")
+◊post-title{Setting Up a Server for My Server}
 
 So I set up my homelab, but now I have to make it accessible from outside my apartment. Normally this is trivially done
 with port forwarding rules on one's router, but my apartment building has a centralized, building-wide router from our
@@ -19,16 +19,16 @@ NixOS has a convenient
 ◊body-link["https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/virtualisation/digital-ocean-config.nix"]{
 config module for droplets} with sane defaults, which I imported in my NixOS configuration:
 
-◊code-block{
+◊file-block["configuration.nix"]{
 imports =
   [
     "${inputs.nixpkgs-stable}/nixos/modules/virtualisation/digital-ocean-image.nix"
   ];
 }
 
-I also found it easy to include my SSH public key at this stage so I can connect immediately after setup:
+I also found it convenient to include my SSH public key at this stage so I can connect immediately after setup:
 
-◊code-block{
+◊file-block["configuration.nix"]{
 users.users.${your_user} = {
   openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA user@hostname"
@@ -38,7 +38,7 @@ users.users.${your_user} = {
 
 And here's the sshd config:
 
-◊code-block{
+◊file-block["configuration.nix"]{
 services.openssh = {
   enable = true;
   authorizedKeysInHomedir = true;
@@ -50,7 +50,7 @@ services.openssh = {
 From here the options are like those for any other machine config, though I kept it a bit minimal; just the usual nix
 path and flakes-enabling settings, plus utilities I thought I'd use:
 
-◊code-block{
+◊file-block["configuration.nix"]{
 nix = {
   registry = lib.mapAttrs (_: value: { flake = value; }) inputs;
   nixPath = lib.mapAttrsToList (key: value: "${key}=${value.to.path}") config.nix.registry;
@@ -70,7 +70,7 @@ The way I've set up this config to be built by the same flake that builds my oth
 ◊code{configuration.nix} file in its own subdirectory, and include it as a module when building with ◊code{nixosSystem}.
 It should look like the following:
 
-◊code-block{
+◊file-block["flake.nix"]{
 nixosConfigurations = {
   ${your_hostname} = nixpkgs.lib.nixosSystem {
     specialArgs = { inherit (self) inputs; };
@@ -98,7 +98,7 @@ Then spin up a VM based on that image.
 With the VM alive, I reserved a static IP address for it on DO's management page. Then I configured my homelab to reach
 out to that address with ◊code{autossh}.
 
-◊code-block{
+◊file-block["configuration.nix"]{
 systemd.services.tunnel = {
   description = "Start reverse tunnel, and keep it alive.";
   wantedBy = [ "multi-user.target" ];

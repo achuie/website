@@ -2,7 +2,7 @@
 
 ◊(define-meta published "24 05 2025")
 
-◊(post-title "Encrypted Boot Without Nix")
+◊post-title{Encrypted Boot Without Nix}
 
 In the past I've done an ◊body-link["./single_password_encrypted_nixos.html"]{encrypted boot setup with NixOS} for my
 server, but now I'd like to also harden my laptop since, out of the two computers, that's the more vulnerable one
@@ -124,28 +124,28 @@ configs.
 ◊code{/etc/mkinitcpio.conf} to the following below. For this setup, LVM-on-LUKS, ◊code{encrypt} should come before
 ◊code{lvm2} to decrypt the disk.
 
-◊code-block{
+◊file-block["/etc/mkinitcpio.conf"]{
 FILES=(/etc/cryptsetup-keys.d/root.key)
 HOOKS=(base udev autodetect microcode modconf kms keyboard keymap consolefont block encrypt lvm2 filesystems fsck)
 }
 
 Next, I changed the following lines in ◊code{/etc/default/grub}:
 
-◊code-block{
+◊file-block["/etc/default/grub"]{
 GRUB_CMDLINE_LINUX="cryptdevice=UUID=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX:root:allow-discards cryptkey=rootfs:/etc/cryptsetup-keys.d/root.key root=/dev/vg/root rootflags=subvol=rootfs rw intel-ucode.img"
 GRUB_ENABLE_CRYPTODISK=y
 }
 
 ◊ul{
   ◊li{◊code{cryptdevice}: colon-separated list of arguments; first the disk partition (the high level block device with
-  a name like sd* or nvme*, but use a persistent name like UUID), then the name of the decrypted partition, then disk
-  options (◊code{allow-discards} enables TRIM), e.g.:
+  a name like sd* or nvme*, but use its persistent UUID as in the listing below), then the name of the decrypted
+  partition, then disk options (◊code{allow-discards} enables TRIM)
     ◊code-block{
 $ lsblk --output name,mountpoints,uuid
 NAME          MOUNTPOINTS UUID
 nvme0n1
 ├─nvme0n1p1   /efi        XXXX-XXXX
-└─nvme0n1p2               XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX  <-- use this one
+└─nvme0n1p2               XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX <-- use this one
   └─root                  XXXXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXXXX
     ├─vg-swap [SWAP]      XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
     └─vg-root /home       XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX

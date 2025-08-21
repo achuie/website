@@ -5,7 +5,6 @@
 ◊(define code-em-size (* body-em-size 0.8))
 ◊(define narrow-aspect-ratio "7/6")
 ◊(define mobile-aspect-ratio "6/7")
-◊(define border-radius "0.25rem")
 ◊(define masonry-padding "0.4vmax")
 
 ◊(define link-color "#0077aa")
@@ -22,8 +21,7 @@
     ◊; Default Bulma footer bg
     --footer-bg: #fafafa;
     --inline-code-fg: #660000;
-    ◊; Default Bulma pre bg
-    --pre-bg: #f5f5f5;
+    --pre-bg: #f5efef;
 }
 
 html {
@@ -37,7 +35,7 @@ html[data-theme="dark"] {
     --fg: #eeeeee;
     --footer-bg: #1a1a1a;
     --inline-code-fg: #ac5353;
-    --pre-bg: #1f1f1f;
+    --pre-bg: #2a2222;
     color-scheme: dark;
 }
 
@@ -67,9 +65,8 @@ body {
 code {
     font-family: "Fira-Mono", monospace;
     font-size: ◊|code-em-size|rem;
-    color: var(--inline-code-fg);
+    color: var(--fg);
     background: var(--pre-bg);
-    border-radius: ◊|border-radius|;
     padding: 0.1rem 0.2rem;
     transition: ◊|dark-mode-transition|;
 }
@@ -252,11 +249,35 @@ a.subheadinglink:hover, a.subheadinglink:active {
     max-width: inherit;
     font-size: ◊|code-em-size|rem;
     overflow: scroll;
+    white-space: pre-wrap;
     color: var(--fg);
     background: var(--pre-bg);
-    border-radius: ◊|border-radius|;
-    padding: 0.5rem 0.75rem;
+    border: 1px solid;
+    border-color: var(--inline-code-fg);
+    padding: 0.5rem;
+    margin: 0.2rem;
+    counter-reset: linenumber;
     transition: ◊|dark-mode-transition|;
+}
+
+.content pre code span {
+    display: block;
+    white-space: pre-wrap;
+    padding-left: 1rem;
+    ◊; Equal to span::before's margin-right minus span's padding-left
+    text-indent: -0.75rem;
+}
+
+.content pre code span::before {
+    counter-increment: linenumber;
+    content: counter(linenumber);
+    display: inline-block;
+    width: 1.5rem;
+    margin-left: -1rem;
+    margin-right: 0.25rem;
+    text-align: right;
+    user-select: none;
+    color: gray;
 }
 
 p {
