@@ -29,6 +29,8 @@ document.addEventListener('click', (e) => {
   if (url.origin !== window.location.origin) return; // external link
 
   const currentTheme = root.getAttribute('data-theme');
+  if (currentTheme === null) return;
+
   url.searchParams.set('theme', currentTheme);
   a.href = url.href;
 });

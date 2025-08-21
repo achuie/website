@@ -23,6 +23,8 @@
 
 (define (body-link url text) `(a ((class "bodylink") (href ,url)) ,text))
 
+;; Takes a list of lines fragmented into tokens (words and whitespace are separate strings) and conglomerates them into
+;; a list of strings, one per line, each ending in linereturn except the last string.
 (define (merge-lines tokens)
   (define (loop tokens accumulator line)
     (cond
@@ -48,6 +50,7 @@
 (define-tag-function (code-block attrs elems)
                      `(pre ,attrs (code ,@(wrap-span-listing (merge-lines elems)))))
 
+;; filename must be a Racket string (inside "") if using Pollen notation
 (define (file-block filename . text)
   ; Margin to match that of a regular code-block
   `(div ((style "margin-bottom: 0.5rem;"))
@@ -55,10 +58,13 @@
      (pre ((style "margin-top: 0; border-top-style: dashed;"))
           (code ,@(wrap-span-listing (merge-lines text))))))
 
+;; Take a string of the form "DD MM YYYY" and return the number of seconds since the epoch to midnight on that day.
 (define (published->timestamp published-string)
   (apply
     find-seconds
-    (append (list 0 0 0) (map (λ (s) (string->number s)) (string-split published-string)) (list #f))))
+    (append (list 0 0 0)
+            (map (λ (s) (string->number s)) (string-split published-string))
+            (list #f))))
 
 (define (seconds->default-datestring timestamp string-format)
   (if (and timestamp (> timestamp 0))
@@ -66,6 +72,7 @@
         (date->string (seconds->date timestamp)))
       "(unpublished)"))
 
+;; A blog post must define `◊(define-meta published "DD MM YYYY")`
 (define-tag-function (post-title attrs elems)
   (define published (select-from-metas 'published (current-metas)))
   (define seconds (if published (published->timestamp published) #f))
