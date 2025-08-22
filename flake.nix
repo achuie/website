@@ -52,7 +52,7 @@
                   echo "  Found thumbnail for $pic"
                 else
                   echo "    Generating thumbnail for $pic"
-                  ${pkgs.imagemagick}/bin/magick ./images/portfolio/$pic -resize 1000000@ ./images/thumbnails/$pic
+                  ${pkgs.imagemagick}/bin/magick ./images/portfolio/$pic -resize 250000@ ./images/thumbnails/$pic
                 fi
 
                 timestamp=$(${pkgs.exif}/bin/exif -t DateTimeOriginal ./images/portfolio/$pic | grep Value | sed 's/[a-zA-Z: ]*//g')

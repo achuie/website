@@ -67,7 +67,7 @@ code {
     font-size: ◊|code-em-size|rem;
     color: var(--fg);
     background: var(--pre-bg);
-    padding: 0.1rem 0.2rem;
+    padding: 0.025rem 0.1rem;
     transition: ◊|dark-mode-transition|;
 }
 
