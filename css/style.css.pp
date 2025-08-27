@@ -21,7 +21,9 @@
     ◊; Default Bulma footer bg
     --footer-bg: #fafafa;
     --inline-code-fg: #660000;
-    --pre-bg: #f5efef;
+    --pre-bg: #f8f9fa;
+    --pre-border: #6a8095;
+    --inline-bg: #edf1f7;
 }
 
 html {
@@ -35,13 +37,14 @@ html[data-theme="dark"] {
     --fg: #eeeeee;
     --footer-bg: #1a1a1a;
     --inline-code-fg: #ac5353;
-    --pre-bg: #2a2222;
+    --pre-bg: #151a1e;
+    --pre-border: #364049;
+    --inline-bg: #1f262d;
     color-scheme: dark;
 }
 
 html, body {
     min-height: 100%;
-    height: 100%;
     margin: 0;
     padding: 0;
     overflow: auto;
@@ -66,7 +69,7 @@ code {
     font-family: "Fira-Mono", monospace;
     font-size: ◊|code-em-size|rem;
     color: var(--fg);
-    background: var(--pre-bg);
+    background: var(--inline-bg);
     padding: 0.025rem 0.1rem;
     transition: ◊|dark-mode-transition|;
 }
@@ -77,15 +80,13 @@ code {
 }
 
 .wrapper {
-    min-height: 100%;
+    min-height: 100vh;
     display: grid;
-    grid-template-rows: 1fr auto;
+    grid-template-rows: auto 1fr auto;
     color-scheme: light dark;
 }
 
 .content {
-    height: 100%;
-    min-height: 100%;
     width: 90%;
     margin-left: auto;
     margin-right: auto;
@@ -163,8 +164,8 @@ a.subheadinglink {
     top: 50%;
     ◊; Centers on line-height
     transform: translateY(-50%);
-    width: 0.7rem;
-    color: var(--inline-code-fg);
+    width: 100%;
+    color: var(--fg);
     font-weight: bold;
     font-size: 0.8rem;
     text-decoration: underline solid transparent;
@@ -173,16 +174,12 @@ a.subheadinglink {
 }
 
 a.subheadinglink:hover, a.subheadinglink:active {
-    text-decoration: underline solid var(--inline-code-fg);
+    opacity: 1;
 }
 
 .linkable-heading {
     position: relative;
     padding-left: -1.5rem;
-}
-
-.content h2:hover a.subheadinglink, .content h3:hover a.subheadinglink, .content h4:hover a.subheadinglink, .content h5:hover a.subheadinglink, .content h6:hover a.subheadinglink {
-    opacity: 1;
 }
 
 .main {
@@ -253,7 +250,7 @@ a.subheadinglink:hover, a.subheadinglink:active {
     color: var(--fg);
     background: var(--pre-bg);
     border: 1px solid;
-    border-color: var(--inline-code-fg);
+    border-color: var(--pre-border);
     padding: 0.5rem;
     margin: 0.2rem;
     counter-reset: linenumber;

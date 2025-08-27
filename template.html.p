@@ -22,18 +22,18 @@
                                 #:href (string-append path-prefix "pages/photography.html")]{←}})
 ◊(define body-with-sidebar
   ◊body{
-    ◊div[#:class "toggle-wrapper"]{
-      ◊; u25d1
-      ◊span[#:class "toggle-label"]{◑}
-      ◊input[#:type "checkbox" #:id "theme-toggle"]{}
-      ◊label[#:for "theme-toggle" #:class "theme-switch"]{
-        ◊svg[#:viewBox "0 0 50 30" #:xmlns "http://www.w3.org/2000/svg"]{
-          ◊rect[#:class "toggle-bg" #:x "1" #:y "1" #:width "48" #:height "28" #:rx "14"]{}
-          ◊circle[#:class "toggle-thumb" #:cx "15" #:cy "15" #:r "12"]{}
+    ◊div[#:class "wrapper"]{
+      ◊div[#:class "toggle-wrapper"]{
+        ◊; u25d1
+        ◊span[#:class "toggle-label"]{◑}
+        ◊input[#:type "checkbox" #:id "theme-toggle"]{}
+        ◊label[#:for "theme-toggle" #:class "theme-switch"]{
+          ◊svg[#:viewBox "0 0 50 30" #:xmlns "http://www.w3.org/2000/svg"]{
+            ◊rect[#:class "toggle-bg" #:x "1" #:y "1" #:width "48" #:height "28" #:rx "14"]{}
+            ◊circle[#:class "toggle-thumb" #:cx "15" #:cy "15" #:r "12"]{}
+          }
         }
       }
-    }
-    ◊div[#:class "wrapper"]{
       ◊; Bulma class content.
       ◊div[#:class "content columns"]{
         ◊div[#:class "column is-one-fifth"]{
