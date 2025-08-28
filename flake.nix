@@ -42,7 +42,7 @@
           thumbnails = {
             type = "app";
             program = "${pkgs.writeShellScriptBin "manageThumbnails.sh" ''
-              find ./images/portfolio -name '*.jpg' -printf '%f\n' | sort >./portfolio_files.txt
+              find ./images/portfolio -regex '.*\.\(jpg\|jxl\)' -printf '%f\n' | sort >./portfolio_files.txt
               if [ -f ./portfolio_datetimes.txt ]; then
                 rm ./portfolio_datetimes.txt
               fi
